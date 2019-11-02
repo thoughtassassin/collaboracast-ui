@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import "./Login.css";
 
-function Login({ setAuthenticated }) {
-  const [user, setUser] = useState({ username: "", password: "" });
+function Login({ setAuthenticated, setUser, user }) {
   const [error, setError] = useState("");
   const authenticate = json => {
     if (json.status === "success") {
