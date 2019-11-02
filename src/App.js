@@ -4,18 +4,24 @@ import Dashboard from "./components/Dashboard/Dashboard";
 import "./App.css";
 
 function App() {
-  const [user, setUser] = useState({ username: "", password: "" });
-  const [authenticated, setAuthenticated] = useState(false);
+  const token = localStorage.getItem("token");
+  console.log(token);
+  const [user, setUser] = useState({ username: "" });
+  const setPersistentUser = user => {
+    setUser(user);
+    localStorage.setItem("username", user.username);
+  };
+  const [authenticated, setAuthenticated] = useState(token ? true : false);
   return (
     <div className="App">
       {!authenticated ? (
         <Login
           setAuthenticated={setAuthenticated}
-          setUser={setUser}
+          setUser={setPersistentUser}
           user={user}
         />
       ) : (
-        <Dashboard user={user} />
+        <Dashboard />
       )}
     </div>
   );

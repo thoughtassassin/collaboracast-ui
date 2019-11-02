@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Feeds from "../Feeds/Feeds";
 import Channels from "../Channels/Channels";
-import { Router, Link } from "@reach/router";
+import { Router, Link, navigate } from "@reach/router";
 
 import "./Dashboard.css";
 
-const Dashboard = ({ user }) => {
-  const [channels, setChannels] = useState();
+const Dashboard = () => {
+  const username = localStorage.getItem("username");
+  const [channels, setChannels] = useState([]);
   const [feeds, setFeeds] = useState();
   const [feed, setFeed] = useState();
   const [loading, setLoading] = useState(false);
@@ -39,20 +40,29 @@ const Dashboard = ({ user }) => {
   useEffect(() => {
     console.log("running");
     const token = localStorage.getItem("token");
-    getUser(user.username, token);
-  }, [getUser, user.username]);
+    getUser(username, token);
+  }, [getUser, username]);
+  const getFeed = feed => {
+    setFeed(feed);
+    navigate(`/channels/${feed}`);
+  };
   return (
     <div className="dashboard">
-      <h1>Welcome, {user.username}</h1>
+      <h1>Welcome, {username}</h1>
       {loading ? (
         <div>loading...</div>
       ) : (
         <>
-          <Feeds feeds={feeds} setFeed={setFeed} />
+          <Feeds feeds={feeds} setFeed={getFeed} />
           {feed && (
-            <Channels
-              channels={channels.filter(channel => channel.FeedId == feed)}
-            />
+            <Router>
+              <Channels
+                path="/channels/:feedId"
+                channels={channels.filter(
+                  channel => channel.FeedId.toString() === feed
+                )}
+              />
+            </Router>
           )}
         </>
       )}

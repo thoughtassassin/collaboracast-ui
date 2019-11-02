@@ -1,7 +1,6 @@
 import React from "react";
 
 const Channels = ({ channels }) => {
-  console.log(channels);
   return (
     <div>
       <h2>Channels</h2>
