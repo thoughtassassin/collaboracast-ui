@@ -27,7 +27,7 @@ function Login({ setAuthenticated, setUser, user }) {
       .then(authenticate);
   };
   return (
-    <div className="App">
+    <div>
       <header className="App-header">
         <h1>Don-Nan</h1>
         {error && <div className="error">{error}</div>}

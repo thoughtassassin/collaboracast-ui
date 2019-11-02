@@ -1,17 +1,26 @@
 import React, { useState, useEffect, useCallback } from "react";
+import Feeds from "../Feeds/Feeds";
+import Channels from "../Channels/Channels";
+import { Router, Link } from "@reach/router";
+
+import "./Dashboard.css";
 
 const Dashboard = ({ user }) => {
   const [channels, setChannels] = useState();
   const [feeds, setFeeds] = useState();
+  const [feed, setFeed] = useState();
+  const [loading, setLoading] = useState(false);
   const setFeedsAndChannels = useCallback(
     ({ data: { feeds, channels } }) => {
       setFeeds(feeds);
       setChannels(channels);
+      setLoading(false);
     },
     [setFeeds, setChannels]
   );
   const getUser = useCallback(
     (username, token) => {
+      setLoading(true);
       fetch(`https://collaboracast.herokuapp.com/api/v1/users/${username}`, {
         headers: {
           "Content-Type": "application/json",
@@ -19,7 +28,11 @@ const Dashboard = ({ user }) => {
         }
       })
         .then(response => response.json())
-        .then(setFeedsAndChannels);
+        .then(setFeedsAndChannels)
+        .catch(e => {
+          setLoading(false);
+          console.error(e);
+        });
     },
     [setFeedsAndChannels]
   );
@@ -29,34 +42,20 @@ const Dashboard = ({ user }) => {
     getUser(user.username, token);
   }, [getUser, user.username]);
   return (
-    <div>
+    <div className="dashboard">
       <h1>Welcome, {user.username}</h1>
-      <div>
-        <label>
-          Feeds
-          <select>
-            <option value="">Select Feed</option>
-            {feeds &&
-              feeds.map(feed => (
-                <option key={feed.id} value={feed.id}>
-                  {feed.name}
-                </option>
-              ))}
-          </select>
-        </label>
-      </div>
-      <label>
-        Channels
-        <select>
-          <option value="">Select Channel</option>
-          {channels &&
-            channels.map(channel => (
-              <option key={channel.id} value={channel.id}>
-                {channel.name}
-              </option>
-            ))}
-        </select>
-      </label>
+      {loading ? (
+        <div>loading...</div>
+      ) : (
+        <>
+          <Feeds feeds={feeds} setFeed={setFeed} />
+          {feed && (
+            <Channels
+              channels={channels.filter(channel => channel.FeedId == feed)}
+            />
+          )}
+        </>
+      )}
     </div>
   );
 };
