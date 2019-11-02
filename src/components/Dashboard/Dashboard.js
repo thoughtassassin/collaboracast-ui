@@ -1,23 +1,33 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 const Dashboard = ({ user }) => {
   const [channels, setChannels] = useState();
   const [feeds, setFeeds] = useState();
-  const setFeedsAndChannels = ({ data }) => {
-    setFeeds(data.feeds);
-    setChannels(data.channels);
-  };
+  const setFeedsAndChannels = useCallback(
+    ({ data: { feeds, channels } }) => {
+      setFeeds(feeds);
+      setChannels(channels);
+    },
+    [setFeeds, setChannels]
+  );
+  const getUser = useCallback(
+    (username, token) => {
+      fetch(`https://collaboracast.herokuapp.com/api/v1/users/${username}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `JWT ${token}`
+        }
+      })
+        .then(response => response.json())
+        .then(setFeedsAndChannels);
+    },
+    [setFeedsAndChannels]
+  );
   useEffect(() => {
+    console.log("running");
     const token = localStorage.getItem("token");
-    fetch("https://collaboracast.herokuapp.com/api/v1/users/4", {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `JWT ${token}`
-      }
-    })
-      .then(response => response.json())
-      .then(setFeedsAndChannels);
-  }, []);
+    getUser(user.username, token);
+  }, [getUser, user.username]);
   return (
     <div>
       <h1>Welcome, {user.username}</h1>
@@ -27,7 +37,11 @@ const Dashboard = ({ user }) => {
           <select>
             <option value="">Select Feed</option>
             {feeds &&
-              feeds.map(feed => <option value={feed.id}>{feed.name}</option>)}
+              feeds.map(feed => (
+                <option key={feed.id} value={feed.id}>
+                  {feed.name}
+                </option>
+              ))}
           </select>
         </label>
       </div>
@@ -37,7 +51,9 @@ const Dashboard = ({ user }) => {
           <option value="">Select Channel</option>
           {channels &&
             channels.map(channel => (
-              <option value={channel.id}>{channel.name}</option>
+              <option key={channel.id} value={channel.id}>
+                {channel.name}
+              </option>
             ))}
         </select>
       </label>
