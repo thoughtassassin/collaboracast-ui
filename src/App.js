@@ -1,23 +1,54 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
 
 function App() {
+  const [user, setUser] = useState({ username: "", password: "" });
+  const handleSubmit = e => {
+    e.preventDefault();
+    fetch("https://collaboracast.herokuapp.com/api/v1/login", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        username: user.username,
+        password: user.password
+      })
+    })
+      .then(response => response.text())
+      .then(token => localStorage.setItem("token", JSON.parse(token).data));
+  };
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1>Don-Nan</h1>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label>
+              Username
+              <input
+                name="username"
+                type="text"
+                value={user.username}
+                onChange={e => setUser({ ...user, username: e.target.value })}
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              Password
+              <input
+                name="username"
+                type="password"
+                value={user.password}
+                onChange={e => setUser({ ...user, password: e.target.value })}
+              />
+            </label>
+          </div>
+          <div>
+            <button type="submit">Login</button>
+          </div>
+        </form>
       </header>
     </div>
   );
