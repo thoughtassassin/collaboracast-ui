@@ -1,23 +1,23 @@
 import React, { useEffect, useCallback, useState } from "react";
-import { Container, Dimmer, Loader } from "semantic-ui-react";
+import { Container, Dimmer, Header, Loader, Segment } from "semantic-ui-react";
 
 import "./Contacts.css";
 
-export const Contacts = ({ channelId }) => {
+export const Contacts = ({ channelId, channel }) => {
   const [loading, setLoading] = useState(false);
   const [contacts, setContacts] = useState([]);
   const setContactsCallback = useCallback(
     ({ data }) => {
-      data && setContacts(data.contacts);
+      setContacts(data);
       setLoading(false);
     },
     [setContacts]
   );
   const getContacts = useCallback(
-    (channelId, token, signal) => {
+    (channelId, token) => {
       setLoading(true);
       fetch(
-        `https://collaboracast.herokuapp.com/api/v1/contacts/${channelId}`,
+        `https://collaboracast.herokuapp.com/api/v1/contacts-channel/${channelId}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -35,13 +35,8 @@ export const Contacts = ({ channelId }) => {
     [setContactsCallback]
   );
   useEffect(() => {
-    const controller = new AbortController();
-    const signal = controller.signal;
-
     const token = localStorage.getItem("token");
-    getContacts(channelId, token, signal);
-
-    return cleanup => controller.abort();
+    getContacts(channelId, token);
   }, [getContacts, channelId]);
   return (
     <Container className="contacts">
@@ -50,7 +45,19 @@ export const Contacts = ({ channelId }) => {
           <Loader size="big">Loading</Loader>
         </Dimmer>
       )}
-      <div>Contacts {JSON.stringify(contacts, null, 2)}</div>
+      {contacts &&
+        contacts.map(contact => (
+          <Segment inverted color="blue">
+            <Header as="h3">
+              {contact.firstName} {contact.lastName} : {contact.phone}
+            </Header>
+            <div>{contact.address1}</div>
+            <div>{contact.address2}</div>
+            <div>
+              {contact.city}, {contact.state} {contact.zip}
+            </div>
+          </Segment>
+        ))}
     </Container>
   );
 };
