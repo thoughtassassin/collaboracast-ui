@@ -69,7 +69,7 @@ const Dashboard = () => {
       ) : (
         <>
           <Menu fixed="top" inverted color="teal">
-            <Menu.Item>
+            <Menu.Item header as="h3">
               <Icon name="user" /> {username}
               <Button size="mini" compact inverted onClick={logout}>
                 <Icon name="log out" />
