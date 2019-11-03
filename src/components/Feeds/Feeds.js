@@ -7,7 +7,7 @@ const Feeds = ({ feeds, setFeed, feed }) => (
       feeds.map(feedItem => (
         <Menu.Item
           key={feedItem.id}
-          active={feed == feedItem.id}
+          active={feed.toString() === feedItem.id.toString()}
           name={feedItem.name}
           onClick={() => setFeed(feedItem.id.toString())}
         />

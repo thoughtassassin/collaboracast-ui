@@ -1,5 +1,6 @@
 import React from "react";
-import { List, Icon } from "semantic-ui-react";
+import { List } from "semantic-ui-react";
+import { Link } from "@reach/router";
 
 const Channels = ({ channels }) => {
   return (
@@ -9,7 +10,9 @@ const Channels = ({ channels }) => {
         {channels &&
           channels.map(channel => (
             <List.Item key={channel.name}>
-              <List.Content>{channel.name}</List.Content>
+              <List.Content>
+                <Link to={`/${channel.id}/contacts`}>{channel.name}</Link>
+              </List.Content>
             </List.Item>
           ))}
       </List>

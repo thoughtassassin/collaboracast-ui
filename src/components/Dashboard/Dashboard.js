@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Feeds from "../Feeds/Feeds";
 import Channels from "../Channels/Channels";
-import { Router, Link, navigate } from "@reach/router";
+import Contacts from "../Contacts/Contacts";
+import { Router, Link } from "@reach/router";
 import jwtDecode from "jwt-decode";
 import {
   Button,
   Container,
-  Header,
   Dimmer,
   Loader,
   Menu,
@@ -62,33 +62,33 @@ const Dashboard = () => {
   };
   return (
     <Container className="dashboard">
-      {loading ? (
+      {loading && (
         <Dimmer active className="collaboradimmer">
           <Loader size="big">Loading</Loader>
         </Dimmer>
-      ) : (
-        <>
-          <Menu fixed="top" inverted color="teal">
-            <Menu.Item>
-              <Icon name="user" /> {username}
-              <Button size="mini" compact inverted onClick={logout}>
-                <Icon name="log out" />
-              </Button>
-            </Menu.Item>
-            {(role === "admin" || role === "manager") && (
-              <Feeds feeds={feeds} setFeed={setFeed} feed={feed} />
-            )}
-          </Menu>
-          <Router>
-            <Channels
-              path="/"
-              channels={channels.filter(
-                channel => channel.FeedId.toString() === feed
-              )}
-            />
-          </Router>
-        </>
       )}
+      <Menu fixed="top" inverted color="teal">
+        <Menu.Item>
+          <Link to="/">
+            <Icon name="user" /> {username}
+          </Link>
+          <Button size="mini" compact inverted onClick={logout}>
+            <Icon name="log out" />
+          </Button>
+        </Menu.Item>
+        {(role === "admin" || role === "manager") && (
+          <Feeds feeds={feeds} setFeed={setFeed} feed={feed} />
+        )}
+      </Menu>
+      <Router>
+        <Channels
+          path="/"
+          channels={channels.filter(
+            channel => channel.FeedId.toString() === feed
+          )}
+        />
+        <Contacts path="/:channelId/contacts/" />
+      </Router>
     </Container>
   );
 };
