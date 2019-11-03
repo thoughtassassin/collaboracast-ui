@@ -28,7 +28,17 @@ const Dashboard = () => {
   const setFeedsAndChannels = useCallback(
     ({ data: { feeds, channels } }) => {
       setFeeds(feeds);
-      setChannels(channels);
+      setChannels(
+        channels.sort((a, b) => {
+          if (a.name.toUpperCase() > b.name.toUpperCase()) {
+            return 1;
+          }
+          if (a.name.toUpperCase() < b.name.toUpperCase()) {
+            return -1;
+          }
+          return 0;
+        })
+      );
       setLoading(false);
     },
     [setFeeds, setChannels]
