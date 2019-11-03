@@ -56,11 +56,11 @@ export const Contacts = ({ channelId, channel }) => {
       {contacts && (
         <>
           <Header as="h2" inverted>
-            Contacts for {channel}{" "}
+            Contacts for {channel}
             <Button
               onClick={() => navigate(`/add-contact/${channelId}`)}
-              floated="right"
-              primary
+              size="small"
+              color="green"
             >
               Add Contact
             </Button>
