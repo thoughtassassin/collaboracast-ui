@@ -28,7 +28,6 @@ const Dashboard = () => {
     ({ data: { feeds, channels } }) => {
       setFeeds(feeds);
       setChannels(channels);
-      console.log(channels);
       setLoading(false);
     },
     [setFeeds, setChannels]
@@ -64,7 +63,7 @@ const Dashboard = () => {
         </Dimmer>
       ) : (
         <>
-          <Menu fixed="top" inverted color="blue">
+          <Menu fixed="top" inverted color="brown">
             <Menu.Item as="h3" header>
               <Icon name="user" /> {username}
             </Menu.Item>
