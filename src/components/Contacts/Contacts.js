@@ -48,7 +48,7 @@ export const Contacts = ({ channelId, channel }) => {
       {contacts && (
         <>
           <Header as="h2" inverted>
-            {channel}
+            Contacts for {channel}
           </Header>
           {contacts.map(contact => (
             <Segment inverted color="blue">
