@@ -55,7 +55,7 @@ export const Contacts = ({ channelId, channel }) => {
       )}
       {contacts && (
         <>
-          <Header as="h2" inverted>
+          <Header as="h3" inverted>
             Contacts for {channel}
             <Button
               onClick={() => navigate(`/add-contact/${channelId}`)}
