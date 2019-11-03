@@ -1,3 +1,6 @@
+.dashboard {
+  margin-top: 5rem;
+}
 .dashboard select {
   display: block;
 }

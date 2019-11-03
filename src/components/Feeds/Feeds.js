@@ -1,22 +1,19 @@
 import React from "react";
+import { Menu } from "semantic-ui-react";
 
-const Feeds = ({ feeds, setFeed }) => {
+const Feeds = ({ feeds, setFeed, feed }) => {
   return (
-    <div>
-      <h2>Feeds</h2>
-      <label>
-        Feeds
-        <select defaultValue="2" onChange={e => setFeed(e.target.value)}>
-          <option value="">Select Feed</option>
-          {feeds &&
-            feeds.map(feed => (
-              <option key={feed.id} value={feed.id}>
-                {feed.name}
-              </option>
-            ))}
-        </select>
-      </label>
-    </div>
+    <Menu compact color="teal" inverted floated="right">
+      {feeds &&
+        feeds.map(feedItem => (
+          <Menu.Item
+            key={feedItem.id}
+            active={feed == feedItem.id}
+            name={feedItem.name}
+            onClick={() => setFeed(feedItem.id.toString())}
+          />
+        ))}
+    </Menu>
   );
 };
 

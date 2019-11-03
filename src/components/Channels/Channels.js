@@ -1,21 +1,18 @@
 import React from "react";
+import { List, Icon } from "semantic-ui-react";
 
 const Channels = ({ channels }) => {
   return (
     <div>
       <h2>Channels</h2>
-      <label>
-        Channels
-        <select>
-          <option value="">Select Channel</option>
-          {channels &&
-            channels.map(channel => (
-              <option key={channel.id} value={channel.id}>
-                {channel.name}
-              </option>
-            ))}
-        </select>
-      </label>
+      <List divided inverted relaxed size="massive">
+        {channels &&
+          channels.map(channel => (
+            <List.Item key={channel.name}>
+              <List.Content>{channel.name}</List.Content>
+            </List.Item>
+          ))}
+      </List>
     </div>
   );
 };

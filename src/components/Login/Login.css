@@ -10,3 +10,7 @@
 label {
   color: white;
 }
+
+.ui.grid.login {
+  margin-top: 5rem;
+}

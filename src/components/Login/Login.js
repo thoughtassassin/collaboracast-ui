@@ -29,7 +29,7 @@ function Login({ setAuthenticated, setUser, user }) {
       .then(authenticate);
   };
   return (
-    <Grid verticalAlign="top" columns={1} centered>
+    <Grid verticalAlign="top" columns={1} centered className="login">
       <Grid.Row>
         <Grid.Column>
           <Header as="h1" inverted>

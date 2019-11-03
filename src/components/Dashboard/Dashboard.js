@@ -3,6 +3,14 @@ import Feeds from "../Feeds/Feeds";
 import Channels from "../Channels/Channels";
 import { Router, Link, navigate } from "@reach/router";
 import jwtDecode from "jwt-decode";
+import {
+  Container,
+  Header,
+  Dimmer,
+  Loader,
+  Menu,
+  Icon
+} from "semantic-ui-react";
 
 import "./Dashboard.css";
 
@@ -49,15 +57,21 @@ const Dashboard = () => {
     getUser(username, token);
   }, [getUser, username]);
   return (
-    <div className="dashboard">
-      <h1>Welcome, {username}</h1>
+    <Container className="dashboard">
       {loading ? (
-        <div>loading...</div>
+        <Dimmer active>
+          <Loader size="big">Loading</Loader>
+        </Dimmer>
       ) : (
         <>
-          {(role === "admin" || role === "manager") && (
-            <Feeds feeds={feeds} setFeed={setFeed} />
-          )}
+          <Menu fixed="top" inverted color="blue">
+            <Menu.Item as="h3" header>
+              <Icon name="user" /> {username}
+            </Menu.Item>
+            {(role === "admin" || role === "manager") && (
+              <Feeds feeds={feeds} setFeed={setFeed} feed={feed} />
+            )}
+          </Menu>
           <Router>
             <Channels
               path="/"
@@ -68,7 +82,7 @@ const Dashboard = () => {
           </Router>
         </>
       )}
-    </div>
+    </Container>
   );
 };
 
