@@ -45,19 +45,25 @@ export const Contacts = ({ channelId, channel }) => {
           <Loader size="big">Loading</Loader>
         </Dimmer>
       )}
-      {contacts &&
-        contacts.map(contact => (
-          <Segment inverted color="blue">
-            <Header as="h3">
-              {contact.firstName} {contact.lastName} : {contact.phone}
-            </Header>
-            <div>{contact.address1}</div>
-            <div>{contact.address2}</div>
-            <div>
-              {contact.city}, {contact.state} {contact.zip}
-            </div>
-          </Segment>
-        ))}
+      {contacts && (
+        <>
+          <Header as="h2" inverted>
+            {channel}
+          </Header>
+          {contacts.map(contact => (
+            <Segment inverted color="blue">
+              <Header as="h3">
+                {contact.firstName} {contact.lastName} : {contact.phone}
+              </Header>
+              <div>{contact.address1}</div>
+              <div>{contact.address2}</div>
+              <div>
+                {contact.city}, {contact.state} {contact.zip}
+              </div>
+            </Segment>
+          ))}
+        </>
+      )}
     </Container>
   );
 };

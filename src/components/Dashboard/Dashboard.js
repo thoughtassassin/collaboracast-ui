@@ -22,6 +22,7 @@ const Dashboard = () => {
     Role: { role }
   } = jwtDecode(token);
   const [channels, setChannels] = useState([]);
+  const [channel, setChannel] = useState("");
   const [feeds, setFeeds] = useState();
   const [feed, setFeed] = useState("2");
   const [loading, setLoading] = useState(false);
@@ -96,8 +97,14 @@ const Dashboard = () => {
           channels={channels.filter(
             channel => channel.FeedId.toString() === feed
           )}
+          feed={
+            feeds &&
+            feeds[feed - 1].name.charAt(0).toUpperCase() +
+              feeds[feed - 1].name.substring(1)
+          }
+          setChannel={setChannel}
         />
-        <Contacts path="/:channelId/contacts/" />
+        <Contacts path="/:channelId/contacts/" channel={channel} />
       </Router>
     </Container>
   );
