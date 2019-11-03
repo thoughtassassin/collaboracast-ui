@@ -4,6 +4,7 @@
   min-height: 100vh;
   display: flex;
   justify-content: center;
+  padding: 1rem;
 }
 
 .App-logo {
@@ -28,49 +29,4 @@
 
 .App-link {
   color: #09d3ac;
-}
-
-.App input,
-.App button {
-  display: block;
-  margin: 1rem 0;
-  padding: 0.5rem;
-  font-size: 1.5rem;
-  border-radius: 5px;
-  width: calc(100% - 1.5rem);
-}
-
-.App label {
-  text-transform: uppercase;
-  display: block;
-  text-align: left;
-  letter-spacing: 2px;
-  font-weight: 200;
-}
-
-.App form {
-  border: 1px solid #fff;
-  padding: 1rem;
-  border-radius: 5px;
-  position: relative;
-  margin: 1rem;
-}
-
-.App button {
-  margin-top: 2rem;
-  width: 100%;
-  font-size: 1.25rem;
-  background: none;
-  border: 1px solid #fff;
-  color: #fff;
-  padding: 0.5rem;
-  text-transform: uppercase;
-  top: 0;
-  position: relative;
-  font-weight: 200;
-  letter-spacing: 2px;
-}
-
-.App button:active {
-  top: 1px;
 }

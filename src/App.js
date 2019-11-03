@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import Login from "./components/Login/Login";
 import Dashboard from "./components/Dashboard/Dashboard";
+import { Container } from "semantic-ui-react";
+
+import "semantic-ui-css/semantic.min.css";
 import "./App.css";
 
 function App() {
