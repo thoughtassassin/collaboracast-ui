@@ -63,7 +63,7 @@ const Dashboard = () => {
         </Dimmer>
       ) : (
         <>
-          <Menu fixed="top" inverted color="brown">
+          <Menu fixed="top" inverted color="teal">
             <Menu.Item as="h3" header>
               <Icon name="user" /> {username}
             </Menu.Item>

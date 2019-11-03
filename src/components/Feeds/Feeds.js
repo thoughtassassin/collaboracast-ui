@@ -2,7 +2,7 @@ import React from "react";
 import { Menu } from "semantic-ui-react";
 
 const Feeds = ({ feeds, setFeed, feed }) => (
-  <Menu compact inverted color="brown" floated="right">
+  <Menu compact inverted color="green" floated="right">
     {feeds &&
       feeds.map(feedItem => (
         <Menu.Item
