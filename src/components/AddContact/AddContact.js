@@ -9,7 +9,7 @@ import {
   Loader
 } from "semantic-ui-react";
 
-const AddContact = ({ channelId, channel, token }) => {
+const AddContact = ({ channelId, channel, token, loading, setLoading }) => {
   const [contact, setContact] = useState({
     firstName: "",
     lastName: "",
@@ -21,7 +21,6 @@ const AddContact = ({ channelId, channel, token }) => {
     state: "",
     zip: ""
   });
-  const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const addContactSuccess = json => {

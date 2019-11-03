@@ -64,11 +64,7 @@ const Dashboard = () => {
   };
   return (
     <Container className="dashboard" text>
-      {loading && (
-        <Dimmer active className="collaboradimmer">
-          <Loader size="big">Loading</Loader>
-        </Dimmer>
-      )}
+      {loading && <Loader size="big">Loading</Loader>}
       <Menu fixed="top" inverted color="teal">
         <Menu.Item>
           <Link to="/">
@@ -95,11 +91,18 @@ const Dashboard = () => {
           }
           setChannel={setChannel}
         />
-        <Contacts path="/:channelId/contacts/" channel={channel} />
+        <Contacts
+          path="/:channelId/contacts/"
+          channel={channel}
+          setLoading={setLoading}
+          loading={loading}
+        />
         <AddContact
           path="/add-contact/:channelId"
           channel={channel}
           token={token}
+          setLoading={setLoading}
+          loading={loading}
         />
       </Router>
     </Container>

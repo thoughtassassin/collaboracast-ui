@@ -11,8 +11,7 @@ import { navigate } from "@reach/router";
 
 import "./Contacts.css";
 
-export const Contacts = ({ channelId, channel }) => {
-  const [loading, setLoading] = useState(false);
+export const Contacts = ({ channelId, channel, loading, setLoading }) => {
   const [contacts, setContacts] = useState([]);
   const setContactsCallback = useCallback(
     ({ data }) => {
