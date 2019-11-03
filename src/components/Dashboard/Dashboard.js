@@ -58,7 +58,7 @@ const Dashboard = () => {
   return (
     <Container className="dashboard">
       {loading ? (
-        <Dimmer active>
+        <Dimmer active className="collaboradimmer">
           <Loader size="big">Loading</Loader>
         </Dimmer>
       ) : (
