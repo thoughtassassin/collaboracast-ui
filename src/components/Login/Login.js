@@ -60,7 +60,9 @@ function Login({ setAuthenticated, setUser, user }) {
               </label>
             </Form.Field>
             <Form.Field>
-              <Button type="submit">Login</Button>
+              <Button color="teal" type="submit">
+                Login
+              </Button>
             </Form.Field>
           </Form>
         </Grid.Column>
