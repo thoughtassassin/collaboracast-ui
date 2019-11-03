@@ -1,5 +1,13 @@
 import React, { useEffect, useCallback, useState } from "react";
-import { Container, Dimmer, Header, Loader, Segment } from "semantic-ui-react";
+import {
+  Container,
+  Dimmer,
+  Header,
+  Loader,
+  Segment,
+  Button
+} from "semantic-ui-react";
+import { navigate } from "@reach/router";
 
 import "./Contacts.css";
 
@@ -48,7 +56,14 @@ export const Contacts = ({ channelId, channel }) => {
       {contacts && (
         <>
           <Header as="h2" inverted>
-            Contacts for {channel}
+            Contacts for {channel}{" "}
+            <Button
+              onClick={() => navigate(`/add-contact/${channelId}`)}
+              floated="right"
+              primary
+            >
+              Add Contact
+            </Button>
           </Header>
           {contacts.map((contact, index) => (
             <Segment key={index} inverted color="blue">

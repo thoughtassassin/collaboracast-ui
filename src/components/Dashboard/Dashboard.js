@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import Feeds from "../Feeds/Feeds";
 import Channels from "../Channels/Channels";
 import Contacts from "../Contacts/Contacts";
+import AddContact from "../AddContact/AddContact";
 import { Router, Link } from "@reach/router";
 import jwtDecode from "jwt-decode";
 import {
@@ -95,6 +96,11 @@ const Dashboard = () => {
           setChannel={setChannel}
         />
         <Contacts path="/:channelId/contacts/" channel={channel} />
+        <AddContact
+          path="/add-contact/:channelId"
+          channel={channel}
+          token={token}
+        />
       </Router>
     </Container>
   );
