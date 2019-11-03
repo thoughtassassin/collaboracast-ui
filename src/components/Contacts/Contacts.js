@@ -50,8 +50,8 @@ export const Contacts = ({ channelId, channel }) => {
           <Header as="h2" inverted>
             Contacts for {channel}
           </Header>
-          {contacts.map(contact => (
-            <Segment inverted color="blue">
+          {contacts.map((contact, index) => (
+            <Segment key={index} inverted color="blue">
               <Header as="h3">
                 {contact.firstName} {contact.lastName} : {contact.phone}
               </Header>
