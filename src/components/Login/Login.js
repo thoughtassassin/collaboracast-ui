@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Grid, Form, Button, Message, Header } from "semantic-ui-react";
+import {
+  Grid,
+  Form,
+  Button,
+  Message,
+  Header,
+  Container
+} from "semantic-ui-react";
 
 import "./Login.css";
 
@@ -32,39 +39,45 @@ function Login({ setAuthenticated, setUser, user }) {
     <Grid verticalAlign="top" columns={1} centered className="login">
       <Grid.Row>
         <Grid.Column>
-          <Header as="h1" inverted>
-            Don-Nan
-          </Header>
-          {error && <Message error content={error} />}
-          <Form onSubmit={handleSubmit} inverted>
-            <Form.Field>
-              <label>
-                Username
-                <input
-                  name="username"
-                  type="text"
-                  value={user.username || ""}
-                  onChange={e => setUser({ ...user, username: e.target.value })}
-                />
-              </label>
-            </Form.Field>
-            <Form.Field>
-              <label>
-                Password
-                <input
-                  name="username"
-                  type="password"
-                  value={user.password || ""}
-                  onChange={e => setUser({ ...user, password: e.target.value })}
-                />
-              </label>
-            </Form.Field>
-            <Form.Field>
-              <Button color="teal" type="submit">
-                Login
-              </Button>
-            </Form.Field>
-          </Form>
+          <Container text>
+            <Header as="h1" inverted>
+              Don-Nan
+            </Header>
+            {error && <Message error content={error} />}
+            <Form onSubmit={handleSubmit} inverted size="small">
+              <Form.Field>
+                <label>
+                  Username
+                  <input
+                    name="username"
+                    type="text"
+                    value={user.username || ""}
+                    onChange={e =>
+                      setUser({ ...user, username: e.target.value })
+                    }
+                  />
+                </label>
+              </Form.Field>
+              <Form.Field>
+                <label>
+                  Password
+                  <input
+                    name="username"
+                    type="password"
+                    value={user.password || ""}
+                    onChange={e =>
+                      setUser({ ...user, password: e.target.value })
+                    }
+                  />
+                </label>
+              </Form.Field>
+              <Form.Field>
+                <Button color="teal" type="submit">
+                  Login
+                </Button>
+              </Form.Field>
+            </Form>
+          </Container>
         </Grid.Column>
       </Grid.Row>
     </Grid>
