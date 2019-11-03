@@ -4,6 +4,7 @@ import Channels from "../Channels/Channels";
 import { Router, Link, navigate } from "@reach/router";
 import jwtDecode from "jwt-decode";
 import {
+  Button,
   Container,
   Header,
   Dimmer,
@@ -55,6 +56,10 @@ const Dashboard = () => {
     const token = localStorage.getItem("token");
     getUser(username, token);
   }, [getUser, username]);
+  const logout = () => {
+    localStorage.removeItem("token");
+    window.location.assign("/");
+  };
   return (
     <Container className="dashboard">
       {loading ? (
@@ -64,8 +69,11 @@ const Dashboard = () => {
       ) : (
         <>
           <Menu fixed="top" inverted color="teal">
-            <Menu.Item as="h3" header>
+            <Menu.Item>
               <Icon name="user" /> {username}
+              <Button size="mini" compact inverted onClick={logout}>
+                Logout
+              </Button>
             </Menu.Item>
             {(role === "admin" || role === "manager") && (
               <Feeds feeds={feeds} setFeed={setFeed} feed={feed} />

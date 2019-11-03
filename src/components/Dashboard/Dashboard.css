@@ -9,3 +9,8 @@
 .collaboradimmer {
   background: #0f1831 !important;
 }
+
+.ui.inverted.teal.menu button {
+  box-shadow: none !important;
+  margin-left: 2rem !important;
+}
