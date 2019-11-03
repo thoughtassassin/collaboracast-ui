@@ -39,7 +39,7 @@ function Login({ setAuthenticated, setUser, user }) {
             <input
               name="username"
               type="text"
-              value={user.username}
+              value={user.username || ""}
               onChange={e => setUser({ ...user, username: e.target.value })}
             />
           </label>
@@ -50,7 +50,7 @@ function Login({ setAuthenticated, setUser, user }) {
             <input
               name="username"
               type="password"
-              value={user.password}
+              value={user.password || ""}
               onChange={e => setUser({ ...user, password: e.target.value })}
             />
           </label>

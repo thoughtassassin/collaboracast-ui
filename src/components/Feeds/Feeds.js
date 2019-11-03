@@ -6,7 +6,7 @@ const Feeds = ({ feeds, setFeed }) => {
       <h2>Feeds</h2>
       <label>
         Feeds
-        <select onChange={e => setFeed(e.target.value)}>
+        <select defaultValue="2" onChange={e => setFeed(e.target.value)}>
           <option value="">Select Feed</option>
           {feeds &&
             feeds.map(feed => (
