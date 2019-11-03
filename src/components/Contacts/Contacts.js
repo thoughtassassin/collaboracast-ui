@@ -55,15 +55,15 @@ export const Contacts = ({ channelId, channel }) => {
       )}
       {contacts && (
         <>
-          <Header as="h3" inverted>
+          <Button
+            onClick={() => navigate(`/add-contact/${channelId}`)}
+            size="small"
+            color="green"
+          >
+            Add Contact
+          </Button>
+          <Header as="h2" inverted>
             Contacts for {channel}
-            <Button
-              onClick={() => navigate(`/add-contact/${channelId}`)}
-              size="small"
-              color="green"
-            >
-              Add Contact
-            </Button>
           </Header>
           {contacts.map((contact, index) => (
             <Segment key={index} inverted color="blue">
