@@ -77,7 +77,7 @@ const AddContact = ({ channelId, channel, token }) => {
       });
   };
   return (
-    <Container>
+    <Container text>
       {loading && (
         <Dimmer active className="collaboradimmer">
           <Loader size="big">Loading</Loader>

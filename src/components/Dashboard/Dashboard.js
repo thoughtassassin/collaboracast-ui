@@ -63,7 +63,7 @@ const Dashboard = () => {
     window.location.assign("/");
   };
   return (
-    <Container className="dashboard">
+    <Container className="dashboard" text>
       {loading && (
         <Dimmer active className="collaboradimmer">
           <Loader size="big">Loading</Loader>
