@@ -72,7 +72,7 @@ const Dashboard = () => {
             <Menu.Item>
               <Icon name="user" /> {username}
               <Button size="mini" compact inverted onClick={logout}>
-                Logout
+                <Icon name="log out" />
               </Button>
             </Menu.Item>
             {(role === "admin" || role === "manager") && (
