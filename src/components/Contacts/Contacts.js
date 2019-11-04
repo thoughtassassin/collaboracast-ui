@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback, useState } from "react";
-import { Header, Segment, Button } from "semantic-ui-react";
+import { Header, Segment, Button, Icon } from "semantic-ui-react";
 import { navigate } from "@reach/router";
 
 import "./Contacts.css";
@@ -54,16 +54,20 @@ export const Contacts = ({ channelId, channel, setLoading }) => {
             Contacts for {channel}
           </Header>
           {contacts.map((contact, index) => (
-            <Segment key={index} inverted color="blue">
-              <Header as="h3">
-                {contact.firstName} {contact.lastName} : {contact.phone}
+            <div key={index} className="contact">
+              <Header as="h3" attached="top" inverted>
+                <Icon name="user circle" size="mini" />
+                {contact.firstName} {contact.lastName} | {contact.phone}
               </Header>
-              <div>{contact.address1}</div>
-              <div>{contact.address2}</div>
-              <div>
-                {contact.city}, {contact.state} {contact.zip}
-              </div>
-            </Segment>
+              <Segment key={index} inverted color="blue" attached>
+                <Header sub>{contact.business}</Header>
+                <div>{contact.address1}</div>
+                <div>{contact.address2}</div>
+                <div>
+                  {contact.city}, {contact.state} {contact.zip}
+                </div>
+              </Segment>
+            </div>
           ))}
         </>
       )}
