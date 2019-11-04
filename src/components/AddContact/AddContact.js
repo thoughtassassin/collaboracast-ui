@@ -98,7 +98,7 @@ const AddContact = ({ channelId, channel, token, setLoading }) => {
                 label="First Name"
               />
               {touched.firstName && errors.firstName && (
-                <Label pointing color="red">
+                <Label pointing prompt color="red">
                   {errors.firstName}
                 </Label>
               )}
@@ -112,7 +112,7 @@ const AddContact = ({ channelId, channel, token, setLoading }) => {
                 label="Last Name"
               />
               {touched.lastName && errors.lastName && (
-                <Label pointing color="red">
+                <Label pointing prompt color="red">
                   {errors.lastName}
                 </Label>
               )}
@@ -126,7 +126,7 @@ const AddContact = ({ channelId, channel, token, setLoading }) => {
                 label="Business"
               />
               {touched.business && errors.business && (
-                <Label pointing color="red">
+                <Label pointing prompt color="red">
                   {errors.business}
                 </Label>
               )}
@@ -140,7 +140,7 @@ const AddContact = ({ channelId, channel, token, setLoading }) => {
                 label="Phone"
               />
               {touched.phone && errors.phone && (
-                <Label pointing color="red">
+                <Label pointing prompt color="red">
                   {errors.phone}
                 </Label>
               )}
@@ -154,7 +154,7 @@ const AddContact = ({ channelId, channel, token, setLoading }) => {
                 label="Address 1"
               />
               {touched.address1 && errors.address1 && (
-                <Label pointing color="red">
+                <Label pointing prompt color="red">
                   {errors.address1}
                 </Label>
               )}
@@ -177,7 +177,7 @@ const AddContact = ({ channelId, channel, token, setLoading }) => {
                 label="City"
               />
               {touched.city && errors.city && (
-                <Label pointing color="red">
+                <Label pointing prompt color="red">
                   {errors.city}
                 </Label>
               )}
@@ -191,7 +191,7 @@ const AddContact = ({ channelId, channel, token, setLoading }) => {
                 label="State"
               />
               {touched.state && errors.state && (
-                <Label pointing color="red">
+                <Label pointing prompt color="red">
                   {errors.state}
                 </Label>
               )}
@@ -205,7 +205,7 @@ const AddContact = ({ channelId, channel, token, setLoading }) => {
                 label="Zip"
               />
               {touched.zip && errors.zip && (
-                <Label pointing color="red">
+                <Label pointing prompt color="red">
                   {errors.zip}
                 </Label>
               )}

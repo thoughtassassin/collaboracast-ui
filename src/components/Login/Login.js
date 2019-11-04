@@ -7,7 +7,9 @@ import {
   Header,
   Container,
   Input,
-  Label
+  Label,
+  Loader,
+  Dimmer
 } from "semantic-ui-react";
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -16,6 +18,7 @@ import "./Login.css";
 
 function Login({ setAuthenticated }) {
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const authenticate = json => {
     if (json.status === "success") {
       localStorage.setItem("token", json.data);
@@ -23,8 +26,10 @@ function Login({ setAuthenticated }) {
     } else if (json.status === "error") {
       setError(json.message);
     }
+    setLoading(false);
   };
   const formSubmit = values => {
+    setLoading(true);
     fetch("https://collaboracast.herokuapp.com/api/v1/login", {
       method: "post",
       headers: {
@@ -36,7 +41,11 @@ function Login({ setAuthenticated }) {
       })
     })
       .then(response => response.json())
-      .then(authenticate);
+      .then(authenticate)
+      .catch(e => {
+        setLoading(false);
+        console.error(e);
+      });
   };
   return (
     <Grid verticalAlign="top" columns={1} centered className="login">
@@ -46,6 +55,11 @@ function Login({ setAuthenticated }) {
             <Header as="h1" inverted>
               Don-Nan
             </Header>
+            {loading && (
+              <Dimmer active={loading} page>
+                <Loader size="big">Logging In</Loader>
+              </Dimmer>
+            )}
             {error && <Message error content={error} />}
             <Formik
               initialValues={{
@@ -75,7 +89,7 @@ function Login({ setAuthenticated }) {
                       onBlur={handleBlur}
                     />
                     {touched.username && errors.username && (
-                      <Label pointing color="red">
+                      <Label pointing prompt color="red">
                         {errors.username}
                       </Label>
                     )}
@@ -89,7 +103,7 @@ function Login({ setAuthenticated }) {
                       onBlur={handleBlur}
                     />
                     {touched.password && errors.password && (
-                      <Label pointing color="red">
+                      <Label pointing prompt color="red">
                         {errors.password}
                       </Label>
                     )}

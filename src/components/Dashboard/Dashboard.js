@@ -65,8 +65,8 @@ const Dashboard = () => {
   return (
     <Container className="dashboard" text>
       {loading && (
-        <Dimmer active>
-          <Loader size="big">Loading</Loader>
+        <Dimmer active={loading} page>
+          <Loader size="big">Logging In</Loader>
         </Dimmer>
       )}
       <Menu fixed="top" inverted color="teal">
