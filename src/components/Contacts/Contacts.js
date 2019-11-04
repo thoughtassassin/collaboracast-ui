@@ -55,7 +55,7 @@ export const Contacts = ({ channelId, channel, setLoading }) => {
           </Header>
           {contacts.map((contact, index) => (
             <div key={index} className="contact">
-              <Header as="h3" attached="top" inverted>
+              <Header as="h4" attached="top" inverted>
                 <Icon name="user circle" size="mini" />
                 {contact.firstName} {contact.lastName} | {contact.phone}
               </Header>
