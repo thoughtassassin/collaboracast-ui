@@ -82,7 +82,7 @@ const Dashboard = () => {
           <Feeds feeds={feeds} setFeed={setFeed} feed={feed} />
         )}
       </Menu>
-      <Router>
+      <Router primary={false}>
         <Channels
           path="/"
           channels={channels.filter(
