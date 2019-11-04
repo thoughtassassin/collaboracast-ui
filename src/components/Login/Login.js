@@ -5,12 +5,16 @@ import {
   Button,
   Message,
   Header,
-  Container
+  Container,
+  Input,
+  Label
 } from "semantic-ui-react";
+import { Formik } from "formik";
+import * as yup from "yup";
 
 import "./Login.css";
 
-function Login({ setAuthenticated, setUser, user }) {
+function Login({ setAuthenticated }) {
   const [error, setError] = useState("");
   const authenticate = json => {
     if (json.status === "success") {
@@ -20,16 +24,15 @@ function Login({ setAuthenticated, setUser, user }) {
       setError(json.message);
     }
   };
-  const handleSubmit = e => {
-    e.preventDefault();
+  const formSubmit = values => {
     fetch("https://collaboracast.herokuapp.com/api/v1/login", {
       method: "post",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        username: user.username.trim(),
-        password: user.password.trim()
+        username: values.username.trim(),
+        password: values.password.trim()
       })
     })
       .then(response => response.json())
@@ -44,39 +47,61 @@ function Login({ setAuthenticated, setUser, user }) {
               Don-Nan
             </Header>
             {error && <Message error content={error} />}
-            <Form onSubmit={handleSubmit} inverted size="small">
-              <Form.Field>
-                <label>
-                  Username
-                  <input
-                    name="username"
-                    type="text"
-                    value={user.username || ""}
-                    onChange={e =>
-                      setUser({ ...user, username: e.target.value })
-                    }
-                  />
-                </label>
-              </Form.Field>
-              <Form.Field>
-                <label>
-                  Password
-                  <input
-                    name="username"
-                    type="password"
-                    value={user.password || ""}
-                    onChange={e =>
-                      setUser({ ...user, password: e.target.value })
-                    }
-                  />
-                </label>
-              </Form.Field>
-              <Form.Field>
-                <Button color="teal" type="submit">
-                  Login
-                </Button>
-              </Form.Field>
-            </Form>
+            <Formik
+              initialValues={{
+                username: "",
+                password: ""
+              }}
+              onSubmit={formSubmit}
+              validationSchema={yup.object().shape({
+                username: yup.string().required("This field is required"),
+                password: yup.string().required("This field is required")
+              })}
+            >
+              {({
+                errors,
+                touched,
+                handleChange,
+                handleBlur,
+                handleSubmit
+              }) => (
+                <Form inverted size="small">
+                  <Form.Field>
+                    <Input
+                      name="username"
+                      type="text"
+                      label="Username"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    />
+                    {touched.username && errors.username && (
+                      <Label pointing color="red">
+                        {errors.username}
+                      </Label>
+                    )}
+                  </Form.Field>
+                  <Form.Field>
+                    <Input
+                      name="password"
+                      type="password"
+                      label="Password"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    />
+                    {touched.password && errors.password && (
+                      <Label pointing color="red">
+                        {errors.password}
+                      </Label>
+                    )}
+                  </Form.Field>
+                  <Form.Field>
+                    <Button color="teal" type="submit" onClick={handleSubmit}>
+                      Login
+                    </Button>
+                  </Form.Field>
+                </Form>
+              )}
+            </Formik>
           </Container>
         </Grid.Column>
       </Grid.Row>

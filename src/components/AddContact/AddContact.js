@@ -1,26 +1,9 @@
 import React, { useState } from "react";
-import {
-  Container,
-  Form,
-  Button,
-  Message,
-  Header,
-  Dimmer,
-  Loader
-} from "semantic-ui-react";
+import { Form, Button, Message, Header, Input, Label } from "semantic-ui-react";
+import { Formik } from "formik";
+import * as yup from "yup";
 
-const AddContact = ({ channelId, channel, token, loading, setLoading }) => {
-  const [contact, setContact] = useState({
-    firstName: "",
-    lastName: "",
-    business: "",
-    phone: "",
-    address1: "",
-    address2: "",
-    city: "",
-    state: "",
-    zip: ""
-  });
+const AddContact = ({ channelId, channel, token, setLoading }) => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const addContactSuccess = json => {
@@ -33,20 +16,18 @@ const AddContact = ({ channelId, channel, token, loading, setLoading }) => {
     }
     setLoading(false);
   };
-  const handleSubmit = e => {
-    e.preventDefault();
+  const formSubmit = ({
+    firstName,
+    lastName,
+    business,
+    phone,
+    address1,
+    address2,
+    city,
+    state,
+    zip
+  }) => {
     setLoading(true);
-    const {
-      firstName,
-      lastName,
-      business,
-      phone,
-      address1,
-      address2,
-      city,
-      state,
-      zip
-    } = contact;
     fetch("https://collaboracast.herokuapp.com/api/v1/contacts", {
       method: "post",
       headers: {
@@ -76,134 +57,168 @@ const AddContact = ({ channelId, channel, token, loading, setLoading }) => {
       });
   };
   return (
-    <Container text>
-      {loading && (
-        <Dimmer active className="collaboradimmer">
-          <Loader size="big">Loading</Loader>
-        </Dimmer>
-      )}
+    <div>
       <Header as="h2" inverted>
         Add Contact To {channel}
       </Header>
       {success && <Message positive>{success}</Message>}
       {error && <Message error>{error}</Message>}
-      <Form onSubmit={handleSubmit} inverted>
-        <Form.Field>
-          <label>
-            First Name
-            <input
-              name="firstName"
-              type="text"
-              value={contact.firstName}
-              onChange={e =>
-                setContact({ ...contact, firstName: e.target.value })
-              }
-            />
-          </label>
-        </Form.Field>
-        <Form.Field>
-          <label>
-            Last Name
-            <input
-              name="lastName"
-              type="text"
-              value={contact.lastName}
-              onChange={e =>
-                setContact({ ...contact, lastName: e.target.value })
-              }
-            />
-          </label>
-        </Form.Field>
-        <Form.Field>
-          <label>
-            Business
-            <input
-              name="business"
-              type="text"
-              value={contact.business}
-              onChange={e =>
-                setContact({ ...contact, business: e.target.value })
-              }
-            />
-          </label>
-        </Form.Field>
-        <Form.Field>
-          <label>
-            Phone
-            <input
-              name="phone"
-              type="text"
-              value={contact.phone}
-              onChange={e => setContact({ ...contact, phone: e.target.value })}
-            />
-          </label>
-        </Form.Field>
-        <Form.Field>
-          <label>
-            Address 1
-            <input
-              name="address1"
-              type="text"
-              value={contact.address1}
-              onChange={e =>
-                setContact({ ...contact, address1: e.target.value })
-              }
-            />
-          </label>
-        </Form.Field>
-        <Form.Field>
-          <label>
-            Address 2
-            <input
-              name="address2"
-              type="text"
-              value={contact.address2}
-              onChange={e =>
-                setContact({ ...contact, address2: e.target.value })
-              }
-            />
-          </label>
-        </Form.Field>
-        <Form.Field>
-          <label>
-            City
-            <input
-              name="city"
-              type="text"
-              value={contact.city}
-              onChange={e => setContact({ ...contact, city: e.target.value })}
-            />
-          </label>
-        </Form.Field>
-        <Form.Field>
-          <label>
-            State
-            <input
-              name="firstName"
-              type="text"
-              value={contact.state}
-              onChange={e => setContact({ ...contact, state: e.target.value })}
-            />
-          </label>
-        </Form.Field>
-        <Form.Field>
-          <label>
-            Zip
-            <input
-              name="zip"
-              type="text"
-              value={contact.zip}
-              onChange={e => setContact({ ...contact, zip: e.target.value })}
-            />
-          </label>
-        </Form.Field>
-        <Form.Field>
-          <Button color="teal" type="submit">
-            Save Contact
-          </Button>
-        </Form.Field>
-      </Form>
-    </Container>
+      <Formik
+        initialValues={{
+          firstName: "",
+          lastName: "",
+          business: "",
+          phone: "",
+          address1: "",
+          address2: "",
+          city: "",
+          state: "",
+          zip: ""
+        }}
+        onSubmit={formSubmit}
+        validationSchema={yup.object().shape({
+          firstName: yup.string().required("First Name is required"),
+          lastName: yup.string().required("Last Name is required"),
+          business: yup.string().required("Business is required"),
+          phone: yup.string().required("Phone is required"),
+          address1: yup.string().required("Address1 field is required"),
+          city: yup.string().required("City is required"),
+          state: yup.string().required("State is required"),
+          zip: yup.string().required("Zip is required")
+        })}
+      >
+        {({ errors, touched, handleChange, handleBlur, handleSubmit }) => (
+          <Form inverted>
+            <Form.Field>
+              <Input
+                name="firstName"
+                type="text"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                label="First Name"
+              />
+              {touched.firstName && errors.firstName && (
+                <Label pointing color="red">
+                  {errors.firstName}
+                </Label>
+              )}
+            </Form.Field>
+            <Form.Field>
+              <Input
+                name="lastName"
+                type="text"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                label="Last Name"
+              />
+              {touched.lastName && errors.lastName && (
+                <Label pointing color="red">
+                  {errors.lastName}
+                </Label>
+              )}
+            </Form.Field>
+            <Form.Field>
+              <Input
+                name="business"
+                type="text"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                label="Business"
+              />
+              {touched.business && errors.business && (
+                <Label pointing color="red">
+                  {errors.business}
+                </Label>
+              )}
+            </Form.Field>
+            <Form.Field>
+              <Input
+                name="phone"
+                type="text"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                label="Phone"
+              />
+              {touched.phone && errors.phone && (
+                <Label pointing color="red">
+                  {errors.phone}
+                </Label>
+              )}
+            </Form.Field>
+            <Form.Field>
+              <Input
+                name="address1"
+                type="text"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                label="Address 1"
+              />
+              {touched.address1 && errors.address1 && (
+                <Label pointing color="red">
+                  {errors.address1}
+                </Label>
+              )}
+            </Form.Field>
+            <Form.Field>
+              <Input
+                name="address2"
+                type="text"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                label="Address 2"
+              />
+            </Form.Field>
+            <Form.Field>
+              <Input
+                name="city"
+                type="text"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                label="City"
+              />
+              {touched.city && errors.city && (
+                <Label pointing color="red">
+                  {errors.city}
+                </Label>
+              )}
+            </Form.Field>
+            <Form.Field>
+              <Input
+                name="state"
+                type="text"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                label="State"
+              />
+              {touched.state && errors.state && (
+                <Label pointing color="red">
+                  {errors.state}
+                </Label>
+              )}
+            </Form.Field>
+            <Form.Field>
+              <Input
+                name="zip"
+                type="text"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                label="Zip"
+              />
+              {touched.zip && errors.zip && (
+                <Label pointing color="red">
+                  {errors.zip}
+                </Label>
+              )}
+            </Form.Field>
+            <Form.Field>
+              <Button color="teal" type="submit" onClick={handleSubmit}>
+                Save Contact
+              </Button>
+            </Form.Field>
+          </Form>
+        )}
+      </Formik>
+    </div>
   );
 };
 

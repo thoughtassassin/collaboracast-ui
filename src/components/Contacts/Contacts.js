@@ -1,24 +1,17 @@
 import React, { useEffect, useCallback, useState } from "react";
-import {
-  Container,
-  Dimmer,
-  Header,
-  Loader,
-  Segment,
-  Button
-} from "semantic-ui-react";
+import { Header, Segment, Button } from "semantic-ui-react";
 import { navigate } from "@reach/router";
 
 import "./Contacts.css";
 
-export const Contacts = ({ channelId, channel, loading, setLoading }) => {
+export const Contacts = ({ channelId, channel, setLoading }) => {
   const [contacts, setContacts] = useState([]);
   const setContactsCallback = useCallback(
     ({ data }) => {
       setContacts(data);
       setLoading(false);
     },
-    [setContacts]
+    [setContacts, setLoading]
   );
   const getContacts = useCallback(
     (channelId, token) => {
@@ -39,19 +32,14 @@ export const Contacts = ({ channelId, channel, loading, setLoading }) => {
           console.error(e);
         });
     },
-    [setContactsCallback]
+    [setContactsCallback, setLoading]
   );
   useEffect(() => {
     const token = localStorage.getItem("token");
     getContacts(channelId, token);
   }, [getContacts, channelId]);
   return (
-    <Container className="contacts">
-      {loading && (
-        <Dimmer active className="collaboradimmer">
-          <Loader size="big">Loading</Loader>
-        </Dimmer>
-      )}
+    <div className="contacts">
       {contacts && (
         <>
           <Button
@@ -79,7 +67,7 @@ export const Contacts = ({ channelId, channel, loading, setLoading }) => {
           ))}
         </>
       )}
-    </Container>
+    </div>
   );
 };
 

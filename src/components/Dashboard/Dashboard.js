@@ -8,10 +8,10 @@ import jwtDecode from "jwt-decode";
 import {
   Button,
   Container,
-  Dimmer,
   Loader,
   Menu,
-  Icon
+  Icon,
+  Dimmer
 } from "semantic-ui-react";
 
 import "./Dashboard.css";
@@ -64,7 +64,11 @@ const Dashboard = () => {
   };
   return (
     <Container className="dashboard" text>
-      {loading && <Loader size="big">Loading</Loader>}
+      {loading && (
+        <Dimmer active>
+          <Loader size="big">Loading</Loader>
+        </Dimmer>
+      )}
       <Menu fixed="top" inverted color="teal">
         <Menu.Item>
           <Link to="/">
