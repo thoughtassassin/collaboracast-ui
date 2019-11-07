@@ -1,5 +1,5 @@
 .App {
-  background-color: #0f1831;
+  background: url('collaboracast-white.svg') #0f1831 50% 50% no-repeat;
   color: white;
   min-height: 100vh;
   justify-content: center;
