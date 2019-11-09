@@ -22,11 +22,12 @@ function Login({ setAuthenticated }) {
   const authenticate = json => {
     if (json.status === "success") {
       localStorage.setItem("token", json.data);
+      setLoading(false);
       setAuthenticated(true);
     } else if (json.status === "error") {
       setError(json.message);
+      setLoading(false);
     }
-    setLoading(false);
   };
   const formSubmit = values => {
     setLoading(true);

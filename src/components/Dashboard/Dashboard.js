@@ -3,6 +3,7 @@ import Feeds from "../Feeds/Feeds";
 import Channels from "../Channels/Channels";
 import Contacts from "../Contacts/Contacts";
 import AddContact from "../AddContact/AddContact";
+import getAdminChannelsAndFeeds from "../../utils/getAllChannelsAndFeeds";
 import { Router, Link } from "@reach/router";
 import jwtDecode from "jwt-decode";
 import {
@@ -33,7 +34,19 @@ const Dashboard = () => {
       setChannels(channels);
       setLoading(false);
     },
-    [setFeeds, setChannels]
+    [setFeeds, setChannels, setLoading]
+  );
+  const setAdminFeedsAndChannels = useCallback(
+    ([channels, feeds]) => {
+      setFeeds(feeds.data);
+      setChannels(channels.data);
+      setLoading(false);
+    },
+    [setFeeds, setChannels, setLoading]
+  );
+  const initializeDashboard = useCallback(
+    !(role === "admin" || role === "manager") ? setFeedsAndChannels : null,
+    [setFeedsAndChannels]
   );
   const getUser = useCallback(
     (username, token) => {
@@ -45,19 +58,24 @@ const Dashboard = () => {
         }
       })
         .then(response => response.json())
-        .then(setFeedsAndChannels)
+        .then(initializeDashboard)
         .catch(e => {
           setLoading(false);
           console.error(e);
         });
     },
-    [setFeedsAndChannels]
+    [initializeDashboard]
   );
   useEffect(() => {
     console.log("running");
     const token = localStorage.getItem("token");
     getUser(username, token);
   }, [getUser, username]);
+  useEffect(() => {
+    if (role === "admin" || role === "manager") {
+      getAdminChannelsAndFeeds(token, setAdminFeedsAndChannels);
+    }
+  }, [role, token, setAdminFeedsAndChannels]);
   const logout = () => {
     localStorage.removeItem("token");
     window.location.assign("/");
