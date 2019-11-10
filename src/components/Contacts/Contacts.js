@@ -58,7 +58,7 @@ export const Contacts = ({ channelId, channel, setLoading }) => {
               <Header as="h4" attached="top" inverted>
                 <Icon name="user circle" size="mini" />
                 {contact.firstName} {contact.lastName} |{" "}
-                <a href={`tel:{contact.phone}`}>{contact.phone}</a>
+                <a href={`tel:${contact.phone}`}>{contact.phone}</a>
               </Header>
               <Segment key={index} inverted color="blue" attached>
                 <Header sub>{contact.business}</Header>
@@ -68,7 +68,7 @@ export const Contacts = ({ channelId, channel, setLoading }) => {
                   {contact.city}, {contact.state} {contact.zip}
                 </div>
                 <div>
-                  <a href={`mailto:{contact.email}`}>{contact.email}</a>
+                  <a href={`mailto:${contact.email}`}>{contact.email}</a>
                 </div>
               </Segment>
             </div>

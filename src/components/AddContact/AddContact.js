@@ -25,7 +25,8 @@ const AddContact = ({ channelId, channel, token, setLoading }) => {
     address2,
     city,
     state,
-    zip
+    zip,
+    email
   }) => {
     setLoading(true);
     fetch("https://collaboracast.herokuapp.com/api/v1/contacts", {
@@ -44,6 +45,7 @@ const AddContact = ({ channelId, channel, token, setLoading }) => {
         city,
         state,
         zip,
+        email,
         ChannelId: channelId
       })
     })
@@ -73,7 +75,8 @@ const AddContact = ({ channelId, channel, token, setLoading }) => {
           address2: "",
           city: "",
           state: "",
-          zip: ""
+          zip: "",
+          email: ""
         }}
         onSubmit={formSubmit}
         validationSchema={yup.object().shape({
@@ -84,7 +87,8 @@ const AddContact = ({ channelId, channel, token, setLoading }) => {
           address1: yup.string().required("Address1 field is required"),
           city: yup.string().required("City is required"),
           state: yup.string().required("State is required"),
-          zip: yup.string().required("Zip is required")
+          zip: yup.string().required("Zip is required"),
+          email: yup.string().required("Email is required")
         })}
       >
         {({ errors, touched, handleChange, handleBlur, handleSubmit }) => (
@@ -207,6 +211,20 @@ const AddContact = ({ channelId, channel, token, setLoading }) => {
               {touched.zip && errors.zip && (
                 <Label pointing prompt color="red">
                   {errors.zip}
+                </Label>
+              )}
+            </Form.Field>
+            <Form.Field>
+              <Input
+                name="email"
+                type="text"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                label="Email"
+              />
+              {touched.zip && errors.email && (
+                <Label pointing prompt color="red">
+                  {errors.email}
                 </Label>
               )}
             </Form.Field>
