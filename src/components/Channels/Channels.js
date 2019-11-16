@@ -12,7 +12,7 @@ const Channels = ({ channels, feed, setChannel }) => {
             <List.Item key={channel.name}>
               <List.Content>
                 <Link
-                  to={`/${channel.id}/contacts`}
+                  to={`/${channel.id}/messages`}
                   onClick={() => setChannel(channel.name)}
                 >
                   {channel.name}

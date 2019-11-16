@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useCallback } from "react";
-import Feeds from "../Feeds/Feeds";
+import AddContact from "../AddContact/AddContact";
 import Channels from "../Channels/Channels";
 import Contacts from "../Contacts/Contacts";
-import AddContact from "../AddContact/AddContact";
+import Feeds from "../Feeds/Feeds";
 import getAdminChannelsAndFeeds from "../../utils/getAllChannelsAndFeeds";
+import Messages from "../Messages/Messages";
+
 import { Router, Link } from "@reach/router";
 import jwtDecode from "jwt-decode";
 import {
@@ -113,6 +115,12 @@ const Dashboard = () => {
               feeds[feed - 1].name.substring(1)
           }
           setChannel={setChannel}
+        />
+        <Messages
+          path="/:channelId/messages/"
+          channel={channel}
+          setLoading={setLoading}
+          loading={loading}
         />
         <Contacts
           path="/:channelId/contacts/"
