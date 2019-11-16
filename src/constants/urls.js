@@ -1,5 +1,5 @@
 const urls = {
-  base: "http://localhost:8000"
+  base: "https://collaboracast.herokuapp.com"
 };
 
 export default urls;
