@@ -1,10 +1,10 @@
 import React, { useEffect, useCallback, useState } from "react";
 import { Header, Segment, Button, Icon } from "semantic-ui-react";
 import { navigate } from "@reach/router";
+import moment from "moment";
 
 import urls from "../../constants/urls";
 import "./Messages.css";
-import { userInfo } from "os";
 
 export const Messages = ({ channelId, channel, setLoading }) => {
   const [messages, setMessages] = useState([]);
@@ -54,14 +54,19 @@ export const Messages = ({ channelId, channel, setLoading }) => {
           </Header>
           {messages.map((message, index) => (
             <div key={index} className="messages">
-              <Header as="h4" attached="top" color="blue" inverted>
-                <Icon name="user circle" size="mini" />
-                {message.User.username}
+              <Header as="h4" attached="top" inverted>
+                <div className="comment-user">
+                  <Icon name="user circle" size="large" />
+                  {message.User.username}
+                </div>
+                <div className="comment-date">
+                  {moment(message.createdAt).format("MMM d, YYYY")}
+                </div>
               </Header>
-              <Segment key={index} inverted color="blue" attached>
+              <Segment key={`content-index`} inverted color="blue" attached>
                 <div>{message.content}</div>
               </Segment>
-              <Segment key={index} inverted color="blue" attached>
+              <Segment key={`footer-index`} inverted color="blue" attached>
                 <div>
                   <Icon name="comments" size="large" />
                   {message.Comments.length}
