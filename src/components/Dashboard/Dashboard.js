@@ -15,6 +15,7 @@ import {
   Dimmer
 } from "semantic-ui-react";
 
+import urls from "../../constants/urls";
 import "./Dashboard.css";
 
 const Dashboard = () => {
@@ -51,7 +52,7 @@ const Dashboard = () => {
   const getUser = useCallback(
     (username, token) => {
       setLoading(true);
-      fetch(`https://collaboracast.herokuapp.com/api/v1/users/${username}`, {
+      fetch(`${urls.base}/api/v1/users/${username}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `JWT ${token}`

@@ -2,6 +2,7 @@ import React, { useEffect, useCallback, useState } from "react";
 import { Header, Segment, Button, Icon } from "semantic-ui-react";
 import { navigate } from "@reach/router";
 
+import urls from "../../constants/urls";
 import "./Contacts.css";
 
 export const Contacts = ({ channelId, channel, setLoading }) => {
@@ -16,15 +17,12 @@ export const Contacts = ({ channelId, channel, setLoading }) => {
   const getContacts = useCallback(
     (channelId, token) => {
       setLoading(true);
-      fetch(
-        `https://collaboracast.herokuapp.com/api/v1/contacts-channel/${channelId}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `JWT ${token}`
-          }
+      fetch(`${urls.base}/api/v1/channel-contacts/${channelId}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `JWT ${token}`
         }
-      )
+      })
         .then(response => response.json())
         .then(setContactsCallback)
         .catch(e => {

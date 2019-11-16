@@ -14,6 +14,7 @@ import {
 import { Formik } from "formik";
 import * as yup from "yup";
 
+import urls from "../../constants/urls";
 import "./Login.css";
 
 function Login({ setAuthenticated }) {
@@ -31,7 +32,7 @@ function Login({ setAuthenticated }) {
   };
   const formSubmit = values => {
     setLoading(true);
-    fetch("https://collaboracast.herokuapp.com/api/v1/login", {
+    fetch(`${urls.base}/api/v1/login`, {
       method: "post",
       headers: {
         "Content-Type": "application/json"

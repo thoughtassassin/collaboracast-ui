@@ -3,6 +3,8 @@ import { Form, Button, Message, Header, Input, Label } from "semantic-ui-react";
 import { Formik } from "formik";
 import * as yup from "yup";
 
+import urls from "../../constants/urls";
+
 const AddContact = ({ channelId, channel, token, setLoading }) => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
@@ -29,7 +31,7 @@ const AddContact = ({ channelId, channel, token, setLoading }) => {
     email
   }) => {
     setLoading(true);
-    fetch("https://collaboracast.herokuapp.com/api/v1/contacts", {
+    fetch(`${urls.base}/api/v1/contacts`, {
       method: "post",
       headers: {
         "Content-Type": "application/json",
