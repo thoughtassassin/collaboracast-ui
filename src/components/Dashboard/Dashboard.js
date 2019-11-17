@@ -5,6 +5,7 @@ import Contacts from "../Contacts/Contacts";
 import Feeds from "../Feeds/Feeds";
 import getAdminChannelsAndFeeds from "../../utils/getAllChannelsAndFeeds";
 import Messages from "../Messages/Messages";
+import AddMessage from "../AddMessage/AddMessage";
 
 import { Router, Link } from "@reach/router";
 import jwtDecode from "jwt-decode";
@@ -31,6 +32,7 @@ const Dashboard = () => {
   const [feeds, setFeeds] = useState();
   const [feed, setFeed] = useState("2");
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
   const setFeedsAndChannels = useCallback(
     ({ data: { feeds, channels } }) => {
       setFeeds(feeds);
@@ -121,6 +123,17 @@ const Dashboard = () => {
           channel={channel}
           setLoading={setLoading}
           loading={loading}
+          success={success}
+          setSuccess={setSuccess}
+        />
+        <AddMessage
+          path="/add-message/:channelId/"
+          channel={channel}
+          token={token}
+          setLoading={setLoading}
+          loading={loading}
+          setSuccess={setSuccess}
+          success={success}
         />
         <Contacts
           path="/:channelId/contacts/"

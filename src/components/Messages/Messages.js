@@ -1,12 +1,18 @@
 import React, { useEffect, useCallback, useState } from "react";
-import { Header, Segment, Button, Icon } from "semantic-ui-react";
+import { Header, Segment, Message, Button, Icon } from "semantic-ui-react";
 import { navigate } from "@reach/router";
 import moment from "moment";
 
 import urls from "../../constants/urls";
 import "./Messages.css";
 
-export const Messages = ({ channelId, channel, setLoading }) => {
+export const Messages = ({
+  channelId,
+  channel,
+  setLoading,
+  success,
+  setSuccess
+}) => {
   const [messages, setMessages] = useState([]);
   const setMessagesCallback = useCallback(
     ({ data }) => {
@@ -52,6 +58,11 @@ export const Messages = ({ channelId, channel, setLoading }) => {
           <Header as="h2" inverted>
             Messages for {channel}
           </Header>
+          {success && (
+            <Message positive onDismiss={() => setSuccess(false)}>
+              {success}
+            </Message>
+          )}
           {messages.map((message, index) => (
             <div key={index} className="messages">
               <Header as="h4" attached="top" inverted>
@@ -60,7 +71,7 @@ export const Messages = ({ channelId, channel, setLoading }) => {
                   {message.User.username}
                 </div>
                 <div className="comment-date">
-                  {moment(message.createdAt).format("MMM d, YYYY")}
+                  {moment(message.createdAt).format("MMM DD, YYYY")}
                 </div>
               </Header>
               <Segment key={`content-index`} inverted color="blue" attached>

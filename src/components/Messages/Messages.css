@@ -1,5 +1,13 @@
+.messages {
+  margin-bottom: 1rem;
+}
+
 .messages .ui.button {
   margin: 0;
+}
+
+.messages .ui.inverted.attached.segment {
+  border-color: #2185d0;
 }
 
 .messages .ui.inverted.top.attached.header {
