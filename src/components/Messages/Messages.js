@@ -82,7 +82,7 @@ export const Messages = ({
                 <Segment key={`footer-index`} inverted color="blue" attached>
                   <div>
                     <Icon name="comments" size="large" />
-                    {message.comments}
+                    {message.Comments.length}
                   </div>
                 </Segment>
               </Link>
