@@ -1,4 +1,5 @@
 import React, { useEffect, useCallback, useState } from "react";
+import { Link } from "@reach/router";
 import { Header, Segment, Message, Button, Icon } from "semantic-ui-react";
 import { navigate } from "@reach/router";
 import moment from "moment";
@@ -64,25 +65,27 @@ export const Messages = ({
             </Message>
           )}
           {messages.map((message, index) => (
-            <div key={index} className="messages">
-              <Header as="h4" attached="top" inverted>
-                <div className="comment-user">
-                  <Icon name="user circle" size="large" />
-                  {message.User.username}
-                </div>
-                <div className="comment-date">
-                  {moment(message.createdAt).format("MMM DD, YYYY")}
-                </div>
-              </Header>
-              <Segment key={`content-index`} inverted color="blue" attached>
-                <div>{message.content}</div>
-              </Segment>
-              <Segment key={`footer-index`} inverted color="blue" attached>
-                <div>
-                  <Icon name="comments" size="large" />
-                  {message.Comments.length}
-                </div>
-              </Segment>
+            <div key={index} className="message">
+              <Link to={`/messages/${message.id}`}>
+                <Header as="h4" attached="top" inverted>
+                  <div className="comment-user">
+                    <Icon name="user circle" size="large" />
+                    {message.User.username}
+                  </div>
+                  <div className="comment-date">
+                    {moment(message.createdAt).format("MMM DD, YYYY")}
+                  </div>
+                </Header>
+                <Segment key={`content-index`} inverted color="blue" attached>
+                  <div>{message.content}</div>
+                </Segment>
+                <Segment key={`footer-index`} inverted color="blue" attached>
+                  <div>
+                    <Icon name="comments" size="large" />
+                    {message.comments}
+                  </div>
+                </Segment>
+              </Link>
             </div>
           ))}
         </>

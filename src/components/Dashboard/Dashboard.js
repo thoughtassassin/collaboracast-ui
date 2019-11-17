@@ -6,6 +6,8 @@ import Feeds from "../Feeds/Feeds";
 import getAdminChannelsAndFeeds from "../../utils/getAllChannelsAndFeeds";
 import Messages from "../Messages/Messages";
 import AddMessage from "../AddMessage/AddMessage";
+import Message from "../Message/Message";
+import AddComment from "../AddComment/AddComment";
 
 import { Router, Link } from "@reach/router";
 import jwtDecode from "jwt-decode";
@@ -129,6 +131,20 @@ const Dashboard = () => {
         <AddMessage
           path="/add-message/:channelId/"
           channel={channel}
+          token={token}
+          setLoading={setLoading}
+          loading={loading}
+          setSuccess={setSuccess}
+          success={success}
+        />
+        <Message
+          path="/messages/:messageId"
+          setLoading={setLoading}
+          loading={loading}
+          messageId="1"
+        />
+        <AddComment
+          path="/add-comment/:messageId"
           token={token}
           setLoading={setLoading}
           loading={loading}
