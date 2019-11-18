@@ -21,7 +21,6 @@ export const Message = ({
   const [message, setMessage] = useState();
   const setMessageCallback = useCallback(
     ({ data }) => {
-      console.log(data);
       setMessage(data);
       setLoading(false);
     },

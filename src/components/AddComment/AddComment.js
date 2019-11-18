@@ -15,7 +15,6 @@ import { navigate } from "@reach/router";
 import urls from "../../constants/urls";
 
 const AddComment = ({ messageId, token, setLoading, setSuccess }) => {
-  console.log("messageId: ", messageId);
   const [error, setError] = useState(false);
   const { id } = jwtDecode(token);
   const addCommentSuccess = json => {
