@@ -19,11 +19,11 @@ const AddComment = ({ messageId, token, setLoading, setSuccess }) => {
   const { id } = jwtDecode(token);
   const addCommentSuccess = json => {
     if (json.status === "success") {
-      setSuccess(json.comment);
+      setSuccess(json.message);
       setError(false);
       navigate(`/messages/${messageId}/`);
     } else if (json.status === "error") {
-      setError(json.comment);
+      setError(json.message);
       setSuccess(false);
     }
     setLoading(false);

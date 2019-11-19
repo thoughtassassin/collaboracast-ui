@@ -142,6 +142,8 @@ const Dashboard = () => {
           setLoading={setLoading}
           loading={loading}
           messageId="1"
+          success={success}
+          setSuccess={setSuccess}
         />
         <AddComment
           path="/add-comment/:messageId"
