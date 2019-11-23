@@ -8,14 +8,16 @@ import "semantic-ui-css/semantic.min.css";
 import "./App.css";
 
 function App() {
-  let role;
+  let roleName;
   const token = localStorage.getItem("token");
   const [user, setUser] = useState({ username: "" });
   const [authenticated, setAuthenticated] = useState(token ? true : false);
   if (authenticated) {
-    role = {
+    const {
       Role: { role }
     } = jwtDecode(token);
+    roleName = role;
+    console.log(role);
   }
   return (
     <div className="App">
@@ -25,7 +27,7 @@ function App() {
           setUser={setUser}
           user={user}
         />
-      ) : role && role === "representative" ? (
+      ) : roleName && roleName === "representative" ? (
         <Dashboard />
       ) : (
         <AdminDashboard setAuthenticated={setAuthenticated} />

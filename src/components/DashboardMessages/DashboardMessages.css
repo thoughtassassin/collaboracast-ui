@@ -1,0 +1,40 @@
+.message {
+  margin-bottom: 1rem;
+}
+
+.messages .ui.button {
+  margin: 0;
+}
+
+.messages .ui.inverted.attached.segment {
+  border: none;
+}
+
+.messages .ui.inverted.attached.segment:last-of-type {
+  border: none;
+  border-radius: 0 0 5px 5px;
+}
+
+.messages .ui.inverted.top.attached.header {
+  background-color: #2185d0 !important;
+  display: flex;
+  border: none;
+  justify-content: space-between;
+}
+
+.messages .contact {
+  margin: 1.5rem 0;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.messages a,
+.messages a:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+.messages a:hover,
+.messages a:active {
+  text-decoration: underline;
+}

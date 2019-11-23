@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import AddContact from "../AddContact/AddContact";
-import Channels from "../Channels/Channels";
 import Contacts from "../Contacts/Contacts";
-import Messages from "../Messages/Messages";
+import DashboardMessages from "../DashboardMessages/DashboardMessages";
 import AddMessage from "../AddMessage/AddMessage";
 import Message from "../Message/Message";
 import AddComment from "../AddComment/AddComment";
@@ -83,19 +82,14 @@ const Dashboard = () => {
         </Menu.Item>
       </Menu>
       <Router primary={false}>
-        <Channels
+        <DashboardMessages
           path="/"
           channels={channels}
-          setChannel={setChannel}
-          default
-        />
-        <Messages
-          path="/:channelId/messages/"
-          channel={channel}
           setLoading={setLoading}
           loading={loading}
           success={success}
           setSuccess={setSuccess}
+          default
         />
         <AddMessage
           path="/add-message/:channelId/"
