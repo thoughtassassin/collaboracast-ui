@@ -63,7 +63,7 @@ const AddMessage = ({
   return (
     <div>
       <Header as="h2" inverted>
-        Add Message To {channel}
+        Add Message {channelId && <span>To {channel}</span>}
         {!channelId && (
           <Dropdown
             placeholder="Select Channel"
@@ -73,7 +73,7 @@ const AddMessage = ({
               text: channel.name
             }))}
             onChange={(e, { value }) => setMessageChannel(value)}
-            style={{ fontSize: "0.8em", float: "right" }}
+            style={{ fontSize: "1rem", float: "right" }}
           />
         )}
       </Header>
