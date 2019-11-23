@@ -10,7 +10,7 @@
   border: none;
 }
 
-.messages .comments .ui.top.attached.header {
+.messages .comments .ui.top.inverted.attached.header {
   background-color: #767676 !important;
   display: flex;
   justify-content: space-between;

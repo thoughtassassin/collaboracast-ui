@@ -25,7 +25,7 @@ export const Messages = ({
   );
   const getMessages = useCallback(
     (channelId, token) => {
-      !loading && setLoading(true);
+      setLoading(true);
       fetch(`${urls.base}/api/v1/channel-messages/${channelId}`, {
         headers: {
           "Content-Type": "application/json",
@@ -35,7 +35,7 @@ export const Messages = ({
         .then(response => response.json())
         .then(setMessagesCallback)
         .catch(e => {
-          loading && setLoading(false);
+          setLoading(false);
           console.error(e);
         });
     },

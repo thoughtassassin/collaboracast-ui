@@ -33,7 +33,7 @@ export const DashboardMessages = ({
   );
   const getMessages = useCallback(
     (token, channels) => {
-      !loading && setLoading(true);
+      setLoading(true);
       Promise.all(
         channels.map(channel => {
           return fetch(`${urls.base}/api/v1/channel-messages/${channel.id}`, {

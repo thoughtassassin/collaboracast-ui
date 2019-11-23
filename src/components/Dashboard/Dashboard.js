@@ -24,7 +24,7 @@ const Dashboard = () => {
   const token = localStorage.getItem("token");
   const { username } = jwtDecode(token);
   const [channels, setChannels] = useState([]);
-  const [channel, setChannel] = useState("");
+  const [channel] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const setFeedsAndChannels = useCallback(
@@ -92,8 +92,8 @@ const Dashboard = () => {
           default
         />
         <AddMessage
-          path="/add-message/:channelId/"
-          channel={channel}
+          path="/add-message/"
+          channels={channels}
           token={token}
           setLoading={setLoading}
           loading={loading}

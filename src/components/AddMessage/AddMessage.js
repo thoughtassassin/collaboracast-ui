@@ -5,7 +5,8 @@ import {
   Message,
   Header,
   TextArea,
-  Label
+  Label,
+  Dropdown
 } from "semantic-ui-react";
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -14,8 +15,16 @@ import { navigate } from "@reach/router";
 
 import urls from "../../constants/urls";
 
-const AddMessage = ({ channelId, channel, token, setLoading, setSuccess }) => {
+const AddMessage = ({
+  channelId,
+  channel,
+  channels,
+  token,
+  setLoading,
+  setSuccess
+}) => {
   const [error, setError] = useState(false);
+  const [messageChannel, setMessageChannel] = useState("");
   const { id } = jwtDecode(token);
   const addMessageSuccess = json => {
     if (json.status === "success") {
@@ -39,7 +48,7 @@ const AddMessage = ({ channelId, channel, token, setLoading, setSuccess }) => {
       body: JSON.stringify({
         content: message,
         UserId: id,
-        ChannelId: channelId
+        ChannelId: channelId || messageChannel
       })
     })
       .then(response => response.json())
@@ -55,7 +64,20 @@ const AddMessage = ({ channelId, channel, token, setLoading, setSuccess }) => {
     <div>
       <Header as="h2" inverted>
         Add Message To {channel}
+        {!channelId && (
+          <Dropdown
+            placeholder="Select Channel"
+            options={channels.map(channel => ({
+              key: channel.id,
+              value: channel.id,
+              text: channel.name
+            }))}
+            onChange={(e, { value }) => setMessageChannel(value)}
+            style={{ fontSize: "0.8em", float: "right" }}
+          />
+        )}
       </Header>
+
       {error && <Message error>{error}</Message>}
       <Formik
         initialValues={{
