@@ -1,17 +1,18 @@
 import React, { useState } from "react";
 import { Form, Button, Message, Header, Input, Label } from "semantic-ui-react";
+import { navigate } from "@reach/router";
 import { Formik } from "formik";
 import * as yup from "yup";
 
 import urls from "../../constants/urls";
 
-const AddContact = ({ channelId, channel, token, setLoading }) => {
-  const [success, setSuccess] = useState(false);
+const AddContact = ({ channelId, channel, token, setLoading, setSuccess }) => {
   const [error, setError] = useState(false);
   const addContactSuccess = json => {
     if (json.status === "success") {
       setSuccess(json.message);
       setError(false);
+      navigate(`/${channelId}/contacts`);
     } else if (json.status === "error") {
       setError(json.message);
       setSuccess(false);
@@ -65,7 +66,6 @@ const AddContact = ({ channelId, channel, token, setLoading }) => {
       <Header as="h2" inverted>
         Add Contact To {channel}
       </Header>
-      {success && <Message positive>{success}</Message>}
       {error && <Message error>{error}</Message>}
       <Formik
         initialValues={{

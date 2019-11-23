@@ -1,11 +1,17 @@
 import React, { useEffect, useCallback, useState } from "react";
-import { Header, Segment, Button, Icon } from "semantic-ui-react";
+import { Header, Message, Segment, Button, Icon } from "semantic-ui-react";
 import { navigate } from "@reach/router";
 
 import urls from "../../constants/urls";
 import "./Contacts.css";
 
-export const Contacts = ({ channelId, channel, setLoading }) => {
+export const Contacts = ({
+  channelId,
+  channel,
+  setLoading,
+  success,
+  setSuccess
+}) => {
   const [contacts, setContacts] = useState([]);
   const setContactsCallback = useCallback(
     ({ data }) => {
@@ -51,6 +57,11 @@ export const Contacts = ({ channelId, channel, setLoading }) => {
           <Header as="h2" inverted>
             Contacts for {channel}
           </Header>
+          {success && (
+            <Message positive onDismiss={() => setSuccess(false)}>
+              {success}
+            </Message>
+          )}
           {contacts.map((contact, index) => (
             <div key={index} className="contact">
               <Header as="h4" attached="top" inverted>

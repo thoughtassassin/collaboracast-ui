@@ -10,6 +10,7 @@ import "./Messages.css";
 export const Messages = ({
   channelId,
   channel,
+  loading,
   setLoading,
   success,
   setSuccess
@@ -24,7 +25,7 @@ export const Messages = ({
   );
   const getMessages = useCallback(
     (channelId, token) => {
-      setLoading(true);
+      !loading && setLoading(true);
       fetch(`${urls.base}/api/v1/channel-messages/${channelId}`, {
         headers: {
           "Content-Type": "application/json",
@@ -34,7 +35,7 @@ export const Messages = ({
         .then(response => response.json())
         .then(setMessagesCallback)
         .catch(e => {
-          setLoading(false);
+          loading && setLoading(false);
           console.error(e);
         });
     },
