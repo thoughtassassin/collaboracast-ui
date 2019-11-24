@@ -89,6 +89,7 @@ const Dashboard = () => {
           loading={loading}
           success={success}
           setSuccess={setSuccess}
+          username={username}
           default
         />
         <AddMessage
