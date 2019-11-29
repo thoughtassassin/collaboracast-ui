@@ -60,7 +60,7 @@ export const Contacts = ({
             Contacts for{" "}
             <ChannelName
               channels={channels}
-              resource={/[0-9].?(?=\/contacts\/?)/g}
+              resource={/[0-9]+.?(?=\/contacts\/?)/g}
             />
           </Header>
           {success && (

@@ -5,11 +5,12 @@ import { navigate } from "@reach/router";
 import moment from "moment";
 
 import urls from "../../constants/urls";
+import ChannelName from "../ChannelName/ChannelName";
 import "./Messages.css";
 
 export const Messages = ({
   channelId,
-  channel,
+  channels,
   loading,
   setLoading,
   success,
@@ -58,7 +59,11 @@ export const Messages = ({
             Add Message
           </Button>
           <Header as="h2" inverted>
-            Messages for {channel}
+            Messages for{" "}
+            <ChannelName
+              channels={channels}
+              resource={/[0-9]+.?(?=\/messages\/?)/g}
+            />
           </Header>
           {success && (
             <Message positive onDismiss={() => setSuccess(false)}>

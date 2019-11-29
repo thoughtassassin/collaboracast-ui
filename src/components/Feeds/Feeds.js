@@ -2,9 +2,13 @@ import React from "react";
 import { Button } from "semantic-ui-react";
 
 const Feeds = ({ feeds, setFeed, feed }) => (
-  <div style={{ float: "right" }}>
-    <span>Select Feed: </span>
-    <Button.Group inverted color="green" style={{ marginLeft: "1rem" }}>
+  <div>
+    <Button.Group
+      inverted
+      color="green"
+      size="tiny"
+      style={{ marginLeft: "1rem" }}
+    >
       {feeds &&
         feeds.map(feedItem => (
           <Button

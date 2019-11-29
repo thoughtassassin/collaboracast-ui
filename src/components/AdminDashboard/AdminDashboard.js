@@ -15,7 +15,6 @@ import { Router } from "@reach/router";
 const AdminDashboard = ({ setAuthenticated }) => {
   const token = localStorage.getItem("token");
   const [channels, setChannels] = useState([]);
-  const [channel, setChannel] = useState("");
   const [feeds, setFeeds] = useState();
   const [feed, setFeed] = useState("2");
   const [loading, setLoading] = useState(false);
@@ -51,12 +50,11 @@ const AdminDashboard = ({ setAuthenticated }) => {
             feeds[feed - 1].name.charAt(0).toUpperCase() +
               feeds[feed - 1].name.substring(1)
           }
-          setChannel={setChannel}
           feedsMenu={feedsMenu}
         />
         <Messages
           path="/:channelId/messages/"
-          channel={channel}
+          channels={channels}
           setLoading={setLoading}
           loading={loading}
           success={success}
@@ -64,7 +62,7 @@ const AdminDashboard = ({ setAuthenticated }) => {
         />
         <AddMessage
           path="/add-message/:channelId/"
-          channel={channel}
+          channels={channels}
           token={token}
           setLoading={setLoading}
           loading={loading}
