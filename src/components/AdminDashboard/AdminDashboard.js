@@ -39,11 +39,7 @@ const AdminDashboard = ({ setAuthenticated }) => {
   const feedsMenu = <Feeds feeds={feeds} setFeed={setFeed} feed={feed} />;
 
   return (
-    <DashboardContainer
-      feedsMenu={feedsMenu}
-      loading={loading}
-      setAuthenticated={setAuthenticated}
-    >
+    <DashboardContainer setAuthenticated={setAuthenticated} loading={loading}>
       <Router primary={false}>
         <Channels
           path="/"
@@ -56,12 +52,7 @@ const AdminDashboard = ({ setAuthenticated }) => {
               feeds[feed - 1].name.substring(1)
           }
           setChannel={setChannel}
-        />
-        <Channels
-          path="/"
-          channels={channels}
-          setChannel={setChannel}
-          default
+          feedsMenu={feedsMenu}
         />
         <Messages
           path="/:channelId/messages/"

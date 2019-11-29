@@ -14,12 +14,7 @@ import {
 
 import "./DashboardContainer.css";
 
-const DashboardContainer = ({
-  children,
-  feedsMenu,
-  loading,
-  setAuthenticated
-}) => {
+const DashboardContainer = ({ children, loading, setAuthenticated, menu }) => {
   const token = localStorage.getItem("token");
   const { username } = jwtDecode(token);
   const logout = () => {
@@ -32,7 +27,7 @@ const DashboardContainer = ({
       <Dimmer active={loading} page>
         <Loader size="big">Loading</Loader>
       </Dimmer>
-      <Menu fixed="top" inverted color="teal">
+      <Menu fixed="top" inverted color="teal" size="massive">
         <Menu.Item>
           <Link to="/">
             <Icon name="user" /> {username}
@@ -41,7 +36,7 @@ const DashboardContainer = ({
             <Icon name="log out" />
           </Button>
         </Menu.Item>
-        {feedsMenu}
+        {menu}
       </Menu>
       {children}
     </Container>

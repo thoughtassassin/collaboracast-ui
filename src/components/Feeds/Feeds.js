@@ -1,22 +1,24 @@
 import React from "react";
-import { navigate } from "@reach/router";
-import { Menu } from "semantic-ui-react";
+import { Button } from "semantic-ui-react";
 
 const Feeds = ({ feeds, setFeed, feed }) => (
-  <Menu compact inverted color="green" floated="right">
-    {feeds &&
-      feeds.map(feedItem => (
-        <Menu.Item
-          key={feedItem.id}
-          active={feed.toString() === feedItem.id.toString()}
-          name={feedItem.name}
-          onClick={() => {
-            setFeed(feedItem.id.toString());
-            return navigate("/");
-          }}
-        />
-      ))}
-  </Menu>
+  <div style={{ float: "right" }}>
+    <span>Select Feed: </span>
+    <Button.Group inverted color="green" style={{ marginLeft: "1rem" }}>
+      {feeds &&
+        feeds.map(feedItem => (
+          <Button
+            key={feedItem.id}
+            active={feed.toString() === feedItem.id.toString()}
+            onClick={() => {
+              setFeed(feedItem.id.toString());
+            }}
+          >
+            {feedItem.name}
+          </Button>
+        ))}
+    </Button.Group>
+  </div>
 );
 
 export default Feeds;

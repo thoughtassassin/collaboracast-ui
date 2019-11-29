@@ -28,7 +28,7 @@ function App() {
           user={user}
         />
       ) : roleName && roleName === "representative" ? (
-        <Dashboard />
+        <Dashboard setAuthenticated={setAuthenticated} />
       ) : (
         <AdminDashboard setAuthenticated={setAuthenticated} />
       )}

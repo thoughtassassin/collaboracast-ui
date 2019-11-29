@@ -1,32 +1,28 @@
 import React, { useState, useEffect, useCallback } from "react";
 import AddContact from "../AddContact/AddContact";
 import Contacts from "../Contacts/Contacts";
+import ContactsChannels from "../ContactsChannels/ContactChannels";
+import DashboardContainer from "../DashboardContainer/DashboadContainer";
 import DashboardMessages from "../DashboardMessages/DashboardMessages";
 import AddMessage from "../AddMessage/AddMessage";
 import Message from "../Message/Message";
 import AddComment from "../AddComment/AddComment";
 
-import { Router, Link } from "@reach/router";
+import { Router, Link, navigate, redirectTo } from "@reach/router";
 import jwtDecode from "jwt-decode";
-import {
-  Button,
-  Container,
-  Loader,
-  Menu,
-  Icon,
-  Dimmer
-} from "semantic-ui-react";
+import { Menu, Icon, Sidebar } from "semantic-ui-react";
 
 import urls from "../../constants/urls";
 import "./Dashboard.css";
 
-const Dashboard = () => {
+const Dashboard = ({ setAuthenticated }) => {
   const token = localStorage.getItem("token");
   const { username } = jwtDecode(token);
   const [channels, setChannels] = useState([]);
   const [channel] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const setFeedsAndChannels = useCallback(
     ({ data: { channels } }) => {
       setChannels(channels);
@@ -60,27 +56,53 @@ const Dashboard = () => {
     const token = localStorage.getItem("token");
     getUser(username, token);
   }, [getUser, username]);
-  const logout = () => {
-    localStorage.removeItem("token");
-    window.location.assign("/");
-  };
+
+  const menu = (
+    <Menu.Item position="right" onClick={() => setIsMenuOpen(true)}>
+      <Icon name="align justify" />
+    </Menu.Item>
+  );
+
   return (
-    <Container className="dashboard" text>
-      {loading && (
-        <Dimmer active={loading} page>
-          <Loader size="big">Loading</Loader>
-        </Dimmer>
-      )}
-      <Menu fixed="top" inverted color="teal">
-        <Menu.Item>
-          <Link to="/">
-            <Icon name="user" /> {username}
-          </Link>
-          <Button size="mini" compact inverted onClick={logout}>
-            <Icon name="log out" />
-          </Button>
+    <DashboardContainer
+      className="dashboard"
+      setAuthenticated={setAuthenticated}
+      menu={menu}
+      loading={loading}
+    >
+      <Sidebar
+        as={Menu}
+        animation="push"
+        direction="right"
+        icon="labeled"
+        inverted
+        vertical
+        visible={isMenuOpen}
+        width="thin"
+      >
+        <Menu.Item as="a" onClick={() => setIsMenuOpen(false)}>
+          <Icon name="close" />
+          Close Menu
         </Menu.Item>
-      </Menu>
+        <Menu.Item
+          onClick={() => {
+            setIsMenuOpen(false);
+            navigate("/");
+          }}
+        >
+          <Icon name="envelope outline" />
+          Messages
+        </Menu.Item>
+        <Menu.Item
+          onClick={() => {
+            setIsMenuOpen(false);
+            navigate("/channels");
+          }}
+        >
+          <Icon name="address card" />
+          Contacts
+        </Menu.Item>
+      </Sidebar>
       <Router primary={false}>
         <DashboardMessages
           path="/"
@@ -117,11 +139,18 @@ const Dashboard = () => {
           setSuccess={setSuccess}
           success={success}
         />
+        <ContactsChannels
+          path="/channels"
+          channels={channels}
+          setChannel={setChannels}
+        />
         <Contacts
           path="/:channelId/contacts/"
           channel={channel}
           setLoading={setLoading}
           loading={loading}
+          success={success}
+          setSuccess={setSuccess}
         />
         <AddContact
           path="/add-contact/:channelId"
@@ -129,9 +158,10 @@ const Dashboard = () => {
           token={token}
           setLoading={setLoading}
           loading={loading}
+          setSuccess={setSuccess}
         />
       </Router>
-    </Container>
+    </DashboardContainer>
   );
 };
 
