@@ -68,7 +68,7 @@ const AddContact = ({ channelId, channels, token, setLoading, setSuccess }) => {
         Add Contact To{" "}
         <ChannelName
           channels={channels}
-          resource={/(?<=\/add-contact\/)[0-9]+.?\/?/g}
+          resource={/\/add-contact\/([0-9]+).?\/?/}
         />
       </Header>
       {error && <Message error>{error}</Message>}
