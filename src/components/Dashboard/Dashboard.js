@@ -8,7 +8,7 @@ import AddMessage from "../AddMessage/AddMessage";
 import Message from "../Message/Message";
 import AddComment from "../AddComment/AddComment";
 
-import { Router, Link, navigate, redirectTo } from "@reach/router";
+import { Router, navigate } from "@reach/router";
 import jwtDecode from "jwt-decode";
 import { Menu, Icon, Sidebar } from "semantic-ui-react";
 
