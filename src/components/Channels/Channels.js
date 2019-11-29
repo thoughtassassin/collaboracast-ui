@@ -1,6 +1,7 @@
 import React from "react";
 import { List } from "semantic-ui-react";
-import { Link } from "@reach/router";
+
+import ContentSelector from "./ContentSelector/ContentSelector";
 
 const Channels = ({ channels, feed, setChannel, feedsMenu }) => {
   return (
@@ -11,13 +12,9 @@ const Channels = ({ channels, feed, setChannel, feedsMenu }) => {
         {channels &&
           channels.map(channel => (
             <List.Item key={channel.name}>
-              <List.Content>
-                <Link
-                  to={`/${channel.id}/messages`}
-                  onClick={() => setChannel(channel.name)}
-                >
-                  {channel.name}
-                </Link>
+              <List.Content onClick={() => setChannel(channel.name)}>
+                {channel.name}
+                <ContentSelector channelId={channel.id} />
               </List.Content>
             </List.Item>
           ))}

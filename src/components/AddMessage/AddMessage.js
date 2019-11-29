@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {
   Form,
+  Grid,
   Button,
   Message,
   Header,
@@ -14,15 +15,9 @@ import jwtDecode from "jwt-decode";
 import { navigate } from "@reach/router";
 
 import urls from "../../constants/urls";
+import "./AddMessage.css";
 
-const AddMessage = ({
-  channelId,
-  channel,
-  channels,
-  token,
-  setLoading,
-  setSuccess
-}) => {
+const AddMessage = ({ channelId, channels, token, setLoading, setSuccess }) => {
   const [error, setError] = useState(false);
   const [messageChannel, setMessageChannel] = useState("");
   const { id } = jwtDecode(token);
@@ -62,22 +57,29 @@ const AddMessage = ({
   };
   return (
     <div>
-      <Header as="h2" inverted>
-        Add Message {channelId && <span>To {channel}</span>}
-        {!channelId && (
-          <Dropdown
-            placeholder="Select Channel"
-            options={channels.map(channel => ({
-              key: channel.id,
-              value: channel.id,
-              text: channel.name
-            }))}
-            onChange={(e, { value }) => setMessageChannel(value)}
-            style={{ fontSize: "1rem", float: "right" }}
-          />
-        )}
-      </Header>
-
+      <Grid columns={2}>
+        <Grid.Row style={{ margin: "2rem 0 1rem" }}>
+          <Grid.Column>
+            <Header as="h2" inverted>
+              Add Message{" "}
+            </Header>
+          </Grid.Column>
+          {!channelId && (
+            <Grid.Column textAlign="right">
+              <Dropdown
+                placeholder="Select Channel"
+                options={channels.map(channel => ({
+                  key: channel.id,
+                  value: channel.id,
+                  text: channel.name
+                }))}
+                className="message-container"
+                onChange={(e, { value }) => setMessageChannel(value)}
+              />
+            </Grid.Column>
+          )}
+        </Grid.Row>
+      </Grid>
       {error && <Message error>{error}</Message>}
       <Formik
         initialValues={{

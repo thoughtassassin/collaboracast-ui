@@ -5,8 +5,9 @@ import { Formik } from "formik";
 import * as yup from "yup";
 
 import urls from "../../constants/urls";
+import ChannelName from "../ChannelName/ChannelName";
 
-const AddContact = ({ channelId, channel, token, setLoading, setSuccess }) => {
+const AddContact = ({ channelId, channels, token, setLoading, setSuccess }) => {
   const [error, setError] = useState(false);
   const addContactSuccess = json => {
     if (json.status === "success") {
@@ -64,7 +65,11 @@ const AddContact = ({ channelId, channel, token, setLoading, setSuccess }) => {
   return (
     <div>
       <Header as="h2" inverted>
-        Add Contact To {channel}
+        Add Contact To{" "}
+        <ChannelName
+          channels={channels}
+          resource={/(?<=\/add-contact\/)[0-9].?\/?/g}
+        />
       </Header>
       {error && <Message error>{error}</Message>}
       <Formik

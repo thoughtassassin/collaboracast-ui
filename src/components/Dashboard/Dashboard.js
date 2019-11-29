@@ -19,7 +19,6 @@ const Dashboard = ({ setAuthenticated }) => {
   const token = localStorage.getItem("token");
   const { username } = jwtDecode(token);
   const [channels, setChannels] = useState([]);
-  const [channel] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -57,17 +56,19 @@ const Dashboard = ({ setAuthenticated }) => {
     getUser(username, token);
   }, [getUser, username]);
 
-  const menu = (
+  const menuIcon = (
     <Menu.Item position="right" onClick={() => setIsMenuOpen(true)}>
       <Icon name="align justify" />
     </Menu.Item>
   );
 
+  let channel = "";
+
   return (
     <DashboardContainer
       className="dashboard"
       setAuthenticated={setAuthenticated}
-      menu={menu}
+      menuIcon={menuIcon}
       loading={loading}
     >
       <Sidebar
@@ -151,6 +152,7 @@ const Dashboard = ({ setAuthenticated }) => {
           loading={loading}
           success={success}
           setSuccess={setSuccess}
+          channels={channels}
         />
         <AddContact
           path="/add-contact/:channelId"
@@ -159,6 +161,7 @@ const Dashboard = ({ setAuthenticated }) => {
           setLoading={setLoading}
           loading={loading}
           setSuccess={setSuccess}
+          channels={channels}
         />
       </Router>
     </DashboardContainer>

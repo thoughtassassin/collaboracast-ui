@@ -89,19 +89,19 @@ const AdminDashboard = ({ setAuthenticated }) => {
         />
         <Contacts
           path="/:channelId/contacts/"
-          channel={channel}
           setLoading={setLoading}
           success={success}
           setSuccess={setSuccess}
           loading={loading}
+          channels={channels}
         />
         <AddContact
           path="/add-contact/:channelId"
-          channel={channel}
           token={token}
           setLoading={setLoading}
           loading={loading}
           setSuccess={setSuccess}
+          channels={channels}
         />
       </Router>
     </DashboardContainer>

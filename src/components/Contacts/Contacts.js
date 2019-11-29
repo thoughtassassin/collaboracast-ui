@@ -3,6 +3,7 @@ import { Header, Message, Segment, Button, Icon } from "semantic-ui-react";
 import { navigate } from "@reach/router";
 
 import urls from "../../constants/urls";
+import ChannelName from "../ChannelName/ChannelName";
 import "./Contacts.css";
 
 export const Contacts = ({
@@ -10,7 +11,8 @@ export const Contacts = ({
   channel,
   setLoading,
   success,
-  setSuccess
+  setSuccess,
+  channels
 }) => {
   const [contacts, setContacts] = useState([]);
   const setContactsCallback = useCallback(
@@ -55,7 +57,11 @@ export const Contacts = ({
             Add Contact
           </Button>
           <Header as="h2" inverted>
-            Contacts for {channel}
+            Contacts for{" "}
+            <ChannelName
+              channels={channels}
+              resource={/[0-9].?(?=\/contacts\/?)/g}
+            />
           </Header>
           {success && (
             <Message positive onDismiss={() => setSuccess(false)}>
