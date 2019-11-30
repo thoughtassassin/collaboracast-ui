@@ -1,5 +1,5 @@
 import React from "react";
-import { List, Container } from "semantic-ui-react";
+import { List } from "semantic-ui-react";
 
 import ContentSelector from "./ContentSelector/ContentSelector";
 import "./Channels.css";
