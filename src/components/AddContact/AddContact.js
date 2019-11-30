@@ -23,7 +23,8 @@ const AddContact = ({ channelId, channels, token, setLoading, setSuccess }) => {
   const formSubmit = ({
     firstName,
     lastName,
-    business,
+    group,
+    position,
     phone,
     address1,
     address2,
@@ -42,7 +43,8 @@ const AddContact = ({ channelId, channels, token, setLoading, setSuccess }) => {
       body: JSON.stringify({
         firstName,
         lastName,
-        business,
+        group,
+        position,
         phone,
         address1,
         address2,
@@ -89,7 +91,8 @@ const AddContact = ({ channelId, channels, token, setLoading, setSuccess }) => {
         validationSchema={yup.object().shape({
           firstName: yup.string().required("First Name is required"),
           lastName: yup.string().required("Last Name is required"),
-          business: yup.string().required("Business is required"),
+          group: yup.string().required("Group is required"),
+          position: yup.string().required("Position is required"),
           phone: yup.string().required("Phone is required"),
           address1: yup.string().required("Address1 field is required"),
           city: yup.string().required("City is required"),
@@ -130,15 +133,29 @@ const AddContact = ({ channelId, channels, token, setLoading, setSuccess }) => {
             </Form.Field>
             <Form.Field>
               <Input
-                name="business"
+                name="group"
                 type="text"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                label="Business"
+                label="Group"
               />
-              {touched.business && errors.business && (
+              {touched.group && errors.group && (
                 <Label pointing prompt color="red">
-                  {errors.business}
+                  {errors.group}
+                </Label>
+              )}
+            </Form.Field>
+            <Form.Field>
+              <Input
+                name="position"
+                type="text"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                label="Position"
+              />
+              {touched.position && errors.position && (
+                <Label pointing prompt color="red">
+                  {errors.position}
                 </Label>
               )}
             </Form.Field>

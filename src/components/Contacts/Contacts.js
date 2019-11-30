@@ -76,7 +76,8 @@ export const Contacts = ({
                 <a href={`tel:${contact.phone}`}>{contact.phone}</a>
               </Header>
               <Segment key={index} inverted color="blue" attached>
-                <Header sub>{contact.business}</Header>
+                <Header sub>{contact.group}</Header>
+                {contact.position && <div>{contact.position}</div>}
                 <div>{contact.address1}</div>
                 <div>{contact.address2}</div>
                 <div>
