@@ -59,13 +59,13 @@ const AddMessage = ({ channelId, channels, token, setLoading, setSuccess }) => {
     <div>
       <Grid columns={2}>
         <Grid.Row style={{ margin: "2rem 0 1rem" }}>
-          <Grid.Column>
-            <Header as="h2" inverted>
+          <Grid.Column width={channelId ? 16 : 6}>
+            <Header as="h3" inverted>
               Add Message{" "}
             </Header>
           </Grid.Column>
           {!channelId && (
-            <Grid.Column textAlign="right">
+            <Grid.Column textAlign="right" width={10}>
               <Dropdown
                 placeholder="Select Channel"
                 options={channels.map(channel => ({
