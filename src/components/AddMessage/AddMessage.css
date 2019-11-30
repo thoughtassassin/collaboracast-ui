@@ -1,3 +1,4 @@
-.ui.drowdown.message-container .menu {
+.message-container .menu {
     right: 0 !important;
+    left: auto !important;
 }
