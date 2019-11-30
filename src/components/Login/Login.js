@@ -5,7 +5,6 @@ import {
   Button,
   Message,
   Header,
-  Container,
   Input,
   Label,
   Loader,
@@ -53,72 +52,62 @@ function Login({ setAuthenticated }) {
     <Grid verticalAlign="top" columns={1} centered className="login">
       <Grid.Row>
         <Grid.Column>
-          <Container text>
-            <Header as="h1" inverted>
-              Don-Nan
-            </Header>
-            {loading && (
-              <Dimmer active={loading} page>
-                <Loader size="big">Logging In</Loader>
-              </Dimmer>
+          <Header as="h1">Don-Nan</Header>
+          {loading && (
+            <Dimmer active={loading} page>
+              <Loader size="big">Logging In</Loader>
+            </Dimmer>
+          )}
+          {error && <Message error content={error} />}
+          <Formik
+            initialValues={{
+              username: "",
+              password: ""
+            }}
+            onSubmit={formSubmit}
+            validationSchema={yup.object().shape({
+              username: yup.string().required("This field is required"),
+              password: yup.string().required("This field is required")
+            })}
+          >
+            {({ errors, touched, handleChange, handleBlur, handleSubmit }) => (
+              <Form size="small">
+                <Form.Field>
+                  <Input
+                    name="username"
+                    type="text"
+                    label="Username"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  {touched.username && errors.username && (
+                    <Label pointing prompt color="red">
+                      {errors.username}
+                    </Label>
+                  )}
+                </Form.Field>
+                <Form.Field>
+                  <Input
+                    name="password"
+                    type="password"
+                    label="Password"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  {touched.password && errors.password && (
+                    <Label pointing prompt color="red">
+                      {errors.password}
+                    </Label>
+                  )}
+                </Form.Field>
+                <Form.Field>
+                  <Button type="submit" color="green" onClick={handleSubmit}>
+                    Login
+                  </Button>
+                </Form.Field>
+              </Form>
             )}
-            {error && <Message error content={error} />}
-            <Formik
-              initialValues={{
-                username: "",
-                password: ""
-              }}
-              onSubmit={formSubmit}
-              validationSchema={yup.object().shape({
-                username: yup.string().required("This field is required"),
-                password: yup.string().required("This field is required")
-              })}
-            >
-              {({
-                errors,
-                touched,
-                handleChange,
-                handleBlur,
-                handleSubmit
-              }) => (
-                <Form inverted size="small">
-                  <Form.Field>
-                    <Input
-                      name="username"
-                      type="text"
-                      label="Username"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                    />
-                    {touched.username && errors.username && (
-                      <Label pointing prompt color="red">
-                        {errors.username}
-                      </Label>
-                    )}
-                  </Form.Field>
-                  <Form.Field>
-                    <Input
-                      name="password"
-                      type="password"
-                      label="Password"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                    />
-                    {touched.password && errors.password && (
-                      <Label pointing prompt color="red">
-                        {errors.password}
-                      </Label>
-                    )}
-                  </Form.Field>
-                  <Form.Field>
-                    <Button color="teal" type="submit" onClick={handleSubmit}>
-                      Login
-                    </Button>
-                  </Form.Field>
-                </Form>
-              )}
-            </Formik>
-          </Container>
+          </Formik>
         </Grid.Column>
       </Grid.Row>
     </Grid>

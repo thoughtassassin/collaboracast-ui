@@ -16,7 +16,6 @@
 }
 
 .messages .ui.inverted.top.attached.header {
-  background-color: #2185d0 !important;
   display: flex;
   border: none;
   justify-content: space-between;
@@ -30,7 +29,6 @@
 
 .messages a,
 .messages a:hover {
-  color: #fff;
   text-decoration: none;
 }
 

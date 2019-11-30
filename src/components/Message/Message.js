@@ -1,15 +1,10 @@
 import React, { useEffect, useCallback, useState } from "react";
-import {
-  Header,
-  Segment,
-  Message as SemanticMessage,
-  Button,
-  Icon
-} from "semantic-ui-react";
+import { Header, Message as SemanticMessage, Button } from "semantic-ui-react";
 import { navigate } from "@reach/router";
-import moment from "moment";
 
 import urls from "../../constants/urls";
+import MessageCard from "../MessageCard/MessageCard";
+import CommentCard from "../CommentCard/CommentCard";
 import "./Message.css";
 
 export const Message = ({
@@ -52,62 +47,38 @@ export const Message = ({
     <div className="messages">
       {message && (
         <>
-          <Button
-            onClick={() => navigate(`/add-comment/${messageId}`)}
-            size="small"
-            color="green"
-            floated="right"
-          >
-            Add Comment
-          </Button>
-          <Header as="h3" inverted>
-            Message
-          </Header>
+          <div className="page-header">
+            <Header as="h3">Message</Header>
+            <Button
+              onClick={() => navigate(`/add-comment/${messageId}`)}
+              size="small"
+              color="green"
+            >
+              Add Comment
+            </Button>
+          </div>
           {success && (
             <SemanticMessage positive onDismiss={() => setSuccess(false)}>
               {success}
             </SemanticMessage>
           )}
-          <div className="message">
-            <Header as="h4" attached="top" inverted>
-              <div className="comment-user">
-                <Icon name="user circle" size="large" />
-                {message.User.username}
-              </div>
-              <div className="comment-date">
-                {moment(message.createdAt).format("MMM DD, YYYY")}
-              </div>
-            </Header>
-            <Segment key={`content-index`} inverted color="blue" attached>
-              <div>{message.content}</div>
-            </Segment>
-            <Segment key={`footer-index`} inverted color="blue" attached>
-              <div>
-                <Icon name="comments" size="large" />
-                {message.Comments.length}
-              </div>
-            </Segment>
-          </div>
+          <MessageCard
+            id={message.id}
+            username={message.User.username}
+            content={message.content}
+            createdAt={message.createdAt}
+            commentCount={message.Comments.length}
+          />
           {message.Comments.length > 0 && (
             <div className="comments">
-              <Header as="h3" inverted>
-                Comments
-              </Header>
+              <Header as="h3">Comments</Header>
               {message.Comments.map((comment, index) => (
-                <div key={index} className="comments">
-                  <Header as="h4" attached="top" inverted>
-                    <div className="comment-user">
-                      <Icon name="user circle" size="large" />
-                      {comment.User.username}
-                    </div>
-                    <div className="comment-date">
-                      {moment(comment.createdAt).format("MMM DD, YYYY")}
-                    </div>
-                  </Header>
-                  <Segment key={`content-index`} attached inverted color="grey">
-                    <div>{comment.content}</div>
-                  </Segment>
-                </div>
+                <CommentCard
+                  key={index}
+                  username={comment.User.username}
+                  createdAt={comment.createdAt}
+                  content={comment.content}
+                />
               ))}
             </div>
           )}

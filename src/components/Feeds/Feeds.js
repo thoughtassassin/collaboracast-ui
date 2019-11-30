@@ -4,11 +4,11 @@ import { Button } from "semantic-ui-react";
 const Feeds = ({ feeds, setFeed, feed }) => (
   <div>
     <Button.Group
-      inverted
       vertical
-      color="green"
       size="mini"
-      style={{ marginLeft: "1rem" }}
+      style={{
+        marginLeft: "1rem"
+      }}
     >
       {feeds &&
         feeds.map(feedItem => (

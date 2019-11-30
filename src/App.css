@@ -1,6 +1,6 @@
 .App {
-  background: #0f1831;
-  color: white;
+  background: #eee;
+  color: black;
   min-height: 100vh;
   justify-content: center;
   padding: 1rem;
@@ -11,12 +11,12 @@
 }
 
 .App-header {
-  background-color: #0f1831;
+  background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: black;
 }
 
 .App h1 {
@@ -28,4 +28,15 @@
 
 .App-link {
   color: #09d3ac;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1rem;
+}
+
+.page-header h3 {
+  margin: 0 !important;
 }

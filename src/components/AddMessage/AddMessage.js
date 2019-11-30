@@ -57,29 +57,21 @@ const AddMessage = ({ channelId, channels, token, setLoading, setSuccess }) => {
   };
   return (
     <div>
-      <Grid columns={2}>
-        <Grid.Row style={{ margin: "2rem 0 1rem" }}>
-          <Grid.Column width={channelId ? 16 : 6}>
-            <Header as="h3" inverted>
-              Add Message{" "}
-            </Header>
-          </Grid.Column>
-          {!channelId && (
-            <Grid.Column textAlign="right" width={10}>
-              <Dropdown
-                placeholder="Select Channel"
-                options={channels.map(channel => ({
-                  key: channel.id,
-                  value: channel.id,
-                  text: channel.name
-                }))}
-                className="message-container"
-                onChange={(e, { value }) => setMessageChannel(value)}
-              />
-            </Grid.Column>
-          )}
-        </Grid.Row>
-      </Grid>
+      <div className="page-header">
+        <Header as="h3">Add Message </Header>
+        {!channelId && (
+          <Dropdown
+            placeholder="Select Channel"
+            options={channels.map(channel => ({
+              key: channel.id,
+              value: channel.id,
+              text: channel.name
+            }))}
+            className="message-container"
+            onChange={(e, { value }) => setMessageChannel(value)}
+          />
+        )}
+      </div>
       {error && <Message error>{error}</Message>}
       <Formik
         initialValues={{
@@ -108,7 +100,7 @@ const AddMessage = ({ channelId, channels, token, setLoading, setSuccess }) => {
               )}
             </Form.Field>
             <Form.Field>
-              <Button color="teal" type="submit" onClick={handleSubmit}>
+              <Button color="green" type="submit" onClick={handleSubmit}>
                 Save Message
               </Button>
             </Form.Field>

@@ -32,14 +32,18 @@ const DashboardContainer = ({
       <Dimmer active={loading} page>
         <Loader size="big">Loading</Loader>
       </Dimmer>
-      <Menu fixed="top" inverted color="teal" size="massive">
+      <Menu fixed="top" inverted size="massive">
         <Menu.Item>
           <Link to="/">
             <Icon name="user" /> {username}
           </Link>
-          <Button size="mini" compact inverted onClick={logout}>
-            <Icon name="log out" />
-          </Button>
+          <Button
+            size="mini"
+            inverted
+            icon="log out"
+            compact
+            onClick={logout}
+          />
         </Menu.Item>
         {menuIcon}
       </Menu>

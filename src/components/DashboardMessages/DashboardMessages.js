@@ -1,11 +1,9 @@
 import React, { useEffect, useCallback, useState } from "react";
-import { Link } from "@reach/router";
-import { Header, Segment, Message, Button, Icon } from "semantic-ui-react";
+import { Header, Message, Button } from "semantic-ui-react";
 import { navigate } from "@reach/router";
-import moment from "moment";
 
 import urls from "../../constants/urls";
-import "./DashboardMessages.css";
+import MessageCard from "../MessageCard/MessageCard";
 
 export const DashboardMessages = ({
   channels,
@@ -47,17 +45,16 @@ export const DashboardMessages = ({
   return (
     <div className="messages">
       <>
-        <Button
-          onClick={() => navigate(`/add-message/`)}
-          size="small"
-          color="green"
-          floated="right"
-        >
-          Add Message
-        </Button>
-        <Header as="h3" inverted>
-          Dashboard
-        </Header>
+        <div className="page-header">
+          <Header as="h3">Dashboard</Header>
+          <Button
+            onClick={() => navigate(`/add-message/`)}
+            size="small"
+            color="green"
+          >
+            Add Message
+          </Button>
+        </div>
         {success && (
           <Message positive onDismiss={() => setSuccess(false)}>
             {success}
@@ -65,28 +62,14 @@ export const DashboardMessages = ({
         )}
         {messages &&
           messages.map((message, index) => (
-            <div key={index} className="message">
-              <Link to={`/messages/${message.id}`}>
-                <Header as="h4" attached="top" inverted>
-                  <div className="comment-user">
-                    <Icon name="user circle" size="large" />
-                    {message.username}
-                  </div>
-                  <div className="comment-date">
-                    {moment(message.createdAt).format("MMM DD, YYYY")}
-                  </div>
-                </Header>
-                <Segment key={`content-index`} inverted color="blue" attached>
-                  <div>{message.content}</div>
-                </Segment>
-                <Segment key={`footer-index`} inverted color="blue" attached>
-                  <div>
-                    <Icon name="comments" size="large" />
-                    {message.CommentCount}
-                  </div>
-                </Segment>
-              </Link>
-            </div>
+            <MessageCard
+              key={index}
+              id={message.id}
+              username={message.username}
+              content={message.content}
+              createdAt={message.createdAt}
+              commentCount={message.CommentCount}
+            />
           ))}
       </>
     </div>

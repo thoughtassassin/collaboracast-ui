@@ -1,16 +1,13 @@
 .channels-header {
-    padding: 0 0 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  border-bottom: 1px solid #999;
 }
 
 .channels .item {
-    display: flex !important;
-    justify-content: space-between;
-    align-items: center;
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .channels .item:after {
-    content: none !important;
+  content: none !important;
 }

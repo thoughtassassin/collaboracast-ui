@@ -6,16 +6,6 @@
   margin: 0;
 }
 
-.messages .comments .ui.inverted.attached.segment {
-  border: none;
-}
-
-.messages .comments .ui.top.inverted.attached.header {
-  background-color: #767676 !important;
-  display: flex;
-  justify-content: space-between;
-}
-
 .messages .contact {
   margin: 1.5rem 0;
   border-radius: 5px;
@@ -25,12 +15,4 @@
 .messages a:hover,
 .messages a:active {
   text-decoration: none;
-}
-
-.comments {
-  margin-top: 1rem;
-}
-
-.comment {
-  margin-bottom: 1rem;
 }

@@ -4,14 +4,9 @@ import { navigate } from "@reach/router";
 
 const ContentSelector = ({ channelId }) => (
   <>
-    <Button.Group
-      size="mini"
-      inverted
-      vertical
-      color="blue"
-      style={{ marginLeft: "1rem" }}
-    >
+    <Button.Group size="mini" inverted vertical style={{ marginLeft: "1rem" }}>
       <Button
+        color="grey"
         onClick={() => {
           navigate(`${channelId}/messages`);
         }}

@@ -1,0 +1,10 @@
+.contact-channels a,
+.contact-channels a:hover,
+.contact-channels a:active {
+  color: black;
+}
+
+.contact-channels a:hover,
+.contact-channels a:active {
+  text-decoration: underline;
+}

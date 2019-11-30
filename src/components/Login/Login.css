@@ -1,7 +1,11 @@
 label {
-  color: white;
+  color: black;
 }
 
 .ui.grid.login {
   margin: 5rem 0.5rem 0;
+}
+
+.login .ui.input {
+  border: 1px solid #ccc;
 }

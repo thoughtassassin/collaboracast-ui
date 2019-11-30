@@ -4,6 +4,7 @@ import { navigate } from "@reach/router";
 
 import urls from "../../constants/urls";
 import ChannelName from "../ChannelName/ChannelName";
+import ContactCard from "../ContactCard/ContactCard";
 import "./Contacts.css";
 
 export const Contacts = ({
@@ -48,46 +49,42 @@ export const Contacts = ({
     <div className="contacts">
       {contacts && (
         <>
-          <Button
-            onClick={() => navigate(`/add-contact/${channelId}`)}
-            size="small"
-            color="green"
-            floated="right"
-          >
-            Add Contact
-          </Button>
-          <Header as="h3" inverted>
-            Contacts for{" "}
-            <ChannelName
-              channels={channels}
-              resource={/[0-9]+.?(?=\/contacts\/?)/g}
-            />
-          </Header>
+          <div className="page-header">
+            <Header as="h3">
+              Contacts for{" "}
+              <ChannelName
+                channels={channels}
+                resource={/[0-9]+.?(?=\/contacts\/?)/g}
+              />
+            </Header>
+            <Button
+              onClick={() => navigate(`/add-contact/${channelId}`)}
+              size="small"
+              color="green"
+            >
+              Add Contact
+            </Button>
+          </div>
           {success && (
             <Message positive onDismiss={() => setSuccess(false)}>
               {success}
             </Message>
           )}
           {contacts.map((contact, index) => (
-            <div key={index} className="contact">
-              <Header as="h4" attached="top" inverted>
-                <Icon name="user circle" size="mini" />
-                {contact.firstName} {contact.lastName} |{" "}
-                <a href={`tel:${contact.phone}`}>{contact.phone}</a>
-              </Header>
-              <Segment key={index} inverted color="blue" attached>
-                <Header sub>{contact.group}</Header>
-                {contact.position && <div>{contact.position}</div>}
-                <div>{contact.address1}</div>
-                <div>{contact.address2}</div>
-                <div>
-                  {contact.city}, {contact.state} {contact.zip}
-                </div>
-                <div>
-                  <a href={`mailto:${contact.email}`}>{contact.email}</a>
-                </div>
-              </Segment>
-            </div>
+            <ContactCard
+              key={index}
+              firstName={contact.firstName}
+              lastName={contact.lastName}
+              phone={contact.phone}
+              group={contact.group}
+              position={contact.position}
+              address1={contact.address1}
+              address2={contact.address2}
+              city={contact.city}
+              state={contact.state}
+              zip={contact.zip}
+              email={contact.email}
+            />
           ))}
         </>
       )}

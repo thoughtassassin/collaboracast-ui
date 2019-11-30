@@ -6,6 +6,7 @@ import * as yup from "yup";
 
 import urls from "../../constants/urls";
 import ChannelName from "../ChannelName/ChannelName";
+import "./AddContact.css";
 
 const AddContact = ({ channelId, channels, token, setLoading, setSuccess }) => {
   const [error, setError] = useState(false);
@@ -66,13 +67,15 @@ const AddContact = ({ channelId, channels, token, setLoading, setSuccess }) => {
   };
   return (
     <div>
-      <Header as="h3" inverted>
-        Add Contact To{" "}
-        <ChannelName
-          channels={channels}
-          resource={/\/add-contact\/([0-9]+).?\/?/}
-        />
-      </Header>
+      <div className="page-header">
+        <Header as="h3">
+          Add Contact To{" "}
+          <ChannelName
+            channels={channels}
+            resource={/\/add-contact\/([0-9]+).?\/?/}
+          />
+        </Header>
+      </div>
       {error && <Message error>{error}</Message>}
       <Formik
         initialValues={{
@@ -102,7 +105,7 @@ const AddContact = ({ channelId, channels, token, setLoading, setSuccess }) => {
         })}
       >
         {({ errors, touched, handleChange, handleBlur, handleSubmit }) => (
-          <Form inverted>
+          <Form inverted className="add-contact">
             <Form.Field>
               <Input
                 name="firstName"
@@ -253,7 +256,7 @@ const AddContact = ({ channelId, channels, token, setLoading, setSuccess }) => {
               )}
             </Form.Field>
             <Form.Field>
-              <Button color="teal" type="submit" onClick={handleSubmit}>
+              <Button color="green" type="submit" onClick={handleSubmit}>
                 Save Contact
               </Button>
             </Form.Field>

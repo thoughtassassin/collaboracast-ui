@@ -1,4 +1,8 @@
 .message-container .menu {
-    right: 0 !important;
-    left: auto !important;
+  right: 0 !important;
+  left: auto !important;
+}
+
+.message-container .default.text {
+  color: #333 !important;
 }

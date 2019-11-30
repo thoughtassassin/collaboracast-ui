@@ -1,0 +1,19 @@
+.contact-card {
+  margin: 1.5rem 0;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.contact-card .ui.header > .icon {
+  display: inline-block;
+}
+
+.contact-card a,
+.contact-card a:hover {
+  color: #555;
+}
+
+.contact-card a:hover,
+.contact-card a:active {
+  text-decoration: underline;
+}

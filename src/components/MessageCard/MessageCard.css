@@ -1,0 +1,50 @@
+.message {
+  margin-bottom: 1rem;
+  background: #fff;
+  padding: 0.5rem;
+  box-shadow: 1px 1px 1px #ccc;
+}
+
+.message .ui.button {
+  margin: 0;
+}
+
+.message .ui.attached.segment {
+  border: none;
+}
+
+.message .ui.attached.segment:last-of-type {
+  border: none;
+  border-radius: 0 0 5px 5px;
+}
+
+.message .ui.top.attached.header {
+  display: flex;
+  border: none;
+  justify-content: space-between;
+}
+
+.message .ui.inverted.header {
+  padding: 0.5rem;
+}
+
+.message .message-content {
+  font-size: 1.35rem;
+}
+
+.message .contact {
+  margin: 1.5rem 0;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.message a,
+.messages a:hover {
+  color: #555;
+  text-decoration: none;
+}
+
+.message a:hover,
+.messages a:active {
+  text-decoration: none !important;
+}
