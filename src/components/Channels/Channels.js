@@ -1,5 +1,5 @@
 import React from "react";
-import { List } from "semantic-ui-react";
+import { List, Header } from "semantic-ui-react";
 
 import ContentSelector from "./ContentSelector/ContentSelector";
 import "./Channels.css";
@@ -8,7 +8,9 @@ const Channels = ({ channels, feed, feedsMenu }) => {
   return (
     <div className="channels">
       <div className="channels-header">
-        <h2>Channels for {feed}</h2>
+        <Header as="h3" inverted>
+          Channels for {feed}
+        </Header>
         {feedsMenu}
       </div>
       <List divided inverted relaxed size="medium" verticalAlign="middle">

@@ -53,7 +53,7 @@ const AddComment = ({ messageId, token, setLoading, setSuccess }) => {
   };
   return (
     <div>
-      <Header as="h2" inverted>
+      <Header as="h3" inverted>
         Add Comment
       </Header>
       {error && <Comment error>{error}</Comment>}

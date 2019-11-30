@@ -55,7 +55,7 @@ export const DashboardMessages = ({
         >
           Add Message
         </Button>
-        <Header as="h2" inverted>
+        <Header as="h3" inverted>
           Dashboard
         </Header>
         {success && (

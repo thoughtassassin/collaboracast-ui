@@ -60,7 +60,7 @@ export const Message = ({
           >
             Add Comment
           </Button>
-          <Header as="h2" inverted>
+          <Header as="h3" inverted>
             Message
           </Header>
           {success && (

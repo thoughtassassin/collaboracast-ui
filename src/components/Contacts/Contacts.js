@@ -56,7 +56,7 @@ export const Contacts = ({
           >
             Add Contact
           </Button>
-          <Header as="h2" inverted>
+          <Header as="h3" inverted>
             Contacts for{" "}
             <ChannelName
               channels={channels}

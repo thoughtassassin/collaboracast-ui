@@ -58,7 +58,7 @@ export const Messages = ({
           >
             Add Message
           </Button>
-          <Header as="h2" inverted>
+          <Header as="h3" inverted>
             Messages for{" "}
             <ChannelName
               channels={channels}

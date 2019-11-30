@@ -1,11 +1,13 @@
 import React from "react";
-import { List } from "semantic-ui-react";
+import { List, Header } from "semantic-ui-react";
 import { Link } from "@reach/router";
 
 const Channels = ({ channels, setChannel }) => {
   return (
     <div>
-      <h2>Channels for Contacts</h2>
+      <Header as="h3" inverted>
+        Channels for Contacts
+      </Header>
       <List divided inverted relaxed size="medium">
         {channels &&
           channels.map(channel => (

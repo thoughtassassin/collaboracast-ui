@@ -22,19 +22,21 @@
   justify-content: space-between;
 }
 
+.messages .ui.inverted.header {
+  padding: 0.5rem;
+}
+
 .messages .contact {
   margin: 1.5rem 0;
   border-radius: 5px;
   overflow: hidden;
 }
 
-.messages a,
-.messages a:hover {
+.messages a, .messages a:hover {
   color: #fff;
   text-decoration: none;
 }
 
-.messages a:hover,
-.messages a:active {
+.messages a:hover, .messages a:active {
   text-decoration: underline;
 }

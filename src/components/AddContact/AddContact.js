@@ -64,7 +64,7 @@ const AddContact = ({ channelId, channels, token, setLoading, setSuccess }) => {
   };
   return (
     <div>
-      <Header as="h2" inverted>
+      <Header as="h3" inverted>
         Add Contact To{" "}
         <ChannelName
           channels={channels}
