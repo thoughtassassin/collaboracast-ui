@@ -6,7 +6,7 @@ const Channels = ({ channels, setChannel }) => {
   return (
     <div>
       <h2>Channels for Contacts</h2>
-      <List divided inverted relaxed size="massive">
+      <List divided inverted relaxed size="medium">
         {channels &&
           channels.map(channel => (
             <List.Item key={channel.name}>

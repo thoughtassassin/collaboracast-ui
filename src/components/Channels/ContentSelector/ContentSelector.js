@@ -3,10 +3,11 @@ import { Button } from "semantic-ui-react";
 import { navigate } from "@reach/router";
 
 const ContentSelector = ({ channelId }) => (
-  <div style={{ float: "right" }}>
+  <>
     <Button.Group
-      size="tiny"
+      size="mini"
       inverted
+      vertical
       color="blue"
       style={{ marginLeft: "1rem" }}
     >
@@ -25,7 +26,7 @@ const ContentSelector = ({ channelId }) => (
         Contacts
       </Button>
     </Button.Group>
-  </div>
+  </>
 );
 
 export default ContentSelector;

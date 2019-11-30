@@ -4,3 +4,13 @@
     justify-content: space-between;
     align-items: center;
 }
+
+.channels .item {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.channels .item:after {
+    content: none !important;
+}

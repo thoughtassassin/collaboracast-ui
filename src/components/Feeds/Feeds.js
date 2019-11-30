@@ -5,8 +5,9 @@ const Feeds = ({ feeds, setFeed, feed }) => (
   <div>
     <Button.Group
       inverted
+      vertical
       color="green"
-      size="tiny"
+      size="mini"
       style={{ marginLeft: "1rem" }}
     >
       {feeds &&
