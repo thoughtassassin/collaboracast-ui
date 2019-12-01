@@ -60,7 +60,7 @@ export const Messages = ({
             <Button
               onClick={() => navigate(`/add-message/${channelId}`)}
               size="small"
-              color="green"
+              primary
             >
               Add Message
             </Button>

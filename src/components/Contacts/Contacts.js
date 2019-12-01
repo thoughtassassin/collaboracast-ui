@@ -60,7 +60,7 @@ export const Contacts = ({
             <Button
               onClick={() => navigate(`/add-contact/${channelId}`)}
               size="small"
-              color="green"
+              primary
             >
               Add Contact
             </Button>

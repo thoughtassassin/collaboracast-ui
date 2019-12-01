@@ -53,7 +53,7 @@ export const Message = ({
             <Button
               onClick={() => navigate(`/add-comment/${messageId}`)}
               size="small"
-              color="green"
+              primary
             >
               Add Comment
             </Button>

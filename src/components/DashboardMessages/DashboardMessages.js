@@ -51,7 +51,7 @@ export const DashboardMessages = ({
           <Button
             onClick={() => navigate(`/add-message/`)}
             size="small"
-            color="green"
+            primary
           >
             Add Message
           </Button>

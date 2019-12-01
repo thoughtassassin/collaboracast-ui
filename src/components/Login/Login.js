@@ -101,7 +101,7 @@ function Login({ setAuthenticated }) {
                   )}
                 </Form.Field>
                 <Form.Field>
-                  <Button type="submit" color="green" onClick={handleSubmit}>
+                  <Button type="submit" primary onClick={handleSubmit}>
                     Login
                   </Button>
                 </Form.Field>

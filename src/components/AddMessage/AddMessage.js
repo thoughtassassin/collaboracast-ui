@@ -101,11 +101,11 @@ const AddMessage = ({ channelId, channels, token, setLoading, setSuccess }) => {
             </Form.Field>
             <Form.Field>
               {channelId ? (
-                <Button color="green" type="submit" onClick={handleSubmit}>
+                <Button primary type="submit" onClick={handleSubmit}>
                   Save Message
                 </Button>
               ) : messageChannel ? (
-                <Button color="green" type="submit" onClick={handleSubmit}>
+                <Button primary type="submit" onClick={handleSubmit}>
                   Save Message
                 </Button>
               ) : (

@@ -85,7 +85,7 @@ const AddComment = ({ messageId, token, setLoading, setSuccess }) => {
               )}
             </Form.Field>
             <Form.Field>
-              <Button color="green" type="submit" onClick={handleSubmit}>
+              <Button primary type="submit" onClick={handleSubmit}>
                 Save Comment
               </Button>
             </Form.Field>

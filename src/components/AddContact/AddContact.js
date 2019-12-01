@@ -257,7 +257,7 @@ const AddContact = ({ channelId, channels, token, setLoading, setSuccess }) => {
               )}
             </Form.Field>
             <Form.Field>
-              <Button color="green" type="submit" onClick={handleSubmit}>
+              <Button primary type="submit" onClick={handleSubmit}>
                 Save Contact
               </Button>
             </Form.Field>
