@@ -36,6 +36,7 @@ const AddContact = ({ channelId, channels, token, setLoading, setSuccess }) => {
     email
   }) => {
     setLoading(true);
+    console.log({ zip: zip });
     fetch(`${urls.base}/api/v1/contacts`, {
       method: "post",
       headers: {
@@ -52,7 +53,7 @@ const AddContact = ({ channelId, channels, token, setLoading, setSuccess }) => {
         address2,
         city,
         state,
-        zip,
+        zip: zip || null,
         email,
         ChannelId: channelId
       })
@@ -96,10 +97,13 @@ const AddContact = ({ channelId, channels, token, setLoading, setSuccess }) => {
           {
             firstName: yup.string().required("First Name is required"),
             lastName: yup.string().required("Last Name is required"),
-            email: yup.string().when("phone", {
-              is: (phone, email) => !(phone || email),
-              then: yup.string().required("Phone or email is required")
-            }),
+            email: yup
+              .string()
+              .email()
+              .when("phone", {
+                is: (phone, email) => !(phone || email),
+                then: yup.string().required("Phone or email is required")
+              }),
             phone: yup.string().when("email", {
               is: (phone, email) => !(phone || email),
               then: yup.string().required("Phone or email is required")

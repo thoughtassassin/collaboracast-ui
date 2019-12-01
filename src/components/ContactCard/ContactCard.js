@@ -19,7 +19,7 @@ export const ContactCard = ({
   <div className="contact-card">
     <Header as="h4" attached="top">
       <Icon name="user circle" size="mini" floated="left" />
-      {firstName} {lastName} | <a href={`tel:${phone}`}>{phone}</a>
+      {firstName} {lastName} {phone && "|"} <a href={`tel:${phone}`}>{phone}</a>
     </Header>
     <Segment attached>
       <Header sub>{group}</Header>
