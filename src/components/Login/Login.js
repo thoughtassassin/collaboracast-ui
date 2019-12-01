@@ -49,7 +49,7 @@ function Login({ setAuthenticated }) {
       });
   };
   return (
-    <Grid verticalAlign="top" columns={1} centered className="login">
+    <Grid columns={1} centered className="login">
       <Grid.Row>
         <Grid.Column>
           <Header as="h1">Don-Nan</Header>
