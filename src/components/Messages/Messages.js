@@ -78,6 +78,7 @@ export const Messages = ({
               content={message.content}
               createdAt={message.createdAt}
               commentCount={message.Comments.length}
+              channel={message.Channel.name}
             />
           ))}
         </>

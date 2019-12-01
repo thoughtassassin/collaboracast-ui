@@ -69,6 +69,7 @@ export const Message = ({
             content={message.content}
             createdAt={message.createdAt}
             commentCount={message.Comments.length}
+            channel={message.Channel.name}
           />
           {message.Comments.length > 0 && (
             <div className="comments">

@@ -70,6 +70,7 @@ export const DashboardMessages = ({
               content={message.content}
               createdAt={message.createdAt}
               commentCount={message.CommentCount}
+              channel={message.channelName}
             />
           ))}
       </>
