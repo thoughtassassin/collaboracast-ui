@@ -2,6 +2,10 @@
   margin-top: 5rem;
 }
 
+.dashboard .ui.massive.menu {
+  background: var(--dark-theme-color);
+}
+
 .dashboard select {
   display: block;
 }

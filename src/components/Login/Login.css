@@ -9,3 +9,7 @@ label {
 .login .ui.input {
   border: 1px solid #ccc;
 }
+
+.login .ui.header {
+  color: var(--dark-theme-color);
+}
