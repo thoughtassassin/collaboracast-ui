@@ -10,7 +10,6 @@ import "./Contacts.css";
 
 export const Contacts = ({
   channelId,
-  channel,
   setLoading,
   success,
   setSuccess,

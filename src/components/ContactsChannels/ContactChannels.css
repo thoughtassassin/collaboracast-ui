@@ -8,3 +8,7 @@
 .contact-channels a:active {
   text-decoration: underline;
 }
+
+.contact-channels .item {
+  padding: 1rem 0 !important;
+}
