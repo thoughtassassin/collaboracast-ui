@@ -6,6 +6,7 @@ import * as yup from "yup";
 
 import urls from "../../constants/urls";
 import ChannelName from "../ChannelName/ChannelName";
+import PageHeader from "../PageHeader/PageHeader";
 import "./AddContact.css";
 
 const AddContact = ({ channelId, channels, token, setLoading, setSuccess }) => {
@@ -67,7 +68,7 @@ const AddContact = ({ channelId, channels, token, setLoading, setSuccess }) => {
   };
   return (
     <div>
-      <div className="page-header">
+      <PageHeader>
         <Header as="h3">
           Add Contact To{" "}
           <ChannelName
@@ -75,7 +76,7 @@ const AddContact = ({ channelId, channels, token, setLoading, setSuccess }) => {
             resource={/\/add-contact\/([0-9]+).?\/?/}
           />
         </Header>
-      </div>
+      </PageHeader>
       {error && <Message error>{error}</Message>}
       <Formik
         initialValues={{

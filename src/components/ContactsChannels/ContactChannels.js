@@ -2,14 +2,15 @@ import React from "react";
 import { List, Header } from "semantic-ui-react";
 import { Link } from "@reach/router";
 
+import PageHeader from "../PageHeader/PageHeader";
 import "./ContactChannels.css";
 
 const ContactChannels = ({ channels, setChannel }) => {
   return (
     <div className="contact-channels">
-      <div className="page-header">
+      <PageHeader>
         <Header as="h3">Channels for Contacts</Header>
-      </div>
+      </PageHeader>
       <List divided relaxed size="medium">
         {channels &&
           channels.map(channel => (

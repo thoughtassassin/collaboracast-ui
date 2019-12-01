@@ -5,6 +5,7 @@ import { navigate } from "@reach/router";
 import urls from "../../constants/urls";
 import MessageCard from "../MessageCard/MessageCard";
 import CommentCard from "../CommentCard/CommentCard";
+import PageHeader from "../PageHeader/PageHeader";
 import "./Message.css";
 
 export const Message = ({
@@ -47,7 +48,7 @@ export const Message = ({
     <div className="messages">
       {message && (
         <>
-          <div className="page-header">
+          <PageHeader>
             <Header as="h3">Message</Header>
             <Button
               onClick={() => navigate(`/add-comment/${messageId}`)}
@@ -56,7 +57,7 @@ export const Message = ({
             >
               Add Comment
             </Button>
-          </div>
+          </PageHeader>
           {success && (
             <SemanticMessage positive onDismiss={() => setSuccess(false)}>
               {success}

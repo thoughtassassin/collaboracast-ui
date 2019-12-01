@@ -4,6 +4,7 @@ import { navigate } from "@reach/router";
 
 import urls from "../../constants/urls";
 import MessageCard from "../MessageCard/MessageCard";
+import PageHeader from "../PageHeader/PageHeader";
 
 export const DashboardMessages = ({
   channels,
@@ -45,7 +46,7 @@ export const DashboardMessages = ({
   return (
     <div className="messages">
       <>
-        <div className="page-header">
+        <PageHeader>
           <Header as="h3">Dashboard</Header>
           <Button
             onClick={() => navigate(`/add-message/`)}
@@ -54,7 +55,7 @@ export const DashboardMessages = ({
           >
             Add Message
           </Button>
-        </div>
+        </PageHeader>
         {success && (
           <Message positive onDismiss={() => setSuccess(false)}>
             {success}

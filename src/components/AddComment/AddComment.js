@@ -13,6 +13,7 @@ import jwtDecode from "jwt-decode";
 import { navigate } from "@reach/router";
 
 import urls from "../../constants/urls";
+import PageHeader from "../PageHeader/PageHeader";
 
 const AddComment = ({ messageId, token, setLoading, setSuccess }) => {
   const [error, setError] = useState(false);
@@ -53,9 +54,9 @@ const AddComment = ({ messageId, token, setLoading, setSuccess }) => {
   };
   return (
     <div>
-      <Header as="h3" inverted>
-        Add Comment
-      </Header>
+      <PageHeader>
+        <Header as="h3">Add Comment</Header>
+      </PageHeader>
       {error && <Comment error>{error}</Comment>}
       <Formik
         initialValues={{
@@ -84,7 +85,7 @@ const AddComment = ({ messageId, token, setLoading, setSuccess }) => {
               )}
             </Form.Field>
             <Form.Field>
-              <Button color="teal" type="submit" onClick={handleSubmit}>
+              <Button color="green" type="submit" onClick={handleSubmit}>
                 Save Comment
               </Button>
             </Form.Field>

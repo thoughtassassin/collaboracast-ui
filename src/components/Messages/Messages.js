@@ -5,6 +5,7 @@ import { navigate } from "@reach/router";
 import urls from "../../constants/urls";
 import ChannelName from "../ChannelName/ChannelName";
 import MessageCard from "../MessageCard/MessageCard";
+import PageHeader from "../PageHeader/PageHeader";
 import "./Messages.css";
 
 export const Messages = ({
@@ -48,7 +49,7 @@ export const Messages = ({
     <div className="messages">
       {messages && (
         <>
-          <div className="page-header">
+          <PageHeader>
             <Header as="h3">
               Messages for{" "}
               <ChannelName
@@ -63,7 +64,7 @@ export const Messages = ({
             >
               Add Message
             </Button>
-          </div>
+          </PageHeader>
           {success && (
             <Message positive onDismiss={() => setSuccess(false)}>
               {success}

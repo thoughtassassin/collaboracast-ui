@@ -5,6 +5,7 @@ import { navigate } from "@reach/router";
 import urls from "../../constants/urls";
 import ChannelName from "../ChannelName/ChannelName";
 import ContactCard from "../ContactCard/ContactCard";
+import PageHeader from "../PageHeader/PageHeader";
 import "./Contacts.css";
 
 export const Contacts = ({
@@ -49,7 +50,7 @@ export const Contacts = ({
     <div className="contacts">
       {contacts && (
         <>
-          <div className="page-header">
+          <PageHeader>
             <Header as="h3">
               Contacts for{" "}
               <ChannelName
@@ -64,7 +65,7 @@ export const Contacts = ({
             >
               Add Contact
             </Button>
-          </div>
+          </PageHeader>
           {success && (
             <Message positive onDismiss={() => setSuccess(false)}>
               {success}

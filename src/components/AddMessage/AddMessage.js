@@ -15,6 +15,7 @@ import jwtDecode from "jwt-decode";
 import { navigate } from "@reach/router";
 
 import urls from "../../constants/urls";
+import PageHeader from "../PageHeader/PageHeader";
 import "./AddMessage.css";
 
 const AddMessage = ({ channelId, channels, token, setLoading, setSuccess }) => {
@@ -57,7 +58,7 @@ const AddMessage = ({ channelId, channels, token, setLoading, setSuccess }) => {
   };
   return (
     <div>
-      <div className="page-header">
+      <PageHeader>
         <Header as="h3">Add Message </Header>
         {!channelId && (
           <Dropdown
@@ -71,7 +72,7 @@ const AddMessage = ({ channelId, channels, token, setLoading, setSuccess }) => {
             onChange={(e, { value }) => setMessageChannel(value)}
           />
         )}
-      </div>
+      </PageHeader>
       {error && <Message error>{error}</Message>}
       <Formik
         initialValues={{

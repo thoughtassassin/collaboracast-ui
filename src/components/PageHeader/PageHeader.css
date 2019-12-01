@@ -1,0 +1,10 @@
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1rem;
+}
+
+.page-header h3 {
+  margin: 0 !important;
+}
