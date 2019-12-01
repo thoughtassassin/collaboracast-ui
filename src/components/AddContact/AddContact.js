@@ -36,7 +36,6 @@ const AddContact = ({ channelId, channels, token, setLoading, setSuccess }) => {
     email
   }) => {
     setLoading(true);
-    console.log({ zip: zip });
     fetch(`${urls.base}/api/v1/contacts`, {
       method: "post",
       headers: {
