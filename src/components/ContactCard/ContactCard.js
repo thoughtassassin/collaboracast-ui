@@ -27,7 +27,7 @@ export const ContactCard = ({
       <div>{address1}</div>
       <div>{address2}</div>
       <div>
-        {city}, {state} {zip}
+        {city} {city && state ? "," : ""} {state} {zip}
       </div>
       <div>
         <a href={`mailto:${email}`}>{email}</a>

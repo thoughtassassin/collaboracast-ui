@@ -88,22 +88,29 @@ const AddContact = ({ channelId, channels, token, setLoading, setSuccess }) => {
           address2: "",
           city: "",
           state: "",
-          zip: "",
+          zip: null,
           email: ""
         }}
         onSubmit={formSubmit}
-        validationSchema={yup.object().shape({
-          firstName: yup.string().required("First Name is required"),
-          lastName: yup.string().required("Last Name is required"),
-          group: yup.string().required("Group is required"),
-          position: yup.string().required("Position is required"),
-          phone: yup.string().required("Phone is required"),
-          address1: yup.string().required("Address1 field is required"),
-          city: yup.string().required("City is required"),
-          state: yup.string().required("State is required"),
-          zip: yup.string().required("Zip is required"),
-          email: yup.string().required("Email is required")
-        })}
+        validationSchema={yup.object().shape(
+          {
+            firstName: yup.string().required("First Name is required"),
+            lastName: yup.string().required("Last Name is required"),
+            email: yup.string().when("phone", {
+              is: (phone, email) => !(phone || email),
+              then: yup.string().required("Phone or email is required")
+            }),
+            phone: yup.string().when("email", {
+              is: (phone, email) => !(phone || email),
+              then: yup.string().required("Phone or email is required")
+            }),
+            zip: yup
+              .number()
+              .typeError("Must be a number.")
+              .nullable()
+          },
+          [["email", "phone"]]
+        )}
       >
         {({ errors, touched, handleChange, handleBlur, handleSubmit }) => (
           <Form inverted className="add-contact">
