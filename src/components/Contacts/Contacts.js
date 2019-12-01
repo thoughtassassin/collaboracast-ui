@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback, useState } from "react";
-import { Header, Message, Segment, Button, Icon } from "semantic-ui-react";
+import { Header, Message, Button } from "semantic-ui-react";
 import { navigate } from "@reach/router";
 
 import urls from "../../constants/urls";
