@@ -38,18 +38,17 @@
   overflow: hidden;
 }
 
-.message a,
-.messages a:hover {
+.message a, .messages a:hover {
   color: #555;
   text-decoration: none;
 }
 
-.message a:hover,
-.messages a:active {
+.message a:hover, .messages a:active {
   text-decoration: none !important;
 }
 
 .message .message-footer {
   display: flex;
   justify-content: space-between;
+  align-items: flex-end;
 }

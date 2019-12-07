@@ -8,6 +8,7 @@ import "./MessageCard.css";
 export const MessageCard = ({
   id,
   username,
+  warehouse,
   channel,
   content,
   createdAt,
@@ -32,8 +33,8 @@ export const MessageCard = ({
           {commentCount || 0}
         </div>
         <div>
-          <Icon name="user circle" size="large" />
-          {username}
+          <div>{username}</div>
+          <div>{warehouse}</div>
         </div>
       </Segment>
     </Link>

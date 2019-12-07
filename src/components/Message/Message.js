@@ -66,6 +66,7 @@ export const Message = ({
           <MessageCard
             id={message.id}
             username={message.User.username}
+            warehouse={message.User.Warehouse.name}
             content={message.content}
             createdAt={message.createdAt}
             commentCount={message.Comments.length}
@@ -78,6 +79,7 @@ export const Message = ({
                 <CommentCard
                   key={index}
                   username={comment.User.username}
+                  warehouse={comment.User.Warehouse.name}
                   createdAt={comment.createdAt}
                   content={comment.content}
                 />

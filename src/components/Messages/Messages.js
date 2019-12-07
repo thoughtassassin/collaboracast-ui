@@ -75,6 +75,7 @@ export const Messages = ({
               key={index}
               id={message.id}
               username={message.username}
+              warehouse={message.User.Warehouse.name}
               content={message.content}
               createdAt={message.createdAt}
               commentCount={message.Comments.length}

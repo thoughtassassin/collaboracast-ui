@@ -67,6 +67,7 @@ export const DashboardMessages = ({
               key={index}
               id={message.id}
               username={message.username}
+              warehouse={message.warehouseName}
               content={message.content}
               createdAt={message.createdAt}
               commentCount={message.CommentCount}
