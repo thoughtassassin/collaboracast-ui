@@ -37,7 +37,7 @@ function Login({ setAuthenticated }) {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        username: values.username.trim(),
+        email: values.email.trim(),
         password: values.password.trim()
       })
     })
@@ -61,12 +61,12 @@ function Login({ setAuthenticated }) {
           {error && <Message error content={error} />}
           <Formik
             initialValues={{
-              username: "",
+              email: "",
               password: ""
             }}
             onSubmit={formSubmit}
             validationSchema={yup.object().shape({
-              username: yup.string().required("This field is required"),
+              email: yup.string().required("This field is required"),
               password: yup.string().required("This field is required")
             })}
           >
@@ -74,15 +74,15 @@ function Login({ setAuthenticated }) {
               <Form size="small">
                 <Form.Field>
                   <Input
-                    name="username"
+                    name="email"
                     type="text"
-                    label="Username"
+                    label="Email"
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
-                  {touched.username && errors.username && (
+                  {touched.email && errors.email && (
                     <Label pointing prompt color="red">
-                      {errors.username}
+                      {errors.email}
                     </Label>
                   )}
                 </Form.Field>

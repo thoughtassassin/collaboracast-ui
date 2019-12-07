@@ -17,7 +17,7 @@ import "./Dashboard.css";
 
 const Dashboard = ({ setAuthenticated }) => {
   const token = localStorage.getItem("token");
-  const { username } = jwtDecode(token);
+  const { email } = jwtDecode(token);
   const [channels, setChannels] = useState([]);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -33,9 +33,9 @@ const Dashboard = ({ setAuthenticated }) => {
     setFeedsAndChannels
   ]);
   const getUser = useCallback(
-    (username, token) => {
+    (email, token) => {
       setLoading(true);
-      fetch(`${urls.base}/api/v1/users/${username}`, {
+      fetch(`${urls.base}/api/v1/users/${email}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `JWT ${token}`
@@ -53,8 +53,8 @@ const Dashboard = ({ setAuthenticated }) => {
   useEffect(() => {
     console.log("representative");
     const token = localStorage.getItem("token");
-    getUser(username, token);
-  }, [getUser, username]);
+    getUser(email, token);
+  }, [getUser, email]);
 
   const menuIcon = (
     <Menu.Item position="right" onClick={() => setIsMenuOpen(true)}>
@@ -112,7 +112,7 @@ const Dashboard = ({ setAuthenticated }) => {
           loading={loading}
           success={success}
           setSuccess={setSuccess}
-          username={username}
+          email={email}
           default
         />
         <AddMessage

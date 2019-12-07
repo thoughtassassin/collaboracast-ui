@@ -11,7 +11,7 @@ export const DashboardMessages = ({
   setLoading,
   success,
   setSuccess,
-  username
+  email
 }) => {
   const [messages, setMessages] = useState([]);
   const setMessagesCallback = useCallback(
@@ -24,7 +24,7 @@ export const DashboardMessages = ({
   const getMessages = useCallback(
     token => {
       setLoading(true);
-      return fetch(`${urls.base}/api/v1/user-messages/${username}`, {
+      return fetch(`${urls.base}/api/v1/user-messages/${email}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `JWT ${token}`
@@ -37,7 +37,7 @@ export const DashboardMessages = ({
           console.error(e);
         });
     },
-    [setMessagesCallback, setLoading, username]
+    [setMessagesCallback, setLoading, email]
   );
   useEffect(() => {
     const token = localStorage.getItem("token");
