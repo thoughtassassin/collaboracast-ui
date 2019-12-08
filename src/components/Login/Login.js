@@ -76,7 +76,7 @@ function Login({ setAuthenticated }) {
                   <Input
                     name="email"
                     type="text"
-                    label="Email"
+                    label={{ basic: true, content: "Email" }}
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
@@ -90,7 +90,7 @@ function Login({ setAuthenticated }) {
                   <Input
                     name="password"
                     type="password"
-                    label="Password"
+                    label={{ basic: true, content: "Password" }}
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />

@@ -123,7 +123,7 @@ const AddContact = ({ channelId, channels, token, setLoading, setSuccess }) => {
                 type="text"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                label="First Name"
+                label={{ basic: true, content: "First Name" }}
               />
               {touched.firstName && errors.firstName && (
                 <Label pointing prompt color="red">
@@ -137,7 +137,7 @@ const AddContact = ({ channelId, channels, token, setLoading, setSuccess }) => {
                 type="text"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                label="Last Name"
+                label={{ basic: true, content: "Last Name" }}
               />
               {touched.lastName && errors.lastName && (
                 <Label pointing prompt color="red">
@@ -151,7 +151,7 @@ const AddContact = ({ channelId, channels, token, setLoading, setSuccess }) => {
                 type="text"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                label="Group"
+                label={{ basic: true, content: "Group" }}
               />
               {touched.group && errors.group && (
                 <Label pointing prompt color="red">
@@ -165,7 +165,7 @@ const AddContact = ({ channelId, channels, token, setLoading, setSuccess }) => {
                 type="text"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                label="Position"
+                label={{ basic: true, content: "Position" }}
               />
               {touched.position && errors.position && (
                 <Label pointing prompt color="red">
@@ -179,7 +179,7 @@ const AddContact = ({ channelId, channels, token, setLoading, setSuccess }) => {
                 type="text"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                label="Phone"
+                label={{ basic: true, content: "Phone" }}
               />
               {touched.phone && errors.phone && (
                 <Label pointing prompt color="red">
@@ -193,7 +193,7 @@ const AddContact = ({ channelId, channels, token, setLoading, setSuccess }) => {
                 type="text"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                label="Address 1"
+                label={{ basic: true, content: "Address 1" }}
               />
               {touched.address1 && errors.address1 && (
                 <Label pointing prompt color="red">
@@ -207,7 +207,7 @@ const AddContact = ({ channelId, channels, token, setLoading, setSuccess }) => {
                 type="text"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                label="Address 2"
+                label={{ basic: true, content: "Address 2" }}
               />
             </Form.Field>
             <Form.Field>
@@ -216,7 +216,7 @@ const AddContact = ({ channelId, channels, token, setLoading, setSuccess }) => {
                 type="text"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                label="City"
+                label={{ basic: true, content: "City" }}
               />
               {touched.city && errors.city && (
                 <Label pointing prompt color="red">
@@ -230,7 +230,7 @@ const AddContact = ({ channelId, channels, token, setLoading, setSuccess }) => {
                 type="text"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                label="State"
+                label={{ basic: true, content: "State" }}
               />
               {touched.state && errors.state && (
                 <Label pointing prompt color="red">
@@ -244,7 +244,7 @@ const AddContact = ({ channelId, channels, token, setLoading, setSuccess }) => {
                 type="text"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                label="Zip"
+                label={{ basic: true, content: "Zip" }}
               />
               {touched.zip && errors.zip && (
                 <Label pointing prompt color="red">
@@ -258,7 +258,7 @@ const AddContact = ({ channelId, channels, token, setLoading, setSuccess }) => {
                 type="text"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                label="Email"
+                label={{ basic: true, content: "Email" }}
               />
               {touched.zip && errors.email && (
                 <Label pointing prompt color="red">
