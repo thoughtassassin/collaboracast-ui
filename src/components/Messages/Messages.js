@@ -74,7 +74,7 @@ export const Messages = ({
             <MessageCard
               key={index}
               id={message.id}
-              username={message.username}
+              username={message.User.username}
               warehouse={message.User.Warehouse.name}
               content={message.content}
               createdAt={message.createdAt}
