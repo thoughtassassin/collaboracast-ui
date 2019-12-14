@@ -79,7 +79,6 @@ const AdminDashboard = ({ setAuthenticated }) => {
         <Messages
           path="/"
           setLoading={setLoading}
-          loading={loading}
           success={success}
           setSuccess={setSuccess}
         />
@@ -87,7 +86,6 @@ const AdminDashboard = ({ setAuthenticated }) => {
         <Messages
           path="/messages-by-user/:userId/"
           setLoading={setLoading}
-          loading={loading}
           success={success}
           setSuccess={setSuccess}
         />
@@ -95,14 +93,12 @@ const AdminDashboard = ({ setAuthenticated }) => {
         <Messages
           path="/channel-messages/:channelId/"
           setLoading={setLoading}
-          loading={loading}
           success={success}
           setSuccess={setSuccess}
         />
         <Message
           path="/messages/:messageId"
           setLoading={setLoading}
-          loading={loading}
           messageId="1"
           success={success}
           setSuccess={setSuccess}
@@ -112,7 +108,14 @@ const AdminDashboard = ({ setAuthenticated }) => {
           channels={channels}
           token={token}
           setLoading={setLoading}
-          loading={loading}
+          setSuccess={setSuccess}
+          success={success}
+        />
+        <AddMessage
+          path="/add-message/:channelId"
+          channels={channels}
+          token={token}
+          setLoading={setLoading}
           setSuccess={setSuccess}
           success={success}
         />
@@ -120,7 +123,6 @@ const AdminDashboard = ({ setAuthenticated }) => {
           path="/add-comment/:messageId"
           token={token}
           setLoading={setLoading}
-          loading={loading}
           setSuccess={setSuccess}
           success={success}
         />
@@ -130,14 +132,13 @@ const AdminDashboard = ({ setAuthenticated }) => {
           setLoading={setLoading}
           success={success}
           setSuccess={setSuccess}
-          loading={loading}
           channels={channels}
         />
         <AddContact
           path="/add-contact/:channelId"
           token={token}
+          channels={channels}
           setLoading={setLoading}
-          loading={loading}
           setSuccess={setSuccess}
         />
       </Router>

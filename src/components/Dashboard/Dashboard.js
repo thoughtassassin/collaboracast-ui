@@ -109,7 +109,6 @@ const Dashboard = ({ setAuthenticated }) => {
           path="/"
           channels={channels}
           setLoading={setLoading}
-          loading={loading}
           success={success}
           setSuccess={setSuccess}
           email={email}
@@ -120,14 +119,12 @@ const Dashboard = ({ setAuthenticated }) => {
           channels={channels}
           token={token}
           setLoading={setLoading}
-          loading={loading}
           setSuccess={setSuccess}
           success={success}
         />
         <Message
           path="/messages/:messageId"
           setLoading={setLoading}
-          loading={loading}
           messageId="1"
           success={success}
           setSuccess={setSuccess}
@@ -136,7 +133,6 @@ const Dashboard = ({ setAuthenticated }) => {
           path="/add-comment/:messageId"
           token={token}
           setLoading={setLoading}
-          loading={loading}
           setSuccess={setSuccess}
           success={success}
         />
@@ -149,7 +145,6 @@ const Dashboard = ({ setAuthenticated }) => {
           path="/:channelId/contacts/"
           channel={channel}
           setLoading={setLoading}
-          loading={loading}
           success={success}
           setSuccess={setSuccess}
           channels={channels}
@@ -159,7 +154,6 @@ const Dashboard = ({ setAuthenticated }) => {
           channel={channel}
           token={token}
           setLoading={setLoading}
-          loading={loading}
           setSuccess={setSuccess}
           channels={channels}
         />

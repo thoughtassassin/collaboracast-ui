@@ -19,13 +19,13 @@ import "./AddMessage.css";
 
 const AddMessage = ({ channelId, channels, token, setLoading, setSuccess }) => {
   const [error, setError] = useState(false);
-  const [messageChannel, setMessageChannel] = useState("");
+  const [messageChannel, setMessageChannel] = useState(channelId);
   const { id } = jwtDecode(token);
   const addMessageSuccess = json => {
     if (json.status === "success") {
       setSuccess(json.message);
       setError(false);
-      navigate(`/${channelId}/messages/`);
+      navigate(`/`);
     } else if (json.status === "error") {
       setError(json.message);
       setSuccess(false);
@@ -43,7 +43,7 @@ const AddMessage = ({ channelId, channels, token, setLoading, setSuccess }) => {
       body: JSON.stringify({
         content: message,
         UserId: id,
-        ChannelId: channelId || messageChannel
+        ChannelId: messageChannel
       })
     })
       .then(response => response.json())
@@ -55,23 +55,23 @@ const AddMessage = ({ channelId, channels, token, setLoading, setSuccess }) => {
         console.error(e);
       });
   };
+  console.log(messageChannel);
   return (
     <div>
       <PageHeader>
         <Header as="h3">Add Message </Header>
-        {!channelId && (
-          <Dropdown
-            placeholder="Select Channel"
-            options={channels.map(channel => ({
-              key: channel.id,
-              value: channel.id,
-              text: channel.name
-            }))}
-            scrolling
-            className="message-container"
-            onChange={(e, { value }) => setMessageChannel(value)}
-          />
-        )}
+        <Dropdown
+          placeholder="Select Channel"
+          options={channels.map(channel => ({
+            key: channel.id,
+            value: channel.id,
+            text: channel.name
+          }))}
+          scrolling
+          value={messageChannel ? Number(messageChannel) : undefined}
+          className="message-container"
+          onChange={(e, { value }) => setMessageChannel(value)}
+        />
       </PageHeader>
       {error && <Message error>{error}</Message>}
       <Formik

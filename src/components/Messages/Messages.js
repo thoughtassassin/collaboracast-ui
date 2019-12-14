@@ -31,7 +31,11 @@ export const Messages = ({
           <PageHeader>
             <Header as="h3">Messages</Header>
             <Button
-              onClick={() => navigate(`/add-message/`)}
+              onClick={() =>
+                channelId
+                  ? navigate(`/add-message/${channelId}`)
+                  : navigate(`/add-message`)
+              }
               size="small"
               primary
             >
