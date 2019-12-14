@@ -67,6 +67,7 @@ const AddMessage = ({ channelId, channels, token, setLoading, setSuccess }) => {
               value: channel.id,
               text: channel.name
             }))}
+            scrolling
             className="message-container"
             onChange={(e, { value }) => setMessageChannel(value)}
           />

@@ -1,73 +1,103 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState } from "react";
 import AddContact from "../AddContact/AddContact";
-import Channels from "../Channels/Channels";
 import Contacts from "../Contacts/Contacts";
+import ContactsChannels from "../ContactsChannels/ContactChannels";
 import DashboardContainer from "../DashboardContainer/DashboadContainer";
-import Feeds from "../Feeds/Feeds";
-import getAdminChannelsAndFeeds from "../../utils/getAllChannelsAndFeeds";
+import { Menu, Icon, Sidebar } from "semantic-ui-react";
 import Messages from "../Messages/Messages";
 import AddMessage from "../AddMessage/AddMessage";
 import Message from "../Message/Message";
 import AddComment from "../AddComment/AddComment";
+import useChannels from "../../customHooks/useChannels";
+import OperatorChannels from "../OperatorChannels/OperatorChannels";
+import UsersChannels from "../UsersChannels/UsersChannels";
 
-import { Router } from "@reach/router";
+import { Router, navigate } from "@reach/router";
 
 const AdminDashboard = ({ setAuthenticated }) => {
   const token = localStorage.getItem("token");
-  const [channels, setChannels] = useState([]);
-  const [feeds, setFeeds] = useState();
-  const [feed, setFeed] = useState("2");
   const [loading, setLoading] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [success, setSuccess] = useState(false);
+  const channels = useChannels(setLoading);
 
-  const setAdminFeedsAndChannels = useCallback(
-    ([channels, feeds]) => {
-      setFeeds(feeds.data);
-      setChannels(channels.data);
-      setLoading(false);
-    },
-    [setFeeds, setChannels, setLoading]
+  const menuIcon = (
+    <Menu.Item position="right" onClick={() => setIsMenuOpen(true)}>
+      <Icon name="align justify" />
+    </Menu.Item>
   );
 
-  useEffect(() => {
-    console.log("admin");
-    setLoading(true);
-    getAdminChannelsAndFeeds(token, setAdminFeedsAndChannels);
-  }, [token, setAdminFeedsAndChannels, setLoading]);
-
-  const feedsMenu = <Feeds feeds={feeds} setFeed={setFeed} feed={feed} />;
-
   return (
-    <DashboardContainer setAuthenticated={setAuthenticated} loading={loading}>
+    <DashboardContainer
+      setAuthenticated={setAuthenticated}
+      menuIcon={menuIcon}
+      loading={loading}
+    >
+      <Sidebar
+        as={Menu}
+        animation="push"
+        direction="right"
+        icon="labeled"
+        inverted
+        vertical
+        visible={isMenuOpen}
+        width="thin"
+      >
+        <Menu.Item as="a" onClick={() => setIsMenuOpen(false)}>
+          <Icon name="close" />
+          Close Menu
+        </Menu.Item>
+        <Menu.Item
+          onClick={() => {
+            setIsMenuOpen(false);
+            navigate("/operators");
+          }}
+        >
+          <Icon name="envelope outline" />
+          Operators
+        </Menu.Item>
+        <Menu.Item
+          onClick={() => {
+            setIsMenuOpen(false);
+            navigate("/users");
+          }}
+        >
+          <Icon name="user circle" />
+          Users
+        </Menu.Item>
+        <Menu.Item
+          onClick={() => {
+            setIsMenuOpen(false);
+            navigate("/contacts");
+          }}
+        >
+          <Icon name="address card" />
+          Contacts
+        </Menu.Item>
+      </Sidebar>
       <Router primary={false}>
-        <Channels
-          path="/"
-          channels={channels.filter(
-            channel => channel.FeedId.toString() === feed
-          )}
-          feed={
-            feeds &&
-            feeds[feed - 1].name.charAt(0).toUpperCase() +
-              feeds[feed - 1].name.substring(1)
-          }
-          feedsMenu={feedsMenu}
-        />
         <Messages
-          path="/:channelId/messages/"
-          channels={channels}
+          path="/"
           setLoading={setLoading}
           loading={loading}
           success={success}
           setSuccess={setSuccess}
         />
-        <AddMessage
-          path="/add-message/:channelId/"
-          channels={channels}
-          token={token}
+        <UsersChannels path="/users" setLoading={setLoading} />
+        <Messages
+          path="/messages-by-user/:userId/"
           setLoading={setLoading}
           loading={loading}
-          setSuccess={setSuccess}
           success={success}
+          setSuccess={setSuccess}
+        />
+        <OperatorChannels path="/operators" channels={channels} />
+        <Messages
+          path="/channel-messages/:channelId/"
+          setLoading={setLoading}
+          loading={loading}
+          success={success}
+          setSuccess={setSuccess}
         />
         <Message
           path="/messages/:messageId"
@@ -77,6 +107,15 @@ const AdminDashboard = ({ setAuthenticated }) => {
           success={success}
           setSuccess={setSuccess}
         />
+        <AddMessage
+          path="/add-message/"
+          channels={channels}
+          token={token}
+          setLoading={setLoading}
+          loading={loading}
+          setSuccess={setSuccess}
+          success={success}
+        />
         <AddComment
           path="/add-comment/:messageId"
           token={token}
@@ -85,6 +124,7 @@ const AdminDashboard = ({ setAuthenticated }) => {
           setSuccess={setSuccess}
           success={success}
         />
+        <ContactsChannels path="/contacts" channels={channels} />
         <Contacts
           path="/:channelId/contacts/"
           setLoading={setLoading}
@@ -99,7 +139,6 @@ const AdminDashboard = ({ setAuthenticated }) => {
           setLoading={setLoading}
           loading={loading}
           setSuccess={setSuccess}
-          channels={channels}
         />
       </Router>
     </DashboardContainer>

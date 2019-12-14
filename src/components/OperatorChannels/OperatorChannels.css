@@ -1,0 +1,11 @@
+.operators-channels a, .operators-channels a:hover, .operators-channels a:active {
+    color: black;
+}
+
+.operators-channels a:hover, .operators-channels a:active {
+    text-decoration: underline;
+}
+
+.operators-channels .item {
+    padding: 1rem 0 !important;
+}
