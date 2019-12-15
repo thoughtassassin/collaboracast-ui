@@ -29,7 +29,7 @@ const DashboardContainer = ({
   };
   return (
     <Container className="dashboard" text>
-      <Dimmer active={loading} page>
+      <Dimmer active={loading} inverted page>
         <Loader size="big">Loading</Loader>
       </Dimmer>
       <Menu fixed="top" inverted size="massive">

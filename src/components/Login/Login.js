@@ -56,7 +56,7 @@ function Login({ setAuthenticated }) {
         <Grid.Column>
           <Header as="h1">Don-Nan</Header>
           {loading && (
-            <Dimmer active={loading} page>
+            <Dimmer active={loading} inverted page>
               <Loader size="big">Logging In</Loader>
             </Dimmer>
           )}
