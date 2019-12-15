@@ -1,68 +1,34 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState } from "react";
 import AddContact from "../AddContact/AddContact";
 import Contacts from "../Contacts/Contacts";
-import ContactsChannels from "../ContactsChannels/ContactChannels";
 import DashboardContainer from "../DashboardContainer/DashboadContainer";
-import DashboardMessages from "../DashboardMessages/DashboardMessages";
 import AddMessage from "../AddMessage/AddMessage";
+import ItemsList from "../ItemsList/ItemsList";
+import Messages from "../Messages/Messages";
 import Message from "../Message/Message";
 import AddComment from "../AddComment/AddComment";
+import useUserChannels from "../../customHooks/useUserChannels";
+import urls from "../../constants/urls";
 
 import { Router, navigate } from "@reach/router";
 import jwtDecode from "jwt-decode";
 import { Menu, Icon, Sidebar } from "semantic-ui-react";
 
-import urls from "../../constants/urls";
 import "./Dashboard.css";
 
 const Dashboard = ({ setAuthenticated }) => {
   const token = localStorage.getItem("token");
   const { email } = jwtDecode(token);
-  const [channels, setChannels] = useState([]);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const setFeedsAndChannels = useCallback(
-    ({ data: { channels } }) => {
-      setChannels(channels);
-      setLoading(false);
-    },
-    [setChannels, setLoading]
-  );
-  const initializeDashboard = useCallback(setFeedsAndChannels, [
-    setFeedsAndChannels
-  ]);
-  const getUser = useCallback(
-    (email, token) => {
-      setLoading(true);
-      fetch(`${urls.base}/api/v1/users/${email}`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `JWT ${token}`
-        }
-      })
-        .then(response => response.json())
-        .then(initializeDashboard)
-        .catch(e => {
-          setLoading(false);
-          console.error(e);
-        });
-    },
-    [initializeDashboard]
-  );
-  useEffect(() => {
-    console.log("representative");
-    const token = localStorage.getItem("token");
-    getUser(email, token);
-  }, [getUser, email]);
+  const channels = useUserChannels(setLoading, email);
 
   const menuIcon = (
     <Menu.Item position="right" onClick={() => setIsMenuOpen(true)}>
       <Icon name="align justify" />
     </Menu.Item>
   );
-
-  let channel = "";
 
   return (
     <DashboardContainer
@@ -97,7 +63,7 @@ const Dashboard = ({ setAuthenticated }) => {
         <Menu.Item
           onClick={() => {
             setIsMenuOpen(false);
-            navigate("/channels");
+            navigate("/contacts");
           }}
         >
           <Icon name="address card" />
@@ -105,22 +71,15 @@ const Dashboard = ({ setAuthenticated }) => {
         </Menu.Item>
       </Sidebar>
       <Router primary={false}>
-        <DashboardMessages
+        <Messages
           path="/"
-          channels={channels}
           setLoading={setLoading}
           success={success}
           setSuccess={setSuccess}
-          email={email}
+          fetchUrl={`${urls.base}/api/v1/user-messages/${email}`}
+          successUrl={`/add-message`}
+          user
           default
-        />
-        <AddMessage
-          path="/add-message/"
-          channels={channels}
-          token={token}
-          setLoading={setLoading}
-          setSuccess={setSuccess}
-          success={success}
         />
         <Message
           path="/messages/:messageId"
@@ -129,6 +88,14 @@ const Dashboard = ({ setAuthenticated }) => {
           success={success}
           setSuccess={setSuccess}
         />
+        <AddMessage
+          path="/add-message"
+          channels={channels}
+          token={token}
+          setLoading={setLoading}
+          setSuccess={setSuccess}
+          success={success}
+        />
         <AddComment
           path="/add-comment/:messageId"
           token={token}
@@ -136,14 +103,15 @@ const Dashboard = ({ setAuthenticated }) => {
           setSuccess={setSuccess}
           success={success}
         />
-        <ContactsChannels
-          path="/channels"
-          channels={channels}
-          setChannel={setChannels}
+        <ItemsList
+          path="/contacts"
+          listItems={channels}
+          header="Contacts"
+          displayValue="name"
+          resource="contacts"
         />
         <Contacts
-          path="/:channelId/contacts/"
-          channel={channel}
+          path="/contacts/:channelId"
           setLoading={setLoading}
           success={success}
           setSuccess={setSuccess}
@@ -151,7 +119,6 @@ const Dashboard = ({ setAuthenticated }) => {
         />
         <AddContact
           path="/add-contact/:channelId"
-          channel={channel}
           token={token}
           setLoading={setLoading}
           setSuccess={setSuccess}

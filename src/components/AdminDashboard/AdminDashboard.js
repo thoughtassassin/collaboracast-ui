@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import AddContact from "../AddContact/AddContact";
 import Contacts from "../Contacts/Contacts";
-import ContactsChannels from "../ContactsChannels/ContactChannels";
 import DashboardContainer from "../DashboardContainer/DashboadContainer";
 import { Menu, Icon, Sidebar } from "semantic-ui-react";
 import Messages from "../Messages/Messages";
@@ -9,17 +8,19 @@ import AddMessage from "../AddMessage/AddMessage";
 import Message from "../Message/Message";
 import AddComment from "../AddComment/AddComment";
 import useChannels from "../../customHooks/useChannels";
-import OperatorChannels from "../OperatorChannels/OperatorChannels";
-import UsersChannels from "../UsersChannels/UsersChannels";
+import useUsers from "../../customHooks/useUsers";
+import ItemsList from "../ItemsList/ItemsList";
+import urls from "../../constants/urls";
 
 import { Router, navigate } from "@reach/router";
 
 const AdminDashboard = ({ setAuthenticated }) => {
   const token = localStorage.getItem("token");
   const [loading, setLoading] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const channels = useChannels(setLoading);
+  const users = useUsers(setLoading);
 
   const menuIcon = (
     <Menu.Item position="right" onClick={() => setIsMenuOpen(true)}>
@@ -81,20 +82,40 @@ const AdminDashboard = ({ setAuthenticated }) => {
           setLoading={setLoading}
           success={success}
           setSuccess={setSuccess}
+          fetchUrl={`${urls.base}/api/v1/messages`}
+          successUrl={`/add-message`}
+          default
         />
-        <UsersChannels path="/users" setLoading={setLoading} />
+        <ItemsList
+          path="/users"
+          listItems={users}
+          header="Users"
+          displayValue="username"
+          resource="users"
+        />
         <Messages
-          path="/messages-by-user/:userId/"
+          path="/users/:id"
           setLoading={setLoading}
           success={success}
           setSuccess={setSuccess}
+          fetchUrl={`${urls.base}/api/v1/messages-by-user/`}
+          successUrl={`/add-message`}
         />
-        <OperatorChannels path="/operators" channels={channels} />
+        <ItemsList
+          path="/operators"
+          listItems={channels}
+          header="Operators"
+          displayValue="name"
+          resource="operators"
+        />
         <Messages
-          path="/channel-messages/:channelId/"
+          path="/operators/:id"
           setLoading={setLoading}
           success={success}
           setSuccess={setSuccess}
+          fetchUrl={`${urls.base}/api/v1/channel-messages/`}
+          selectMessageTopic
+          successUrl={`/add-message`}
         />
         <Message
           path="/messages/:messageId"
@@ -104,7 +125,7 @@ const AdminDashboard = ({ setAuthenticated }) => {
           setSuccess={setSuccess}
         />
         <AddMessage
-          path="/add-message/"
+          path="/add-message"
           channels={channels}
           token={token}
           setLoading={setLoading}
@@ -126,9 +147,15 @@ const AdminDashboard = ({ setAuthenticated }) => {
           setSuccess={setSuccess}
           success={success}
         />
-        <ContactsChannels path="/contacts" channels={channels} />
+        <ItemsList
+          path="/contacts"
+          listItems={channels}
+          header="Contacts"
+          displayValue="name"
+          resource="contacts"
+        />
         <Contacts
-          path="/:channelId/contacts/"
+          path="/contacts/:channelId"
           setLoading={setLoading}
           success={success}
           setSuccess={setSuccess}
@@ -140,6 +167,7 @@ const AdminDashboard = ({ setAuthenticated }) => {
           channels={channels}
           setLoading={setLoading}
           setSuccess={setSuccess}
+          channels={channels}
         />
       </Router>
     </DashboardContainer>

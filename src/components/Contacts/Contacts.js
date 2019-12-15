@@ -54,7 +54,7 @@ export const Contacts = ({
               Contacts for{" "}
               <ChannelName
                 channels={channels}
-                resource={/[0-9]+.?(?=\/contacts\/?)/g}
+                resource={/\/contacts\/([0-9]+).?\/?/}
               />
             </Header>
             <Button

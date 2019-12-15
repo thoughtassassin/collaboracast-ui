@@ -3,21 +3,21 @@ import { List, Header } from "semantic-ui-react";
 import { Link } from "@reach/router";
 
 import PageHeader from "../PageHeader/PageHeader";
-import "./OperatorChannels.css";
+import "./ItemsList.css";
 
-const UsersChannels = ({ channels }) => {
+const ItemsList = ({ listItems, header, resource, displayValue }) => {
   return (
-    <div className="operators-channels">
+    <div className="items-list">
       <PageHeader>
-        <Header as="h3">Channels for Operators</Header>
+        <Header as="h3">List for {header}</Header>
       </PageHeader>
       <List divided relaxed size="huge">
-        {channels &&
-          channels.map(channel => (
-            <List.Item key={channel.id}>
+        {listItems &&
+          listItems.map(listItem => (
+            <List.Item key={listItem.id}>
               <List.Content>
-                <Link to={`/channel-messages/${channel.id}`}>
-                  {channel.name}
+                <Link to={`/${resource}/${listItem.id}`}>
+                  {listItem[displayValue]}
                 </Link>
               </List.Content>
             </List.Item>
@@ -27,4 +27,4 @@ const UsersChannels = ({ channels }) => {
   );
 };
 
-export default UsersChannels;
+export default ItemsList;

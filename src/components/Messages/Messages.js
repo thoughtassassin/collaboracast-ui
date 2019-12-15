@@ -5,25 +5,20 @@ import { navigate } from "@reach/router";
 import MessageCard from "../MessageCard/MessageCard";
 import PageHeader from "../PageHeader/PageHeader";
 import useMessages from "../../customHooks/useMessages";
-import urls from "../../constants/urls";
 import "./Messages.css";
 
 export const Messages = ({
-  userId,
-  channelId,
+  id,
   setLoading,
   success,
-  setSuccess
+  setSuccess,
+  fetchUrl,
+  successUrl,
+  selectMessageTopic,
+  user
 }) => {
-  let url = `${urls.base}/api/v1/messages`;
-  if (userId) {
-    url = `${urls.base}/api/v1/messages-by-user/${userId}`;
-  }
-  if (channelId) {
-    url = `${urls.base}/api/v1/channel-messages/${channelId}`;
-  }
+  const url = id ? `${fetchUrl}/${id}` : fetchUrl;
   const messages = useMessages(url, setLoading);
-
   return (
     <div className="messages">
       {messages && (
@@ -32,9 +27,9 @@ export const Messages = ({
             <Header as="h3">Messages</Header>
             <Button
               onClick={() =>
-                channelId
-                  ? navigate(`/add-message/${channelId}`)
-                  : navigate(`/add-message`)
+                navigate(
+                  selectMessageTopic ? `${successUrl}/${id}` : successUrl
+                )
               }
               size="small"
               primary
@@ -47,18 +42,31 @@ export const Messages = ({
               {success}
             </Message>
           )}
-          {messages.map((message, index) => (
-            <MessageCard
-              key={index}
-              id={message.id}
-              username={message.User.username}
-              warehouse={message.User.Warehouse.name}
-              content={message.content}
-              createdAt={message.createdAt}
-              commentCount={message.Comments.length}
-              channel={message.Channel.name}
-            />
-          ))}
+          {messages.map((message, index) =>
+            user ? (
+              <MessageCard
+                key={index}
+                id={message.id}
+                username={message.username}
+                warehouse={message.warehouseName}
+                content={message.content}
+                createdAt={message.createdAt}
+                commentCount={message.CommentCount}
+                channel={message.channelName}
+              />
+            ) : (
+              <MessageCard
+                key={index}
+                id={message.id}
+                username={message.User.username}
+                warehouse={message.User.Warehouse.name}
+                content={message.content}
+                createdAt={message.createdAt}
+                commentCount={message.Comments.length}
+                channel={message.Channel.name}
+              />
+            )
+          )}
         </>
       )}
     </div>
