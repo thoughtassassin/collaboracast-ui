@@ -9,6 +9,7 @@ import Message from "../Message/Message";
 import AddComment from "../AddComment/AddComment";
 import useUserChannels from "../../customHooks/useUserChannels";
 import urls from "../../constants/urls";
+import useLoader from "../../customHooks/useLoader";
 
 import { Router, navigate } from "@reach/router";
 import jwtDecode from "jwt-decode";
@@ -19,7 +20,7 @@ import "./Dashboard.css";
 const Dashboard = ({ setAuthenticated }) => {
   const token = localStorage.getItem("token");
   const { email } = jwtDecode(token);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useLoader();
   const [success, setSuccess] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const channels = useUserChannels(setLoading, email);

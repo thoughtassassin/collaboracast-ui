@@ -28,7 +28,7 @@ function useUserChannels(setLoading, email) {
           console.error(e);
         });
     },
-    [setUserChannelsCallback, setLoading]
+    [setUserChannelsCallback, setLoading, email]
   );
 
   useEffect(() => {

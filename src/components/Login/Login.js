@@ -14,11 +14,13 @@ import { Formik } from "formik";
 import * as yup from "yup";
 
 import urls from "../../constants/urls";
+import useLoader from "../../customHooks/useLoader";
 import "./Login.css";
 
 function Login({ setAuthenticated }) {
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useLoader();
+
   const authenticate = json => {
     if (json.status === "success") {
       localStorage.setItem("token", json.data);

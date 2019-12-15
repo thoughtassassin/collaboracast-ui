@@ -11,12 +11,13 @@ import useChannels from "../../customHooks/useChannels";
 import useUsers from "../../customHooks/useUsers";
 import ItemsList from "../ItemsList/ItemsList";
 import urls from "../../constants/urls";
+import useLoader from "../../customHooks/useLoader";
 
 import { Router, navigate } from "@reach/router";
 
 const AdminDashboard = ({ setAuthenticated }) => {
   const token = localStorage.getItem("token");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useLoader();
   const [success, setSuccess] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const channels = useChannels(setLoading);
@@ -164,7 +165,6 @@ const AdminDashboard = ({ setAuthenticated }) => {
         <AddContact
           path="/add-contact/:channelId"
           token={token}
-          channels={channels}
           setLoading={setLoading}
           setSuccess={setSuccess}
           channels={channels}

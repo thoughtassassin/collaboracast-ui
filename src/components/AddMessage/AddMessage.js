@@ -55,7 +55,6 @@ const AddMessage = ({ channelId, channels, token, setLoading, setSuccess }) => {
         console.error(e);
       });
   };
-  console.log(messageChannel);
   return (
     <div>
       <PageHeader>
