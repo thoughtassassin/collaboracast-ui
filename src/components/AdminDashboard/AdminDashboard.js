@@ -6,22 +6,27 @@ import { Menu, Icon, Sidebar } from "semantic-ui-react";
 import Messages from "../Messages/Messages";
 import AddMessage from "../AddMessage/AddMessage";
 import Message from "../Message/Message";
+import Notifications from "../Notifications/Notifications";
 import AddComment from "../AddComment/AddComment";
 import useChannels from "../../customHooks/useChannels";
+import useNotifications from "../../customHooks/useNotifications";
 import useUsers from "../../customHooks/useUsers";
 import ItemsList from "../ItemsList/ItemsList";
 import urls from "../../constants/urls";
 import useLoader from "../../customHooks/useLoader";
 
 import { Router, navigate } from "@reach/router";
+import jwtDecode from "jwt-decode";
 
 const AdminDashboard = ({ setAuthenticated }) => {
   const token = localStorage.getItem("token");
+  const { id: userId } = jwtDecode(token);
   const [loading, setLoading] = useLoader();
   const [success, setSuccess] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const channels = useChannels(setLoading);
-  const users = useUsers(setLoading);
+  const channels = useChannels();
+  const notifications = useNotifications("admin", userId);
+  const users = useUsers();
 
   const menuIcon = (
     <Menu.Item position="right" onClick={() => setIsMenuOpen(true)}>
@@ -29,11 +34,17 @@ const AdminDashboard = ({ setAuthenticated }) => {
     </Menu.Item>
   );
 
+  const dashboardLoading =
+    channels.length === 0 ||
+    notifications.length === 0 ||
+    users.length === 0 ||
+    loading;
+
   return (
     <DashboardContainer
       setAuthenticated={setAuthenticated}
       menuIcon={menuIcon}
-      loading={loading}
+      loading={dashboardLoading}
     >
       <Sidebar
         as={Menu}
@@ -76,11 +87,19 @@ const AdminDashboard = ({ setAuthenticated }) => {
           <Icon name="address card" />
           Contacts
         </Menu.Item>
+        <Menu.Item
+          onClick={() => {
+            setIsMenuOpen(false);
+            navigate("/notifications");
+          }}
+        >
+          <Icon name="bullhorn" />
+          Notifications
+        </Menu.Item>
       </Sidebar>
       <Router primary={false}>
         <Messages
           path="/"
-          setLoading={setLoading}
           success={success}
           setSuccess={setSuccess}
           fetchUrl={`${urls.base}/api/v1/messages`}
@@ -168,6 +187,17 @@ const AdminDashboard = ({ setAuthenticated }) => {
           setLoading={setLoading}
           setSuccess={setSuccess}
           channels={channels}
+        />
+        <ItemsList
+          path="/notifications"
+          listItems={notifications}
+          header="Notifications"
+          displayValue="name"
+          resource="notifications"
+        />
+        <Notifications
+          path="/notifications/:notificationId"
+          notifications={notifications}
         />
       </Router>
     </DashboardContainer>

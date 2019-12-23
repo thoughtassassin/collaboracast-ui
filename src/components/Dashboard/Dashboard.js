@@ -1,12 +1,14 @@
 import React, { useState } from "react";
+import AddComment from "../AddComment/AddComment";
 import AddContact from "../AddContact/AddContact";
+import AddMessage from "../AddMessage/AddMessage";
 import Contacts from "../Contacts/Contacts";
 import DashboardContainer from "../DashboardContainer/DashboadContainer";
-import AddMessage from "../AddMessage/AddMessage";
 import ItemsList from "../ItemsList/ItemsList";
 import Messages from "../Messages/Messages";
 import Message from "../Message/Message";
-import AddComment from "../AddComment/AddComment";
+import Notifications from "../Notifications/Notifications";
+import useNotifications from "../../customHooks/useNotifications";
 import useUserChannels from "../../customHooks/useUserChannels";
 import urls from "../../constants/urls";
 import useLoader from "../../customHooks/useLoader";
@@ -19,11 +21,12 @@ import "./Dashboard.css";
 
 const Dashboard = ({ setAuthenticated }) => {
   const token = localStorage.getItem("token");
-  const { email } = jwtDecode(token);
+  const { email, id: userId } = jwtDecode(token);
   const [loading, setLoading] = useLoader();
   const [success, setSuccess] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const channels = useUserChannels(setLoading, email);
+  const notifications = useNotifications("user", userId);
 
   const menuIcon = (
     <Menu.Item position="right" onClick={() => setIsMenuOpen(true)}>
@@ -31,12 +34,15 @@ const Dashboard = ({ setAuthenticated }) => {
     </Menu.Item>
   );
 
+  const dashboardLoading =
+    channels.length === 0 || notifications.length === 0 || loading;
+
   return (
     <DashboardContainer
       className="dashboard"
       setAuthenticated={setAuthenticated}
       menuIcon={menuIcon}
-      loading={loading}
+      loading={dashboardLoading}
     >
       <Sidebar
         as={Menu}
@@ -124,6 +130,17 @@ const Dashboard = ({ setAuthenticated }) => {
           setLoading={setLoading}
           setSuccess={setSuccess}
           channels={channels}
+        />
+        <ItemsList
+          path="/notifications"
+          listItems={notifications}
+          header="Notifications"
+          displayValue="name"
+          resource="notifications"
+        />
+        <Notifications
+          path="/notifications/:notificationId"
+          notifications={notifications}
         />
       </Router>
     </DashboardContainer>

@@ -1,20 +1,18 @@
 import { useEffect, useCallback, useState } from "react";
 import urls from "../constants/urls";
 
-function useChannels(setLoading) {
+function useChannels() {
   const [channels, setChannels] = useState([]);
 
   const setChannelsCallback = useCallback(
     ({ data }) => {
       setChannels(data);
-      setLoading(false);
     },
-    [setChannels, setLoading]
+    [setChannels]
   );
 
   const getChannels = useCallback(
     token => {
-      setLoading(true);
       fetch(`${urls.base}/api/v1/channels`, {
         headers: {
           "Content-Type": "application/json",
@@ -24,11 +22,10 @@ function useChannels(setLoading) {
         .then(response => response.json())
         .then(setChannelsCallback)
         .catch(e => {
-          setLoading(false);
           console.error(e);
         });
     },
-    [setChannelsCallback, setLoading]
+    [setChannelsCallback]
   );
 
   useEffect(() => {

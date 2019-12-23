@@ -1,19 +1,17 @@
 import { useEffect, useCallback, useState } from "react";
 
-function useMessages(url, setLoading) {
+function useMessages(url) {
   const [messages, setMessages] = useState([]);
 
   const setMessagesCallback = useCallback(
     ({ data }) => {
       setMessages(data);
-      setLoading(false);
     },
-    [setMessages, setLoading]
+    [setMessages]
   );
 
   const getMessages = useCallback(
     token => {
-      setLoading(true);
       fetch(url, {
         headers: {
           "Content-Type": "application/json",
@@ -23,11 +21,10 @@ function useMessages(url, setLoading) {
         .then(response => response.json())
         .then(setMessagesCallback)
         .catch(e => {
-          setLoading(false);
           console.error(e);
         });
     },
-    [setMessagesCallback, setLoading, url]
+    [setMessagesCallback, url]
   );
 
   useEffect(() => {
