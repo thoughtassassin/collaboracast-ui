@@ -94,7 +94,7 @@ const SetNotification = ({
         {({ errors, touched, handleBlur, handleSubmit }) => (
           <Form>
             <Form.Field>
-              Selected value: <b>{type}</b>
+              Selected value: <b>{type || "none"}</b>
             </Form.Field>
             <Form.Field>
               <Radio

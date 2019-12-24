@@ -7,6 +7,7 @@ import DashboardContainer from "../DashboardContainer/DashboadContainer";
 import ItemsList from "../ItemsList/ItemsList";
 import Messages from "../Messages/Messages";
 import Message from "../Message/Message";
+import NotificationLabel from "../NotificationLabel/NotificationLabel";
 import SetNotification from "../SetNotification/SetNotification";
 import useNotifications from "../../customHooks/useNotifications";
 import useUserChannels from "../../customHooks/useUserChannels";
@@ -152,6 +153,8 @@ const Dashboard = ({ setAuthenticated }) => {
           header="Notifications"
           displayValue="name"
           resource="notifications"
+          calloutItem={<NotificationLabel />}
+          calloutValue="type"
         />
         <SetNotification
           path="/notifications/:channelId"

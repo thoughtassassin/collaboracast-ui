@@ -6,6 +6,7 @@ import { Menu, Icon, Sidebar } from "semantic-ui-react";
 import Messages from "../Messages/Messages";
 import AddMessage from "../AddMessage/AddMessage";
 import Message from "../Message/Message";
+import NotificationLabel from "../NotificationLabel/NotificationLabel";
 import SetNotification from "../SetNotification/SetNotification";
 import AddComment from "../AddComment/AddComment";
 import useChannels from "../../customHooks/useChannels";
@@ -200,6 +201,8 @@ const AdminDashboard = ({ setAuthenticated }) => {
           header="Notifications"
           displayValue="name"
           resource="notifications"
+          calloutItem={<NotificationLabel />}
+          calloutValue="type"
         />
         <SetNotification
           path="/notifications/:channelId"

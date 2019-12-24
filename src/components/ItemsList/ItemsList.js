@@ -11,8 +11,12 @@ const ItemsList = ({
   resource,
   displayValue,
   success,
-  setSuccess
+  setSuccess,
+  calloutItem,
+  calloutValue
 }) => {
+  if (calloutItem === "badge") {
+  }
   return (
     <div className="items-list">
       <PageHeader>
@@ -31,6 +35,13 @@ const ItemsList = ({
                 <Link to={`/${resource}/${listItem.id}`}>
                   {listItem[displayValue]}
                 </Link>
+                {calloutItem && (
+                  <div className="callout">
+                    {React.cloneElement(calloutItem, {
+                      value: listItem[calloutValue]
+                    })}
+                  </div>
+                )}
               </List.Content>
             </List.Item>
           ))}
