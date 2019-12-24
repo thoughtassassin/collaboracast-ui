@@ -7,7 +7,7 @@ import DashboardContainer from "../DashboardContainer/DashboadContainer";
 import ItemsList from "../ItemsList/ItemsList";
 import Messages from "../Messages/Messages";
 import Message from "../Message/Message";
-import Notifications from "../Notifications/Notifications";
+import SetNotification from "../SetNotification/SetNotification";
 import useNotifications from "../../customHooks/useNotifications";
 import useUserChannels from "../../customHooks/useUserChannels";
 import urls from "../../constants/urls";
@@ -26,7 +26,11 @@ const Dashboard = ({ setAuthenticated }) => {
   const [success, setSuccess] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const channels = useUserChannels(setLoading, email);
-  const notifications = useNotifications("user", userId);
+  const notifications = useNotifications(
+    "user",
+    userId,
+    success === "Notification Added!" || success === "Notification deleted"
+  );
 
   const menuIcon = (
     <Menu.Item position="right" onClick={() => setIsMenuOpen(true)}>
@@ -75,6 +79,15 @@ const Dashboard = ({ setAuthenticated }) => {
         >
           <Icon name="address card" />
           Contacts
+        </Menu.Item>
+        <Menu.Item
+          onClick={() => {
+            setIsMenuOpen(false);
+            navigate("/notifications");
+          }}
+        >
+          <Icon name="bullhorn" />
+          Notifications
         </Menu.Item>
       </Sidebar>
       <Router primary={false}>
@@ -134,13 +147,18 @@ const Dashboard = ({ setAuthenticated }) => {
         <ItemsList
           path="/notifications"
           listItems={notifications}
+          success={success}
+          setSuccess={setSuccess}
           header="Notifications"
           displayValue="name"
           resource="notifications"
         />
-        <Notifications
-          path="/notifications/:notificationId"
+        <SetNotification
+          path="/notifications/:channelId"
+          token={token}
           notifications={notifications}
+          setSuccess={setSuccess}
+          setLoading={setLoading}
         />
       </Router>
     </DashboardContainer>

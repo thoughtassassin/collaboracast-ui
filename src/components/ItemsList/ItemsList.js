@@ -1,16 +1,28 @@
 import React from "react";
-import { List, Header } from "semantic-ui-react";
+import { Header, List, Message } from "semantic-ui-react";
 import { Link } from "@reach/router";
 
 import PageHeader from "../PageHeader/PageHeader";
 import "./ItemsList.css";
 
-const ItemsList = ({ listItems, header, resource, displayValue }) => {
+const ItemsList = ({
+  listItems,
+  header,
+  resource,
+  displayValue,
+  success,
+  setSuccess
+}) => {
   return (
     <div className="items-list">
       <PageHeader>
         <Header as="h3">List for {header}</Header>
       </PageHeader>
+      {success && (
+        <Message positive onDismiss={() => setSuccess(false)}>
+          {success}
+        </Message>
+      )}
       <List divided relaxed size="huge">
         {listItems &&
           listItems.map(listItem => (

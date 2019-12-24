@@ -6,7 +6,7 @@ import { Menu, Icon, Sidebar } from "semantic-ui-react";
 import Messages from "../Messages/Messages";
 import AddMessage from "../AddMessage/AddMessage";
 import Message from "../Message/Message";
-import Notifications from "../Notifications/Notifications";
+import SetNotification from "../SetNotification/SetNotification";
 import AddComment from "../AddComment/AddComment";
 import useChannels from "../../customHooks/useChannels";
 import useNotifications from "../../customHooks/useNotifications";
@@ -25,7 +25,11 @@ const AdminDashboard = ({ setAuthenticated }) => {
   const [success, setSuccess] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const channels = useChannels();
-  const notifications = useNotifications("admin", userId);
+  const notifications = useNotifications(
+    "admin",
+    userId,
+    success === "Notification Added!" || success === "Notification deleted"
+  );
   const users = useUsers();
 
   const menuIcon = (
@@ -191,13 +195,18 @@ const AdminDashboard = ({ setAuthenticated }) => {
         <ItemsList
           path="/notifications"
           listItems={notifications}
+          success={success}
+          setSuccess={setSuccess}
           header="Notifications"
           displayValue="name"
           resource="notifications"
         />
-        <Notifications
-          path="/notifications/:notificationId"
+        <SetNotification
+          path="/notifications/:channelId"
+          token={token}
           notifications={notifications}
+          setSuccess={setSuccess}
+          setLoading={setLoading}
         />
       </Router>
     </DashboardContainer>
