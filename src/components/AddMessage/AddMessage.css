@@ -1,6 +1,5 @@
 .message-container .menu {
-  right: 0 !important;
-  left: auto !important;
+  left: 0 !important;
 }
 
 .message-container .default.text {

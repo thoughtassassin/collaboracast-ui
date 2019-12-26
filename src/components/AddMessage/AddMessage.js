@@ -6,7 +6,8 @@ import {
   Header,
   TextArea,
   Label,
-  Dropdown
+  Dropdown,
+  Checkbox
 } from "semantic-ui-react";
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -20,6 +21,7 @@ import "./AddMessage.css";
 const AddMessage = ({ channelId, channels, token, setLoading, setSuccess }) => {
   const [error, setError] = useState(false);
   const [messageChannel, setMessageChannel] = useState(channelId);
+  const [priority, setPriority] = useState(false);
   const { id } = jwtDecode(token);
   const addMessageSuccess = json => {
     if (json.status === "success") {
@@ -43,7 +45,8 @@ const AddMessage = ({ channelId, channels, token, setLoading, setSuccess }) => {
       body: JSON.stringify({
         content: message,
         UserId: id,
-        ChannelId: messageChannel
+        ChannelId: messageChannel,
+        priority: priority ? true : null
       })
     })
       .then(response => response.json())
@@ -57,8 +60,9 @@ const AddMessage = ({ channelId, channels, token, setLoading, setSuccess }) => {
   };
   return (
     <div>
+      <Header as="h3">Add Message </Header>
+
       <PageHeader>
-        <Header as="h3">Add Message </Header>
         <Dropdown
           placeholder="Select Channel"
           options={channels.map(channel => ({
@@ -71,11 +75,18 @@ const AddMessage = ({ channelId, channels, token, setLoading, setSuccess }) => {
           className="message-container"
           onChange={(e, { value }) => setMessageChannel(value)}
         />
+        <Checkbox
+          label="priority"
+          name="priority"
+          checked={priority}
+          onChange={() => setPriority(priority => !priority)}
+        />
       </PageHeader>
       {error && <Message error>{error}</Message>}
       <Formik
         initialValues={{
-          message: ""
+          message: "",
+          priority: null
         }}
         onSubmit={formSubmit}
         validationSchema={yup.object().shape({
@@ -101,9 +112,11 @@ const AddMessage = ({ channelId, channels, token, setLoading, setSuccess }) => {
             </Form.Field>
             <Form.Field>
               {channelId ? (
-                <Button primary type="submit" onClick={handleSubmit}>
-                  Save Message
-                </Button>
+                <>
+                  <Button primary type="submit" onClick={handleSubmit}>
+                    Save Message
+                  </Button>
+                </>
               ) : messageChannel ? (
                 <Button primary type="submit" onClick={handleSubmit}>
                   Save Message
