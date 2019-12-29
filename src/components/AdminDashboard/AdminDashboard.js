@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 import AddContact from "../AddContact/AddContact";
+import AddComment from "../AddComment/AddComment";
+import AddMessage from "../AddMessage/AddMessage";
 import Contacts from "../Contacts/Contacts";
 import DashboardContainer from "../DashboardContainer/DashboadContainer";
 import { Menu, Icon, Sidebar } from "semantic-ui-react";
 import Messages from "../Messages/Messages";
-import AddMessage from "../AddMessage/AddMessage";
+import ItemsList from "../ItemsList/ItemsList";
 import Message from "../Message/Message";
 import NotificationLabel from "../NotificationLabel/NotificationLabel";
+import Reports from "../Reports/Reports";
 import SetNotification from "../SetNotification/SetNotification";
-import AddComment from "../AddComment/AddComment";
 import useChannels from "../../customHooks/useChannels";
 import useNotifications from "../../customHooks/useNotifications";
 import useUsers from "../../customHooks/useUsers";
-import ItemsList from "../ItemsList/ItemsList";
 import urls from "../../constants/urls";
 import useLoader from "../../customHooks/useLoader";
 
@@ -100,6 +101,15 @@ const AdminDashboard = ({ setAuthenticated }) => {
         >
           <Icon name="bullhorn" />
           Notifications
+        </Menu.Item>
+        <Menu.Item
+          onClick={() => {
+            setIsMenuOpen(false);
+            navigate("/reports");
+          }}
+        >
+          <Icon name="file alternate outline" />
+          Reports
         </Menu.Item>
       </Sidebar>
       <Router primary={false}>
@@ -211,6 +221,7 @@ const AdminDashboard = ({ setAuthenticated }) => {
           setSuccess={setSuccess}
           setLoading={setLoading}
         />
+        <Reports path="/reports" token={token} />
       </Router>
     </DashboardContainer>
   );
