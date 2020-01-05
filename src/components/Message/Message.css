@@ -16,3 +16,7 @@
 .messages a:active {
   text-decoration: none;
 }
+
+.comments {
+  margin-top: 2rem;
+}

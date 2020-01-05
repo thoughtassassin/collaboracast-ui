@@ -2,13 +2,38 @@
 }
 
 .reports-body {
+  counter-reset: step-counter;
+}
+
+.reports-body ol {
+  margin: 1rem 1rem 1rem calc(1rem + 50px);
+  padding: 0;
+  list-style: none;
 }
 
 .reports-body li {
-  margin-bottom: 2.5rem;
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px dashed #666;
+  position: relative;
 }
 
-.types-radio {
+.reports-body li:before {
+  content: counter(step-counter) ".";
+  counter-increment: step-counter;
+  position: absolute;
+  left: calc(-1rem - 50px);
+  top: -0.5rem;
+  font: bold 50px/1 Sans-Serif;
+  color: #aaa;
+}
+
+.reports-body li:last-child {
+  border-bottom: none;
+}
+
+.ui.radio.checkbox {
+  font-size: 1.25rem;
 }
 
 .report-select {
@@ -20,6 +45,10 @@
   line-height: 3rem;
 }
 
+.report-select-container .visible.menu.transition {
+  width: 100%;
+}
+
 .report-select-container,
 .date-range input {
   border: 1px solid #aaa;
@@ -28,10 +57,15 @@
   background: #fff;
 }
 
+.report-select-container .dropdown.icon {
+  line-height: 1.5 !important;
+}
+
 .date-range .dates-wrapper {
   display: flex;
   width: 100%;
   justify-content: flex-start;
+  flex-direction: column;
 }
 
 .date-range .dates-wrapper h4 {
@@ -39,5 +73,24 @@
 }
 
 .date-range .dates-wrapper .date-wrapper:last-child {
-  margin-left: 2rem;
+  margin-left: 0;
+  margin-top: 1rem;
+}
+
+.date-range .dates-wrapper .date-wrapper .ui.grey.massive.label {
+  margin-right: -5px;
+}
+
+.date-range .dates-wrapper .date-wrapper .ui.grey.massive.label .ui.header {
+  color: white;
+}
+
+@media screen and (min-width: 800px) {
+  .date-range .dates-wrapper {
+    flex-direction: row;
+  }
+  .date-range .dates-wrapper .date-wrapper:last-child {
+    margin-left: 1.5rem;
+    margin-top: 0;
+  }
 }

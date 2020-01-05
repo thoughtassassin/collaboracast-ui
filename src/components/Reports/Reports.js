@@ -152,10 +152,14 @@ const Reports = ({ token, setLoading, loading }) => {
           {type && (channel || user) && (
             <li>
               <div className="date-range">
-                <Header as="h3">Select a start and end date:</Header>
+                <Header as="h3">
+                  Select a <em>start</em> and <em>end</em> date:
+                </Header>
                 <div className="dates-wrapper">
                   <div className="date-wrapper">
-                    <Header as="h4">Start Date:</Header>
+                    <Label color="grey" size="massive">
+                      <Header as="h4">Start Date:</Header>
+                    </Label>
                     <DayPickerInput
                       formatDate={formatDate}
                       parseDate={parseDate}
@@ -169,7 +173,9 @@ const Reports = ({ token, setLoading, loading }) => {
                     />
                   </div>
                   <div className="date-wrapper">
-                    <Header as="h4">End Date:</Header>
+                    <Label color="grey" size="massive">
+                      <Header as="h4">End Date:</Header>
+                    </Label>
                     <DayPickerInput
                       formatDate={formatDate}
                       parseDate={parseDate}
@@ -190,7 +196,8 @@ const Reports = ({ token, setLoading, loading }) => {
             <li>
               <Header as="h3">Download report:</Header>
               <Button
-                color="grey"
+                color="blue"
+                size="large"
                 onClick={() =>
                   fetchReport(
                     token,

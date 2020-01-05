@@ -34,9 +34,7 @@ const DashboardContainer = ({
       </Dimmer>
       <Menu fixed="top" inverted size="massive">
         <Menu.Item>
-          <Link to="/">
-            <Icon name="user" /> {username}
-          </Link>
+          <Link to="/">{username}</Link>
           <Button
             size="mini"
             inverted

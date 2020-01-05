@@ -74,7 +74,7 @@ export const Message = ({
           />
           {message.Comments.length > 0 && (
             <div className="comments">
-              <Header as="h1">Comments</Header>
+              <Header as="h2">Comments</Header>
               {message.Comments.map((comment, index) => (
                 <CommentCard
                   key={index}
