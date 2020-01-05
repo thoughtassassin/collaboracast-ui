@@ -18,6 +18,24 @@
   position: relative;
 }
 
+.appear.enter {
+  opacity: 0;
+}
+
+.appear.enter-active {
+  opacity: 1;
+  transition: opacity 250ms ease-in;
+}
+
+.appear.exit {
+  opacity: 1;
+}
+
+.appear.exit-active {
+  opacity: 0;
+  transition: opacity 250ms ease-out;
+}
+
 .reports-body li:before {
   content: counter(step-counter) ".";
   counter-increment: step-counter;

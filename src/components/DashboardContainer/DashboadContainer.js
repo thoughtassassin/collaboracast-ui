@@ -3,14 +3,7 @@ import { navigate } from "@reach/router";
 
 import { Link } from "@reach/router";
 import jwtDecode from "jwt-decode";
-import {
-  Button,
-  Container,
-  Loader,
-  Menu,
-  Icon,
-  Dimmer
-} from "semantic-ui-react";
+import { Button, Container, Loader, Menu, Dimmer } from "semantic-ui-react";
 
 import "./DashboardContainer.css";
 

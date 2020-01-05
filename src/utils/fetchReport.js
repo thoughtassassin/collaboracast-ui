@@ -1,9 +1,24 @@
 import urls from "../constants/urls";
+import moment from "moment";
 
 const fetchReport = async (token, userId, channelId, beginDate, endDate) => {
+  // check if all necessary arguments are sent
   if (!token || !beginDate || !endDate || (!channelId && !userId)) {
     throw new Error(`fetchReport requires a valid token, 
         a user id or a channel id and both a begin and end date`);
+  }
+  // check if dates are in the future
+  if (
+    moment(beginDate).isAfter(moment()) ||
+    moment(endDate).isAfter(moment())
+  ) {
+    throw new Error(`fetchReport requires that both dates be in the past`);
+  }
+  // check if beginDate is before endDate
+  if (moment(beginDate).isAfter(endDate)) {
+    throw new Error(
+      `fetchReport requires that the start date is before the end date`
+    );
   }
 
   let route = userId ? `/users/${userId}` : `/channels/${channelId}`;
@@ -32,8 +47,9 @@ const fetchReport = async (token, userId, channelId, beginDate, endDate) => {
     lnk.dispatchEvent(new MouseEvent("click"));
     setTimeout(URL.revokeObjectURL.bind(URL, objectURL));
   } else {
-    console.log(blob.type);
-    window.alert("A report with those parameters was not found.");
+    throw new Error(
+      "A report could not be fetched because the parameters returned no results."
+    );
   }
 };
 

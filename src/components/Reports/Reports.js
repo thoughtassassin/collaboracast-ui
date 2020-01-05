@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import { CSSTransition } from "react-transition-group";
+import moment from "moment";
 import DayPickerInput from "react-day-picker/DayPickerInput";
 import { formatDate, parseDate } from "react-day-picker/moment";
 import {
   Button,
   Dropdown,
   Header,
+  Message as SemanticMessage,
   Icon,
   Label,
   Radio
@@ -19,6 +22,7 @@ import "./Reports.css";
 import "react-day-picker/lib/style.css";
 
 const Reports = ({ token, setLoading, loading }) => {
+  const [error, setError] = useState(null);
   const [type, setType] = useState(null);
   const [user, setUser] = useState(null);
   const [channel, setChannel] = useState(null);
@@ -31,12 +35,41 @@ const Reports = ({ token, setLoading, loading }) => {
     ? setLoading(false)
     : setLoading(true);
 
+  const getReport = async () => {
+    try {
+      await fetchReport(
+        token,
+        user && JSON.parse(user).id,
+        channel && JSON.parse(channel).id,
+        startDate,
+        endDate
+      );
+      setError(null);
+    } catch (e) {
+      if (
+        e.message ===
+        "A report could not be fetched because the parameters returned no results."
+      ) {
+        setError(
+          "A report could not be generated because the parameters returned no results. Please try another user, channel, start date or end date."
+        );
+      } else {
+        console.error(e);
+      }
+    }
+  };
+
   return (
     <div className="reports">
       <PageHeader>
         <Header as="h1">Reports</Header>
       </PageHeader>
       <div className="reports-body">
+        {error && (
+          <SemanticMessage negative onDismiss={() => setError(null)}>
+            {error}
+          </SemanticMessage>
+        )}
         <ol>
           <li>
             <div className="type-radios">
@@ -73,7 +106,12 @@ const Reports = ({ token, setLoading, loading }) => {
               </div>
             </div>
           </li>
-          {!loading && type && (
+          <CSSTransition
+            in={!loading && !!type}
+            timeout={250}
+            unmountOnExit
+            className="appear"
+          >
             <li>
               <div className="report-select">
                 <Header as="h3">
@@ -117,17 +155,18 @@ const Reports = ({ token, setLoading, loading }) => {
                   }
                   options={
                     type === "channel"
-                      ? channels.length > 0 &&
-                        channels.map(channel => ({
-                          key: channel.id,
-                          value: JSON.stringify({
-                            id: channel.id,
-                            name: channel.name
-                          }),
-                          text: channel.name
-                        }))
-                      : channels.length > 0 &&
-                        users.map(user => ({
+                      ? channels.length > 0
+                        ? channels.map(channel => ({
+                            key: channel.id,
+                            value: JSON.stringify({
+                              id: channel.id,
+                              name: channel.name
+                            }),
+                            text: channel.name
+                          }))
+                        : []
+                      : users.length > 0
+                      ? users.map(user => ({
                           key: user.id,
                           value: JSON.stringify({
                             id: user.id,
@@ -135,6 +174,7 @@ const Reports = ({ token, setLoading, loading }) => {
                           }),
                           text: user.username
                         }))
+                      : []
                   }
                   lazyLoad
                   fluid
@@ -148,8 +188,13 @@ const Reports = ({ token, setLoading, loading }) => {
                 />
               </div>
             </li>
-          )}
-          {type && (channel || user) && (
+          </CSSTransition>
+          <CSSTransition
+            in={!!type && (!!channel || !!user)}
+            timeout={250}
+            unmountOnExit
+            className="appear"
+          >
             <li>
               <div className="date-range">
                 <Header as="h3">
@@ -165,6 +210,9 @@ const Reports = ({ token, setLoading, loading }) => {
                       parseDate={parseDate}
                       format="LL"
                       placeholder={formatDate(new Date(), "LL")}
+                      dayPickerProps={{
+                        disabledDays: { after: moment().toDate() }
+                      }}
                       onDayChange={date =>
                         date
                           ? setStartDate(formatDate(date, "YYYY-MM-DD"))
@@ -181,6 +229,12 @@ const Reports = ({ token, setLoading, loading }) => {
                       parseDate={parseDate}
                       format="LL"
                       placeholder={formatDate(new Date(), "LL")}
+                      dayPickerProps={{
+                        disabledDays: [
+                          { before: moment(startDate).toDate() },
+                          { after: moment().toDate() }
+                        ]
+                      }}
                       onDayChange={date =>
                         date
                           ? setEndDate(formatDate(date, "YYYY-MM-DD"))
@@ -191,27 +245,20 @@ const Reports = ({ token, setLoading, loading }) => {
                 </div>
               </div>
             </li>
-          )}
-          {type && (channel || user) && startDate && endDate && (
+          </CSSTransition>
+          <CSSTransition
+            in={!!type && (!!channel || !!user) && !!startDate && !!endDate}
+            timeout={250}
+            unmountOnExit
+            className="appear"
+          >
             <li>
               <Header as="h3">Download report:</Header>
-              <Button
-                color="blue"
-                size="large"
-                onClick={() =>
-                  fetchReport(
-                    token,
-                    user && JSON.parse(user).id,
-                    channel && JSON.parse(channel).id,
-                    startDate,
-                    endDate
-                  )
-                }
-              >
+              <Button color="blue" size="large" onClick={getReport}>
                 Get Report
               </Button>
             </li>
-          )}
+          </CSSTransition>
         </ol>
       </div>
     </div>
