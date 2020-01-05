@@ -153,28 +153,36 @@ const Reports = ({ token, setLoading, loading }) => {
             <li>
               <div className="date-range">
                 <Header as="h3">Select a start and end date:</Header>
-                <DayPickerInput
-                  formatDate={formatDate}
-                  parseDate={parseDate}
-                  format="LL"
-                  placeholder={formatDate(new Date(), "LL")}
-                  onDayChange={date =>
-                    date
-                      ? setStartDate(formatDate(date, "YYYY-MM-DD"))
-                      : setStartDate(null)
-                  }
-                />
-                <DayPickerInput
-                  formatDate={formatDate}
-                  parseDate={parseDate}
-                  format="LL"
-                  placeholder={formatDate(new Date(), "LL")}
-                  onDayChange={date =>
-                    date
-                      ? setEndDate(formatDate(date, "YYYY-MM-DD"))
-                      : setEndDate(null)
-                  }
-                />
+                <div className="dates-wrapper">
+                  <div className="date-wrapper">
+                    <Header as="h4">Start Date:</Header>
+                    <DayPickerInput
+                      formatDate={formatDate}
+                      parseDate={parseDate}
+                      format="LL"
+                      placeholder={formatDate(new Date(), "LL")}
+                      onDayChange={date =>
+                        date
+                          ? setStartDate(formatDate(date, "YYYY-MM-DD"))
+                          : setStartDate(null)
+                      }
+                    />
+                  </div>
+                  <div className="date-wrapper">
+                    <Header as="h4">End Date:</Header>
+                    <DayPickerInput
+                      formatDate={formatDate}
+                      parseDate={parseDate}
+                      format="LL"
+                      placeholder={formatDate(new Date(), "LL")}
+                      onDayChange={date =>
+                        date
+                          ? setEndDate(formatDate(date, "YYYY-MM-DD"))
+                          : setEndDate(null)
+                      }
+                    />
+                  </div>
+                </div>
               </div>
             </li>
           )}

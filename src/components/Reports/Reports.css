@@ -20,9 +20,24 @@
   line-height: 3rem;
 }
 
-.report-select-container {
+.report-select-container,
+.date-range input {
   border: 1px solid #aaa;
   border-radius: 5px;
   padding: 1rem;
   background: #fff;
+}
+
+.date-range .dates-wrapper {
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+}
+
+.date-range .dates-wrapper h4 {
+  margin-bottom: 0.25rem;
+}
+
+.date-range .dates-wrapper .date-wrapper:last-child {
+  margin-left: 2rem;
 }
