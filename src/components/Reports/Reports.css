@@ -1,0 +1,28 @@
+.reports {
+}
+
+.reports-body {
+}
+
+.reports-body li {
+  margin-bottom: 2.5rem;
+}
+
+.types-radio {
+}
+
+.report-select {
+  margin: 1rem 0;
+}
+
+.report-select .selected-entity {
+  margin: 1rem 0;
+  line-height: 3rem;
+}
+
+.report-select-container {
+  border: 1px solid #aaa;
+  border-radius: 5px;
+  padding: 1rem;
+  background: #fff;
+}

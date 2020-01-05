@@ -49,7 +49,7 @@ export const Message = ({
       {message && (
         <>
           <PageHeader>
-            <Header as="h3">Message</Header>
+            <Header as="h1">Message</Header>
             <Button
               onClick={() => navigate(`/add-comment/${messageId}`)}
               size="small"
@@ -74,7 +74,7 @@ export const Message = ({
           />
           {message.Comments.length > 0 && (
             <div className="comments">
-              <Header as="h3">Comments</Header>
+              <Header as="h1">Comments</Header>
               {message.Comments.map((comment, index) => (
                 <CommentCard
                   key={index}

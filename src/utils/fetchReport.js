@@ -21,12 +21,20 @@ const fetchReport = async (token, userId, channelId, beginDate, endDate) => {
   });
 
   const blob = await response.blob();
-  let lnk = document.createElement("a"),
-    objectURL;
-  lnk.download = "report.xlsx";
-  lnk.href = objectURL = URL.createObjectURL(blob);
-  lnk.dispatchEvent(new MouseEvent("click"));
-  setTimeout(URL.revokeObjectURL.bind(URL, objectURL));
+  if (
+    blob.type ===
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+  ) {
+    let lnk = document.createElement("a"),
+      objectURL;
+    lnk.download = "report.xlsx";
+    lnk.href = objectURL = URL.createObjectURL(blob);
+    lnk.dispatchEvent(new MouseEvent("click"));
+    setTimeout(URL.revokeObjectURL.bind(URL, objectURL));
+  } else {
+    console.log(blob.type);
+    window.alert("A report with those parameters was not found.");
+  }
 };
 
 export default fetchReport;

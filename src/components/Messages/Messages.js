@@ -24,7 +24,7 @@ export const Messages = ({
       {messages && (
         <>
           <PageHeader>
-            <Header as="h3">Messages</Header>
+            <Header as="h1">Messages</Header>
             <Button
               onClick={() =>
                 navigate(

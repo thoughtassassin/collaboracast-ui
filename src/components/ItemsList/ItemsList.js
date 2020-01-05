@@ -20,7 +20,7 @@ const ItemsList = ({
   return (
     <div className="items-list">
       <PageHeader>
-        <Header as="h3">List for {header}</Header>
+        <Header as="h1">List for {header}</Header>
       </PageHeader>
       {success && (
         <Message positive onDismiss={() => setSuccess(false)}>

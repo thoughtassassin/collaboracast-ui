@@ -69,7 +69,7 @@ const AddContact = ({ channelId, channels, token, setLoading, setSuccess }) => {
   return (
     <div>
       <PageHeader>
-        <Header as="h3">
+        <Header as="h1">
           Add Contact To{" "}
           <ChannelName
             channels={channels}

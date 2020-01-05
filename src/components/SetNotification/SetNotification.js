@@ -80,7 +80,7 @@ const SetNotification = ({
   return (
     <div className="notifications">
       <PageHeader>
-        <Header as="h3">
+        <Header as="h1">
           Set Notifications for {notification && notification.name}
         </Header>
       </PageHeader>

@@ -60,7 +60,7 @@ const AddMessage = ({ channelId, channels, token, setLoading, setSuccess }) => {
   };
   return (
     <div>
-      <Header as="h3">Add Message </Header>
+      <Header as="h1">Add Message </Header>
 
       <PageHeader>
         <Dropdown

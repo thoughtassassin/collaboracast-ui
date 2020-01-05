@@ -55,7 +55,7 @@ const AddComment = ({ messageId, token, setLoading, setSuccess }) => {
   return (
     <div>
       <PageHeader>
-        <Header as="h3">Add Comment</Header>
+        <Header as="h1">Add Comment</Header>
       </PageHeader>
       {error && <Comment error>{error}</Comment>}
       <Formik

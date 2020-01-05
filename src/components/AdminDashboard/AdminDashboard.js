@@ -221,7 +221,12 @@ const AdminDashboard = ({ setAuthenticated }) => {
           setSuccess={setSuccess}
           setLoading={setLoading}
         />
-        <Reports path="/reports" token={token} />
+        <Reports
+          path="/reports"
+          token={token}
+          loading={loading}
+          setLoading={setLoading}
+        />
       </Router>
     </DashboardContainer>
   );

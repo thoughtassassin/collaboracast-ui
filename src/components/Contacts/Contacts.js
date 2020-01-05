@@ -21,7 +21,7 @@ export const Contacts = ({
       {contacts && (
         <>
           <PageHeader>
-            <Header as="h3">
+            <Header as="h1">
               Contacts for{" "}
               <ChannelName
                 channels={channels}
