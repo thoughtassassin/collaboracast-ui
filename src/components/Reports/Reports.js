@@ -255,7 +255,7 @@ const Reports = ({ token, setLoading, loading }) => {
             <li id="downloadStep">
               <Header as="h3">Download report:</Header>
               <Button color="blue" size="large" onClick={getReport}>
-                Build Report
+                Download Report
               </Button>
             </li>
           </CSSTransition>

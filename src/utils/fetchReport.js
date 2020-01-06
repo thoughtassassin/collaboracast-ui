@@ -44,13 +44,13 @@ const fetchReport = async (token, userId, channelId, beginDate, endDate) => {
       objectURL;
     lnk.download = "report.xlsx";
     lnk.href = objectURL = URL.createObjectURL(blob);
-    lnk.text = "Download Report";
+    //lnk.text = "Download Report";
     const downloadArea = document.getElementById("downloadStep");
     const wrapperDiv = document.createElement("div");
     wrapperDiv.classList.add("report-link");
     wrapperDiv.appendChild(lnk);
     downloadArea.appendChild(wrapperDiv);
-    // lnk.dispatchEvent(new MouseEvent("click"));
+    lnk.dispatchEvent(new MouseEvent("click"));
     // setTimeout(URL.revokeObjectURL.bind(URL, objectURL));
   } else {
     throw new Error(
