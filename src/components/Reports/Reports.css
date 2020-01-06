@@ -1,5 +1,4 @@
-.reports {
-}
+.reports {}
 
 .reports-body {
   counter-reset: step-counter;
@@ -67,12 +66,15 @@
   width: 100%;
 }
 
-.report-select-container,
-.date-range input {
+.report-select-container, .date-range input {
   border: 1px solid #aaa;
   border-radius: 5px;
   padding: 1rem;
   background: #fff;
+}
+
+.report-link {
+  padding: 1rem 0;
 }
 
 .report-select-container .dropdown.icon {

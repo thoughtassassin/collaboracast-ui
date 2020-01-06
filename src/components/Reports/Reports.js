@@ -252,10 +252,10 @@ const Reports = ({ token, setLoading, loading }) => {
             unmountOnExit
             className="appear"
           >
-            <li>
+            <li id="downloadStep">
               <Header as="h3">Download report:</Header>
               <Button color="blue" size="large" onClick={getReport}>
-                Get Report
+                Build Report
               </Button>
             </li>
           </CSSTransition>
