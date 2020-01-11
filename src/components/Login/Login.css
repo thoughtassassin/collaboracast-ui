@@ -1,7 +1,16 @@
 label {
-  color: white;
+  color: black;
 }
 
 .ui.grid.login {
-  margin: 5rem 0.5rem 0;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.login .ui.input {
+  border: 1px solid #ccc;
+}
+
+.login .ui.header {
+  color: var(--dark-theme-color);
 }

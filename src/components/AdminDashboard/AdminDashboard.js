@@ -1,37 +1,38 @@
 import React, { useState } from "react";
-import AddComment from "../AddComment/AddComment";
 import AddContact from "../AddContact/AddContact";
+import AddComment from "../AddComment/AddComment";
 import AddMessage from "../AddMessage/AddMessage";
 import Contacts from "../Contacts/Contacts";
 import DashboardContainer from "../DashboardContainer/DashboadContainer";
-import ItemsList from "../ItemsList/ItemsList";
+import { Menu, Icon, Sidebar } from "semantic-ui-react";
 import Messages from "../Messages/Messages";
+import ItemsList from "../ItemsList/ItemsList";
 import Message from "../Message/Message";
 import NotificationLabel from "../NotificationLabel/NotificationLabel";
+import Reports from "../Reports/Reports";
 import SetNotification from "../SetNotification/SetNotification";
+import useChannels from "../../customHooks/useChannels";
 import useNotifications from "../../customHooks/useNotifications";
-import useUserChannels from "../../customHooks/useUserChannels";
+import useUsers from "../../customHooks/useUsers";
 import urls from "../../constants/urls";
 import useLoader from "../../customHooks/useLoader";
 
 import { Router, navigate } from "@reach/router";
 import jwtDecode from "jwt-decode";
-import { Menu, Icon, Sidebar } from "semantic-ui-react";
 
-import "./Dashboard.css";
-
-const Dashboard = ({ setAuthenticated }) => {
+const AdminDashboard = ({ setAuthenticated }) => {
   const token = localStorage.getItem("token");
-  const { email, id: userId } = jwtDecode(token);
+  const { id: userId } = jwtDecode(token);
   const [loading, setLoading] = useLoader();
   const [success, setSuccess] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const channels = useUserChannels(setLoading, email);
+  const channels = useChannels();
   const notifications = useNotifications(
-    "user",
+    "admin",
     userId,
     success === "Notification Added!" || success === "Notification deleted"
   );
+  const users = useUsers();
 
   const menuIcon = (
     <Menu.Item position="right" onClick={() => setIsMenuOpen(true)}>
@@ -40,11 +41,13 @@ const Dashboard = ({ setAuthenticated }) => {
   );
 
   const dashboardLoading =
-    channels.length === 0 || notifications.length === 0 || loading;
+    channels.length === 0 ||
+    notifications.length === 0 ||
+    users.length === 0 ||
+    loading;
 
   return (
     <DashboardContainer
-      className="dashboard"
       setAuthenticated={setAuthenticated}
       menuIcon={menuIcon}
       loading={dashboardLoading}
@@ -66,11 +69,20 @@ const Dashboard = ({ setAuthenticated }) => {
         <Menu.Item
           onClick={() => {
             setIsMenuOpen(false);
-            navigate("/");
+            navigate("/operators");
           }}
         >
           <Icon name="envelope outline" />
-          Messages
+          Operators
+        </Menu.Item>
+        <Menu.Item
+          onClick={() => {
+            setIsMenuOpen(false);
+            navigate("/users");
+          }}
+        >
+          <Icon name="user circle" />
+          Users
         </Menu.Item>
         <Menu.Item
           onClick={() => {
@@ -90,17 +102,55 @@ const Dashboard = ({ setAuthenticated }) => {
           <Icon name="bullhorn" />
           Notifications
         </Menu.Item>
+        <Menu.Item
+          onClick={() => {
+            setIsMenuOpen(false);
+            navigate("/reports");
+          }}
+        >
+          <Icon name="file alternate outline" />
+          Reports
+        </Menu.Item>
       </Sidebar>
       <Router primary={false}>
         <Messages
           path="/"
+          success={success}
+          setSuccess={setSuccess}
+          fetchUrl={`${urls.base}/api/v1/messages`}
+          successUrl={`/add-message`}
+          default
+        />
+        <ItemsList
+          path="/users"
+          listItems={users}
+          header="Users"
+          displayValue="username"
+          resource="users"
+        />
+        <Messages
+          path="/users/:id"
           setLoading={setLoading}
           success={success}
           setSuccess={setSuccess}
-          fetchUrl={`${urls.base}/api/v1/user-messages/${email}`}
+          fetchUrl={`${urls.base}/api/v1/messages-by-user/`}
           successUrl={`/add-message`}
-          user
-          default
+        />
+        <ItemsList
+          path="/operators"
+          listItems={channels}
+          header="Operators"
+          displayValue="name"
+          resource="operators"
+        />
+        <Messages
+          path="/operators/:id"
+          setLoading={setLoading}
+          success={success}
+          setSuccess={setSuccess}
+          fetchUrl={`${urls.base}/api/v1/channel-messages/`}
+          selectMessageTopic
+          successUrl={`/add-message`}
         />
         <Message
           path="/messages/:messageId"
@@ -111,6 +161,14 @@ const Dashboard = ({ setAuthenticated }) => {
         />
         <AddMessage
           path="/add-message"
+          channels={channels}
+          token={token}
+          setLoading={setLoading}
+          setSuccess={setSuccess}
+          success={success}
+        />
+        <AddMessage
+          path="/add-message/:channelId"
           channels={channels}
           token={token}
           setLoading={setLoading}
@@ -163,9 +221,15 @@ const Dashboard = ({ setAuthenticated }) => {
           setSuccess={setSuccess}
           setLoading={setLoading}
         />
+        <Reports
+          path="/reports"
+          token={token}
+          loading={loading}
+          setLoading={setLoading}
+        />
       </Router>
     </DashboardContainer>
   );
 };
 
-export default Dashboard;
+export default AdminDashboard;

@@ -1,17 +1,21 @@
 import React, { useState } from "react";
 import { Form, Button, Message, Header, Input, Label } from "semantic-ui-react";
+import { navigate } from "@reach/router";
 import { Formik } from "formik";
 import * as yup from "yup";
 
 import urls from "../../constants/urls";
+import ChannelName from "../ChannelName/ChannelName";
+import PageHeader from "../PageHeader/PageHeader";
+import "./AddContact.css";
 
-const AddContact = ({ channelId, channel, token, setLoading }) => {
-  const [success, setSuccess] = useState(false);
+const AddContact = ({ channelId, channels, token, setLoading, setSuccess }) => {
   const [error, setError] = useState(false);
   const addContactSuccess = json => {
     if (json.status === "success") {
       setSuccess(json.message);
       setError(false);
+      navigate(`/${channelId}/contacts`);
     } else if (json.status === "error") {
       setError(json.message);
       setSuccess(false);
@@ -21,7 +25,8 @@ const AddContact = ({ channelId, channel, token, setLoading }) => {
   const formSubmit = ({
     firstName,
     lastName,
-    business,
+    group,
+    position,
     phone,
     address1,
     address2,
@@ -40,13 +45,14 @@ const AddContact = ({ channelId, channel, token, setLoading }) => {
       body: JSON.stringify({
         firstName,
         lastName,
-        business,
+        group,
+        position,
         phone,
         address1,
         address2,
         city,
         state,
-        zip,
+        zip: zip || null,
         email,
         ChannelId: channelId
       })
@@ -62,10 +68,15 @@ const AddContact = ({ channelId, channel, token, setLoading }) => {
   };
   return (
     <div>
-      <Header as="h2" inverted>
-        Add Contact To {channel}
-      </Header>
-      {success && <Message positive>{success}</Message>}
+      <PageHeader>
+        <Header as="h1">
+          Add Contact To{" "}
+          <ChannelName
+            channels={channels}
+            resource={/\/add-contact\/([0-9]+).?\/?/}
+          />
+        </Header>
+      </PageHeader>
       {error && <Message error>{error}</Message>}
       <Formik
         initialValues={{
@@ -77,31 +88,42 @@ const AddContact = ({ channelId, channel, token, setLoading }) => {
           address2: "",
           city: "",
           state: "",
-          zip: "",
+          zip: null,
           email: ""
         }}
         onSubmit={formSubmit}
-        validationSchema={yup.object().shape({
-          firstName: yup.string().required("First Name is required"),
-          lastName: yup.string().required("Last Name is required"),
-          business: yup.string().required("Business is required"),
-          phone: yup.string().required("Phone is required"),
-          address1: yup.string().required("Address1 field is required"),
-          city: yup.string().required("City is required"),
-          state: yup.string().required("State is required"),
-          zip: yup.string().required("Zip is required"),
-          email: yup.string().required("Email is required")
-        })}
+        validationSchema={yup.object().shape(
+          {
+            firstName: yup.string().required("First Name is required"),
+            lastName: yup.string().required("Last Name is required"),
+            email: yup
+              .string()
+              .email()
+              .when("phone", {
+                is: (phone, email) => !(phone || email),
+                then: yup.string().required("Phone or email is required")
+              }),
+            phone: yup.string().when("email", {
+              is: (phone, email) => !(phone || email),
+              then: yup.string().required("Phone or email is required")
+            }),
+            zip: yup
+              .number()
+              .typeError("Must be a number.")
+              .nullable()
+          },
+          [["email", "phone"]]
+        )}
       >
         {({ errors, touched, handleChange, handleBlur, handleSubmit }) => (
-          <Form inverted>
+          <Form inverted className="add-contact">
             <Form.Field>
               <Input
                 name="firstName"
                 type="text"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                label="First Name"
+                label={{ basic: true, content: "First Name" }}
               />
               {touched.firstName && errors.firstName && (
                 <Label pointing prompt color="red">
@@ -115,7 +137,7 @@ const AddContact = ({ channelId, channel, token, setLoading }) => {
                 type="text"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                label="Last Name"
+                label={{ basic: true, content: "Last Name" }}
               />
               {touched.lastName && errors.lastName && (
                 <Label pointing prompt color="red">
@@ -125,15 +147,29 @@ const AddContact = ({ channelId, channel, token, setLoading }) => {
             </Form.Field>
             <Form.Field>
               <Input
-                name="business"
+                name="group"
                 type="text"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                label="Business"
+                label={{ basic: true, content: "Group" }}
               />
-              {touched.business && errors.business && (
+              {touched.group && errors.group && (
                 <Label pointing prompt color="red">
-                  {errors.business}
+                  {errors.group}
+                </Label>
+              )}
+            </Form.Field>
+            <Form.Field>
+              <Input
+                name="position"
+                type="text"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                label={{ basic: true, content: "Position" }}
+              />
+              {touched.position && errors.position && (
+                <Label pointing prompt color="red">
+                  {errors.position}
                 </Label>
               )}
             </Form.Field>
@@ -143,7 +179,7 @@ const AddContact = ({ channelId, channel, token, setLoading }) => {
                 type="text"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                label="Phone"
+                label={{ basic: true, content: "Phone" }}
               />
               {touched.phone && errors.phone && (
                 <Label pointing prompt color="red">
@@ -157,7 +193,7 @@ const AddContact = ({ channelId, channel, token, setLoading }) => {
                 type="text"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                label="Address 1"
+                label={{ basic: true, content: "Address 1" }}
               />
               {touched.address1 && errors.address1 && (
                 <Label pointing prompt color="red">
@@ -171,7 +207,7 @@ const AddContact = ({ channelId, channel, token, setLoading }) => {
                 type="text"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                label="Address 2"
+                label={{ basic: true, content: "Address 2" }}
               />
             </Form.Field>
             <Form.Field>
@@ -180,7 +216,7 @@ const AddContact = ({ channelId, channel, token, setLoading }) => {
                 type="text"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                label="City"
+                label={{ basic: true, content: "City" }}
               />
               {touched.city && errors.city && (
                 <Label pointing prompt color="red">
@@ -194,7 +230,7 @@ const AddContact = ({ channelId, channel, token, setLoading }) => {
                 type="text"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                label="State"
+                label={{ basic: true, content: "State" }}
               />
               {touched.state && errors.state && (
                 <Label pointing prompt color="red">
@@ -208,7 +244,7 @@ const AddContact = ({ channelId, channel, token, setLoading }) => {
                 type="text"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                label="Zip"
+                label={{ basic: true, content: "Zip" }}
               />
               {touched.zip && errors.zip && (
                 <Label pointing prompt color="red">
@@ -222,7 +258,7 @@ const AddContact = ({ channelId, channel, token, setLoading }) => {
                 type="text"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                label="Email"
+                label={{ basic: true, content: "Email" }}
               />
               {touched.zip && errors.email && (
                 <Label pointing prompt color="red">
@@ -231,7 +267,7 @@ const AddContact = ({ channelId, channel, token, setLoading }) => {
               )}
             </Form.Field>
             <Form.Field>
-              <Button color="teal" type="submit" onClick={handleSubmit}>
+              <Button primary type="submit" onClick={handleSubmit}>
                 Save Contact
               </Button>
             </Form.Field>

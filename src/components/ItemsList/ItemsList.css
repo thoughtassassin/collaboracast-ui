@@ -1,0 +1,26 @@
+.items-list a, .items-list a:hover, .items-list a:active {
+    color: black;
+}
+
+.items-list a:hover, .items-list a:active {
+    text-decoration: underline;
+}
+
+.items-list .item {
+    padding: 1rem 0 !important;
+}
+
+.items-list .item .content {
+    display: grid;
+    grid-template-rows: 1fr auto;
+    grid-template-areas: "description extra";
+    justify-content: space-between;
+}
+
+.items-list .item .content a {
+    grid-area: description;
+}
+
+.items-list .item .content div {
+    grid-area: extra;
+}

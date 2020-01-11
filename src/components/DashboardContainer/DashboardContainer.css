@@ -1,0 +1,20 @@
+.dashboard {
+  margin-top: 5rem;
+}
+
+.dashboard .ui.massive.menu {
+  background: var(--dark-theme-color);
+}
+
+.dashboard select {
+  display: block;
+}
+
+.collaboradimmer {
+  background: #0f1831 !important;
+}
+
+.ui.inverted.menu button {
+  box-shadow: none !important;
+  margin-left: 1rem !important;
+}

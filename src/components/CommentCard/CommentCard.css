@@ -1,0 +1,27 @@
+.comments {
+  margin-top: 1rem;
+}
+
+.comment-card {
+  margin-bottom: 1rem;
+  box-shadow: 1px 1px 1px #ccc;
+}
+
+.comment-card .content {
+  font-size: 1.25rem;
+  color: #555;
+  padding: 1rem;
+}
+
+.comment-card .ui.attached.segment {
+  border: none;
+}
+
+.comment-card .ui.top.attached.header {
+  border: none;
+}
+
+.comment-card .top {
+  display: flex;
+  justify-content: space-between;
+}
