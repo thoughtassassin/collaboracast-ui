@@ -14,6 +14,8 @@ export const CommentCard = ({ username, warehouse, createdAt, content }) => (
         </div>
         <div className="comment-date">
           {moment(createdAt).format("MMM DD, YYYY")}
+          <br />
+          {moment(createdAt).format("h:mm a")}
         </div>
       </Header>
     </Segment>
