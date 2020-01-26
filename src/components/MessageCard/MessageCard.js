@@ -21,6 +21,8 @@ export const MessageCard = ({
           <div className="comment-user">{channel}</div>
           <div className="comment-date">
             {moment(createdAt).format("MMM DD, YYYY")}
+            <br />
+            {moment(createdAt).format("h:mm a")}
           </div>
         </Header>
       </Segment>
