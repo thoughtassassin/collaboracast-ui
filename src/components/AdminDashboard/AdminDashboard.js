@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import AddContact from "../AddContact/AddContact";
 import AddComment from "../AddComment/AddComment";
 import AddMessage from "../AddMessage/AddMessage";
+import ChannelUsers from "../ChannelUsers/ChannelUsers";
 import Contacts from "../Contacts/Contacts";
 import DashboardContainer from "../DashboardContainer/DashboadContainer";
 import { Menu, Icon, Sidebar } from "semantic-ui-react";
@@ -239,6 +240,12 @@ const AdminDashboard = ({ setAuthenticated }) => {
         />
         <RequestChannel
           path="/request-operator"
+          token={token}
+          loading={loading}
+          setLoading={setLoading}
+        />
+        <ChannelUsers
+          path="/channel-users/:channelId"
           token={token}
           loading={loading}
           setLoading={setLoading}
