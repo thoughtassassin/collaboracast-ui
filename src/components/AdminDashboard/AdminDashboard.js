@@ -10,6 +10,7 @@ import ItemsList from "../ItemsList/ItemsList";
 import Message from "../Message/Message";
 import NotificationLabel from "../NotificationLabel/NotificationLabel";
 import Reports from "../Reports/Reports";
+import RequestChannel from "../RequestChannel/RequestChannel";
 import SetNotification from "../SetNotification/SetNotification";
 import useChannels from "../../customHooks/useChannels";
 import useNotifications from "../../customHooks/useNotifications";
@@ -110,6 +111,15 @@ const AdminDashboard = ({ setAuthenticated }) => {
         >
           <Icon name="file alternate outline" />
           Reports
+        </Menu.Item>
+        <Menu.Item
+          onClick={() => {
+            setIsMenuOpen(false);
+            navigate("/request-operator");
+          }}
+        >
+          <Icon name="question circle" />
+          Request Operator
         </Menu.Item>
       </Sidebar>
       <Router primary={false}>
@@ -223,6 +233,12 @@ const AdminDashboard = ({ setAuthenticated }) => {
         />
         <Reports
           path="/reports"
+          token={token}
+          loading={loading}
+          setLoading={setLoading}
+        />
+        <RequestChannel
+          path="/request-operator"
           token={token}
           loading={loading}
           setLoading={setLoading}
