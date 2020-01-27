@@ -4,9 +4,8 @@ import ItemsList from "../ItemsList/ItemsList";
 import PageHeader from "../PageHeader/PageHeader";
 import useChannelUsers from "../../customHooks/useChannelUsers";
 
-const ChannelUsers = ({ channelId, token, loading, setLoading }) => {
+const ChannelUsers = ({ channelId }) => {
   const { users, name } = useChannelUsers(channelId);
-  console.log(users, name);
   return users && users.length > 0 ? (
     <ItemsList
       listItems={users}

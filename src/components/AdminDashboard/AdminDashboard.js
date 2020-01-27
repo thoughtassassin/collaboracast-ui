@@ -243,6 +243,8 @@ const AdminDashboard = ({ setAuthenticated }) => {
           token={token}
           loading={loading}
           setLoading={setLoading}
+          setSuccess={setSuccess}
+          success={success}
         />
         <ChannelUsers
           path="/channel-users/:channelId"

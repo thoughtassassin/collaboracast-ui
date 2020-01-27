@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import AddComment from "../AddComment/AddComment";
 import AddContact from "../AddContact/AddContact";
 import AddMessage from "../AddMessage/AddMessage";
+import ChannelUsers from "../ChannelUsers/ChannelUsers";
 import Contacts from "../Contacts/Contacts";
 import DashboardContainer from "../DashboardContainer/DashboadContainer";
 import ItemsList from "../ItemsList/ItemsList";
 import Messages from "../Messages/Messages";
 import Message from "../Message/Message";
 import NotificationLabel from "../NotificationLabel/NotificationLabel";
+import RequestChannel from "../RequestChannel/RequestChannel";
 import SetNotification from "../SetNotification/SetNotification";
 import useNotifications from "../../customHooks/useNotifications";
 import useUserChannels from "../../customHooks/useUserChannels";
@@ -90,6 +92,15 @@ const Dashboard = ({ setAuthenticated }) => {
           <Icon name="bullhorn" />
           Notifications
         </Menu.Item>
+        <Menu.Item
+          onClick={() => {
+            setIsMenuOpen(false);
+            navigate("/request-operator");
+          }}
+        >
+          <Icon name="question circle" />
+          Request Operator
+        </Menu.Item>
       </Sidebar>
       <Router primary={false}>
         <Messages
@@ -161,6 +172,20 @@ const Dashboard = ({ setAuthenticated }) => {
           token={token}
           notifications={notifications}
           setSuccess={setSuccess}
+          setLoading={setLoading}
+        />
+        <RequestChannel
+          path="/request-operator"
+          token={token}
+          loading={loading}
+          setLoading={setLoading}
+          setSuccess={setSuccess}
+          success={success}
+        />
+        <ChannelUsers
+          path="/channel-users/:channelId"
+          token={token}
+          loading={loading}
           setLoading={setLoading}
         />
       </Router>

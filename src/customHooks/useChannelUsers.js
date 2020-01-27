@@ -2,12 +2,10 @@ import { useEffect, useCallback, useState } from "react";
 import urls from "../constants/urls";
 
 function useChannelUsers(channelId) {
-  console.log("from useChannelUsers: ", channelId);
   const [channelUsers, setChannelUsers] = useState([]);
 
   const setChannelUsersCallback = useCallback(
     ({ data }) => {
-      console.log("channelUsers data: ", data);
       setChannelUsers(data);
     },
     [setChannelUsers]
@@ -15,7 +13,6 @@ function useChannelUsers(channelId) {
 
   const getChannelUsers = useCallback(
     token => {
-      console.log(`${urls.base}/api/v1/channel-users/${channelId}`);
       fetch(`${urls.base}/api/v1/channel-users/${channelId}`, {
         headers: {
           "Content-Type": "application/json",
@@ -28,7 +25,7 @@ function useChannelUsers(channelId) {
           console.error(e);
         });
     },
-    [setChannelUsersCallback]
+    [setChannelUsersCallback, channelId]
   );
 
   useEffect(() => {

@@ -1,20 +1,19 @@
 import React, { useState } from "react";
-import {
-  Button,
-  Form,
-  Input,
-  Header,
-  Message as SemanticMessage
-} from "semantic-ui-react";
+import { Form, Header, Message } from "semantic-ui-react";
 import { Link } from "@reach/router";
-import { navigate } from "@reach/router";
 
-import urls from "../../constants/urls";
+import requestChannel from "../../utils/requestChannel";
 import PageHeader from "../PageHeader/PageHeader";
 import "./RequestChannel.css";
 import useChannels from "../../customHooks/useChannels";
 
-export const RequestChannels = ({ setLoading, loading, token }) => {
+export const RequestChannels = ({
+  loading,
+  setLoading,
+  success,
+  setSuccess,
+  token
+}) => {
   const channels = useChannels();
   const [filteredChannels, setFilteredChannels] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -35,8 +34,6 @@ export const RequestChannels = ({ setLoading, loading, token }) => {
     setSearchTerm(value);
   };
 
-  console.log("term", searchTerm === "");
-
   return (
     <div className="channel-requests">
       <PageHeader>
@@ -52,6 +49,16 @@ export const RequestChannels = ({ setLoading, loading, token }) => {
       </p>
       {loading ? null : (
         <div>
+          {success && (
+            <Message positive onDismiss={() => setSuccess(false)}>
+              {success}
+            </Message>
+          )}
+          {error && (
+            <Message negative onDismiss={() => setError(null)}>
+              {JSON.stringify(error)}
+            </Message>
+          )}
           <Form>
             <Form.Group>
               <Form.Field>
@@ -65,7 +72,14 @@ export const RequestChannels = ({ setLoading, loading, token }) => {
                 primary
                 type="button"
                 content="Request Operator"
-                onClick={() => ""}
+                onClick={async () => {
+                  try {
+                    const response = await requestChannel(searchTerm, token);
+                    setSuccess(response.message);
+                  } catch (e) {
+                    setError(e.message);
+                  }
+                }}
                 disabled={filteredChannels.length > 0 || searchTerm === ""}
               />
             </Form.Group>
