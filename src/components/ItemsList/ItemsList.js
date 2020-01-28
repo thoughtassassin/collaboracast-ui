@@ -30,7 +30,7 @@ const ItemsList = ({
       <List divided relaxed size="huge">
         {listItems &&
           listItems.map(listItem => (
-            <List.Item key={listItem.id}>
+            <List.Item key={`${listItem.id} + ${header.toLowerCase()}`}>
               <List.Content>
                 <Link to={`/${resource}/${listItem.id}`}>
                   {listItem[displayValue]}
