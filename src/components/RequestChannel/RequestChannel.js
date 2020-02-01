@@ -5,6 +5,7 @@ import { Link } from "@reach/router";
 import requestChannel from "../../utils/requestChannel";
 import PageHeader from "../PageHeader/PageHeader";
 import "./RequestChannel.css";
+import useFilteredChannels from "../../customHooks/useFilteredChannels";
 import useChannels from "../../customHooks/useChannels";
 
 export const RequestChannels = ({
@@ -15,24 +16,12 @@ export const RequestChannels = ({
   token
 }) => {
   const channels = useChannels();
-  const [filteredChannels, setFilteredChannels] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredChannels, searchTerm, handleChange] = useFilteredChannels(
+    channels
+  );
   const [error, setError] = useState(null);
 
   channels && channels.length > 0 ? setLoading(false) : setLoading(true);
-
-  const handleChange = ({ target: { value } }) => {
-    if (value !== "") {
-      setFilteredChannels(
-        channels.filter(channel =>
-          channel.name.toLowerCase().includes(value.toLowerCase())
-        )
-      );
-    } else {
-      setFilteredChannels([]);
-    }
-    setSearchTerm(value);
-  };
 
   return (
     <div className="channel-requests">

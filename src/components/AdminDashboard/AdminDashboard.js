@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import AddContact from "../AddContact/AddContact";
 import AddComment from "../AddComment/AddComment";
 import AddMessage from "../AddMessage/AddMessage";
+import ChannelList from "../ChannelList/ChannelList";
 import ChannelUsers from "../ChannelUsers/ChannelUsers";
 import Contacts from "../Contacts/Contacts";
 import DashboardContainer from "../DashboardContainer/DashboadContainer";
@@ -147,13 +148,7 @@ const AdminDashboard = ({ setAuthenticated }) => {
           fetchUrl={`${urls.base}/api/v1/messages-by-user/`}
           successUrl={`/add-message`}
         />
-        <ItemsList
-          path="/operators"
-          listItems={channels}
-          header="Operators"
-          displayValue="name"
-          resource="operators"
-        />
+        <ChannelList path="/operators" channels={channels} />
         <Messages
           path="/operators/:id"
           setLoading={setLoading}
