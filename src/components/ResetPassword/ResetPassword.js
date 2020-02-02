@@ -11,6 +11,7 @@ import {
   Dimmer
 } from "semantic-ui-react";
 import { Formik } from "formik";
+import PasswordStrengthMeter from "../PasswordStrengthMeter/PasswordStrengthMeter";
 import urls from "../../constants/urls";
 import useLoader from "../../customHooks/useLoader";
 import * as yup from "yup";
@@ -74,7 +75,12 @@ const ResetPassword = ({}) => {
               <Loader size="big">Logging In</Loader>
             </Dimmer>
           )}
-          {!success && <p>Please enter new password.</p>}
+          {!success && (
+            <p>
+              Please enter new password. The password strength meter indicates
+              how secure your password is.{" "}
+            </p>
+          )}
           {error && <Message error content={error} />}
           {success && <Message success content={success} />}
           {!success && (
@@ -97,43 +103,48 @@ const ResetPassword = ({}) => {
                 touched,
                 handleChange,
                 handleBlur,
-                handleSubmit
+                handleSubmit,
+                values: { password }
               }) => (
-                <Form size="small">
-                  <Form.Field>
-                    <Input
-                      name="password"
-                      type="password"
-                      label={{ basic: true, content: "Password" }}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                    />
-                    {touched.password && errors.password && (
-                      <Label pointing prompt color="red">
-                        {errors.password}
-                      </Label>
-                    )}
-                  </Form.Field>
-                  <Form.Field>
-                    <Input
-                      name="confirmPassword"
-                      type="password"
-                      label={{ basic: true, content: "Confirm Password" }}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                    />
-                    {touched.confirmPassword && errors.confirmPassword && (
-                      <Label pointing prompt color="red">
-                        {errors.confirmPassword}
-                      </Label>
-                    )}
-                  </Form.Field>
-                  <Form.Field>
-                    <Button type="submit" primary onClick={handleSubmit}>
-                      Set Password
-                    </Button>
-                  </Form.Field>
-                </Form>
+                <>
+                  {" "}
+                  <PasswordStrengthMeter password={password} />
+                  <Form size="small">
+                    <Form.Field>
+                      <Input
+                        name="password"
+                        type="password"
+                        label={{ basic: true, content: "Password" }}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                      />
+                      {touched.password && errors.password && (
+                        <Label pointing prompt color="red">
+                          {errors.password}
+                        </Label>
+                      )}
+                    </Form.Field>
+                    <Form.Field>
+                      <Input
+                        name="confirmPassword"
+                        type="password"
+                        label={{ basic: true, content: "Confirm" }}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                      />
+                      {touched.confirmPassword && errors.confirmPassword && (
+                        <Label pointing prompt color="red">
+                          {errors.confirmPassword}
+                        </Label>
+                      )}
+                    </Form.Field>
+                    <Form.Field>
+                      <Button type="submit" primary onClick={handleSubmit}>
+                        Set Password
+                      </Button>
+                    </Form.Field>
+                  </Form>
+                </>
               )}
             </Formik>
           )}
