@@ -11,6 +11,7 @@ import {
   Dimmer
 } from "semantic-ui-react";
 import { Formik } from "formik";
+import { Link } from "@reach/router";
 import * as yup from "yup";
 
 import urls from "../../constants/urls";
@@ -110,6 +111,9 @@ function Login({ setAuthenticated }) {
               </Form>
             )}
           </Formik>
+          <div className="forgotPassword">
+            <Link to="/request-password-reset">Forgot Password?</Link>
+          </div>
         </Grid.Column>
       </Grid.Row>
     </Grid>
