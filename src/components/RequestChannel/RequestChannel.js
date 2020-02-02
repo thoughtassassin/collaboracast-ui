@@ -26,7 +26,7 @@ export const RequestChannels = ({
   return (
     <div className="channel-requests">
       <PageHeader>
-        <Header as="h1">Request Channels</Header>
+        <Header as="h1">Request Operators</Header>
       </PageHeader>
       <p>
         Type in the name of the operator you would like to request. If it
