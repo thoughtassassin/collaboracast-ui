@@ -67,7 +67,7 @@ const RequestPassword = () => {
           <Header as="h1">Don-Nan</Header>
           {loading && (
             <Dimmer active={loading} inverted page>
-              <Loader size="big">Logging In</Loader>
+              <Loader size="big">Requesting Password Reset</Loader>
             </Dimmer>
           )}
           {!success && <p>Please enter your email address.</p>}

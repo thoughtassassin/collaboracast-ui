@@ -72,7 +72,7 @@ const ResetPassword = ({}) => {
           <Header as="h1">Don-Nan</Header>
           {loading && (
             <Dimmer active={loading} inverted page>
-              <Loader size="big">Logging In</Loader>
+              <Loader size="big">Resetting Password</Loader>
             </Dimmer>
           )}
           {!success && (
