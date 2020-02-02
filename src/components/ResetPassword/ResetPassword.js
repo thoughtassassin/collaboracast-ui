@@ -16,7 +16,7 @@ import urls from "../../constants/urls";
 import useLoader from "../../customHooks/useLoader";
 import * as yup from "yup";
 
-const ResetPassword = ({}) => {
+const ResetPassword = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useLoader();
