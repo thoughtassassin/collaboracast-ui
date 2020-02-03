@@ -22,12 +22,13 @@ const AddComment = ({ messageId, token, setLoading, setSuccess }) => {
     if (json.status === "success") {
       setSuccess(json.message);
       setError(false);
+      setLoading(false);
       navigate(`/messages/${messageId}/`);
     } else if (json.status === "error") {
       setError(json.message);
       setSuccess(false);
+      setLoading(false);
     }
-    setLoading(false);
   };
   const formSubmit = ({ comment }) => {
     setLoading(true);
