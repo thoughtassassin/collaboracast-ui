@@ -27,12 +27,13 @@ const SetNotification = ({
     if (json.status === "success") {
       setSuccess(json.message);
       setError(false);
+      setLoading(false);
       navigate(`/notifications`);
     } else if (json.status === "error") {
       setError(json.message);
       setSuccess(false);
+      setLoading(false);
     }
-    setLoading(false);
   };
   const formSubmit = async () => {
     setLoading(true);
