@@ -1,0 +1,19 @@
+.channels-list form {
+    margin-bottom: 1.5rem;
+    width: 100%;
+}
+
+.channels-list form * {
+    width: 100%;
+}
+
+@media (min-width: 546px) {
+    .channels-list form {
+        float: right;
+        margin-bottom: 0;
+        width: auto;
+    }
+    .channels-list form * {
+        width: auto;
+    }
+}

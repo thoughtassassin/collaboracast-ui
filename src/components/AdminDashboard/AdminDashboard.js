@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import AddContact from "../AddContact/AddContact";
 import AddComment from "../AddComment/AddComment";
 import AddMessage from "../AddMessage/AddMessage";
+import ChannelList from "../ChannelList/ChannelList";
+import ChannelUsers from "../ChannelUsers/ChannelUsers";
 import Contacts from "../Contacts/Contacts";
 import DashboardContainer from "../DashboardContainer/DashboadContainer";
 import { Menu, Icon, Sidebar } from "semantic-ui-react";
@@ -10,6 +12,7 @@ import ItemsList from "../ItemsList/ItemsList";
 import Message from "../Message/Message";
 import NotificationLabel from "../NotificationLabel/NotificationLabel";
 import Reports from "../Reports/Reports";
+import RequestChannel from "../RequestChannel/RequestChannel";
 import SetNotification from "../SetNotification/SetNotification";
 import useChannels from "../../customHooks/useChannels";
 import useNotifications from "../../customHooks/useNotifications";
@@ -111,6 +114,15 @@ const AdminDashboard = ({ setAuthenticated }) => {
           <Icon name="file alternate outline" />
           Reports
         </Menu.Item>
+        <Menu.Item
+          onClick={() => {
+            setIsMenuOpen(false);
+            navigate("/request-operator");
+          }}
+        >
+          <Icon name="question circle" />
+          Request Operator
+        </Menu.Item>
       </Sidebar>
       <Router primary={false}>
         <Messages
@@ -136,13 +148,7 @@ const AdminDashboard = ({ setAuthenticated }) => {
           fetchUrl={`${urls.base}/api/v1/messages-by-user/`}
           successUrl={`/add-message`}
         />
-        <ItemsList
-          path="/operators"
-          listItems={channels}
-          header="Operators"
-          displayValue="name"
-          resource="operators"
-        />
+        <ChannelList path="/operators" channels={channels} />
         <Messages
           path="/operators/:id"
           setLoading={setLoading}
@@ -223,6 +229,20 @@ const AdminDashboard = ({ setAuthenticated }) => {
         />
         <Reports
           path="/reports"
+          token={token}
+          loading={loading}
+          setLoading={setLoading}
+        />
+        <RequestChannel
+          path="/request-operator"
+          token={token}
+          loading={loading}
+          setLoading={setLoading}
+          setSuccess={setSuccess}
+          success={success}
+        />
+        <ChannelUsers
+          path="/channel-users/:channelId"
           token={token}
           loading={loading}
           setLoading={setLoading}
