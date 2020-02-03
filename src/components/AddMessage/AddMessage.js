@@ -27,12 +27,13 @@ const AddMessage = ({ channelId, channels, token, setLoading, setSuccess }) => {
     if (json.status === "success") {
       setSuccess(json.message);
       setError(false);
+      setLoading(false);
       navigate(`/`);
     } else if (json.status === "error") {
       setError(json.message);
       setSuccess(false);
+      setLoading(false);
     }
-    setLoading(false);
   };
   const formSubmit = ({ message }) => {
     setLoading(true);
