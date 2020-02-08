@@ -94,17 +94,12 @@ const AddMessage = ({ channelId, channels, token, setLoading, setSuccess }) => {
           priority: null
         }}
         onSubmit={formSubmit}
-        validationSchema={yup.object().shape(
-          {
-            message: yup
-              .string()
-              .max(600, "Message cannot exceed 600 characters")
-              .required("Message is required")
-          },
-          {
-            interaction: yup.string().required("Interaction type is required")
-          }
-        )}
+        validationSchema={yup.object().shape({
+          message: yup
+            .string()
+            .max(600, "Message cannot exceed 600 characters")
+            .required("Message is required")
+        })}
       >
         {({ errors, touched, handleChange, handleBlur, handleSubmit }) => (
           <Form>
