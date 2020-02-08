@@ -5,3 +5,17 @@
 .message-container .default.text {
   color: #333 !important;
 }
+
+.interaction-type {
+  display: flex;
+  flex-direction: column !important;
+  margin: 1rem 0 1.5rem 0 !important;
+}
+
+.interaction-type label {
+  margin-bottom: 0.5rem;
+}
+
+.help {
+  color: #900;
+}

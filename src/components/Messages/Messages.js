@@ -53,6 +53,7 @@ export const Messages = ({
                 createdAt={message.createdAt}
                 commentCount={message.CommentCount}
                 channel={message.channelName}
+                interaction={message.interaction}
               />
             ) : (
               <MessageCard
@@ -64,6 +65,7 @@ export const Messages = ({
                 createdAt={message.createdAt}
                 commentCount={message.Comments.length}
                 channel={message.Channel.name}
+                interaction={message.interaction}
               />
             )
           )}
