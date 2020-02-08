@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
-import jwtDecode from "jwt-decode";
 import Dashboard from "./components/Dashboard/Dashboard";
-import Login from "./components/Login/Login";
+import jwtDecode from "jwt-decode";
+import Authenticate from "./components/Authenticate/Authenticate";
 
 import "semantic-ui-css/semantic.min.css";
 import "./App.css";
@@ -22,7 +22,7 @@ function App() {
   return (
     <div className="App">
       {!authenticated ? (
-        <Login
+        <Authenticate
           setAuthenticated={setAuthenticated}
           setUser={setUser}
           user={user}
