@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import {
-  Form,
   Button,
-  Message,
-  Header,
-  TextArea,
-  Label,
+  Checkbox,
   Dropdown,
-  Checkbox
+  Form,
+  Header,
+  Label,
+  Message,
+  Radio,
+  TextArea
 } from "semantic-ui-react";
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -22,6 +23,8 @@ const AddMessage = ({ channelId, channels, token, setLoading, setSuccess }) => {
   const [error, setError] = useState(false);
   const [messageChannel, setMessageChannel] = useState(channelId);
   const [priority, setPriority] = useState(false);
+  const [interaction, setInteraction] = useState(false);
+
   const { id } = jwtDecode(token);
   const addMessageSuccess = json => {
     if (json.status === "success") {
@@ -47,7 +50,8 @@ const AddMessage = ({ channelId, channels, token, setLoading, setSuccess }) => {
         content: message,
         UserId: id,
         ChannelId: messageChannel,
-        priority: priority ? true : null
+        priority: priority ? true : null,
+        interaction: interaction
       })
     })
       .then(response => response.json())
@@ -90,15 +94,20 @@ const AddMessage = ({ channelId, channels, token, setLoading, setSuccess }) => {
           priority: null
         }}
         onSubmit={formSubmit}
-        validationSchema={yup.object().shape({
-          message: yup
-            .string()
-            .max(600, "Message cannot exceed 600 characters")
-            .required("Message is required")
-        })}
+        validationSchema={yup.object().shape(
+          {
+            message: yup
+              .string()
+              .max(600, "Message cannot exceed 600 characters")
+              .required("Message is required")
+          },
+          {
+            interaction: yup.string().required("Interaction type is required")
+          }
+        )}
       >
         {({ errors, touched, handleChange, handleBlur, handleSubmit }) => (
-          <Form inverted>
+          <Form>
             <Form.Field>
               <TextArea
                 name="message"
@@ -113,20 +122,51 @@ const AddMessage = ({ channelId, channels, token, setLoading, setSuccess }) => {
                   {errors.message}
                 </Label>
               )}
+              <Form.Group className="interaction-type">
+                <label>Interaction Type</label>
+                <Form.Field
+                  control={Radio}
+                  label="Call"
+                  value="call"
+                  checked={interaction === "call"}
+                  onChange={(e, { value }) => setInteraction(value)}
+                />
+                <Form.Field
+                  control={Radio}
+                  label="Email"
+                  value="email"
+                  checked={interaction === "email"}
+                  onChange={(e, { value }) => setInteraction(value)}
+                />
+                <Form.Field
+                  control={Radio}
+                  label="In Person"
+                  value="in-person"
+                  checked={interaction === "in-person"}
+                  onChange={(e, { value }) => setInteraction(value)}
+                />
+              </Form.Group>
             </Form.Field>
             <Form.Field>
-              {channelId ? (
+              {(channelId || messageChannel) && interaction ? (
                 <>
                   <Button primary type="submit" onClick={handleSubmit}>
                     Save Message
                   </Button>
                 </>
-              ) : messageChannel ? (
-                <Button primary type="submit" onClick={handleSubmit}>
-                  Save Message
-                </Button>
               ) : (
-                "Please select a channel from the Select Channel menu to save message."
+                <div>
+                  {!messageChannel && (
+                    <div className="help">
+                      Please select a channel from the Select Channel menu.
+                    </div>
+                  )}
+                  {!interaction && (
+                    <div className="help">
+                      Please select an interaction type.
+                    </div>
+                  )}
+                </div>
               )}
             </Form.Field>
           </Form>
