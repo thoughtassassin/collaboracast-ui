@@ -65,7 +65,10 @@ const AddComment = ({ messageId, token, setLoading, setSuccess }) => {
         }}
         onSubmit={formSubmit}
         validationSchema={yup.object().shape({
-          comment: yup.string().required("Comment is required")
+          comment: yup
+            .string()
+            .max(600, "Comment cannot exceed 600 characters")
+            .required("Comment is required")
         })}
       >
         {({ errors, touched, handleChange, handleBlur, handleSubmit }) => (
