@@ -20,6 +20,7 @@ const ResetPassword = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useLoader();
+  const [passwordStrength, setPasswordStrength] = useState("weak");
 
   const params = new URLSearchParams(window.location.search);
   const email = params.get("email");
@@ -78,11 +79,19 @@ const ResetPassword = () => {
           {!success && (
             <p>
               Please enter new password. The password strength meter indicates
-              how secure your password is.{" "}
+              how secure your password is. Password must have at least{" "}
+              <i>fair</i> strength in order to save.{" "}
             </p>
           )}
           {error && <Message error content={error} />}
-          {success && <Message success content={success} />}
+          {success && (
+            <div>
+              <Message success content={success} />
+              <div>
+                <a href="/">Login</a>
+              </div>
+            </div>
+          )}
           {!success && (
             <Formik
               initialValues={{
@@ -107,8 +116,10 @@ const ResetPassword = () => {
                 values: { password }
               }) => (
                 <>
-                  {" "}
-                  <PasswordStrengthMeter password={password} />
+                  <PasswordStrengthMeter
+                    password={password}
+                    setPasswordStrength={setPasswordStrength}
+                  />
                   <Form size="small">
                     <Form.Field>
                       <Input
@@ -138,11 +149,13 @@ const ResetPassword = () => {
                         </Label>
                       )}
                     </Form.Field>
-                    <Form.Field>
-                      <Button type="submit" primary onClick={handleSubmit}>
-                        Set Password
-                      </Button>
-                    </Form.Field>
+                    {passwordStrength !== "weak" && (
+                      <Form.Field>
+                        <Button type="submit" primary onClick={handleSubmit}>
+                          Set Password
+                        </Button>
+                      </Form.Field>
+                    )}
                   </Form>
                 </>
               )}

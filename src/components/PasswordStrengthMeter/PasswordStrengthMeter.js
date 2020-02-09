@@ -5,21 +5,33 @@ import zxcvbn from "zxcvbn";
 
 import "./PasswordStrengthMeter.css";
 
-const PasswordStrengthMeter = ({ password }) => {
+const PasswordStrengthMeter = ({ password, setPasswordStrength }) => {
   const createPasswordLabel = result => {
     switch (result.score) {
-      case 0:
+      case 0: {
+        setPasswordStrength("weak");
         return "Weak";
-      case 1:
+      }
+      case 1: {
+        setPasswordStrength("weak");
         return "Weak";
-      case 2:
+      }
+      case 2: {
+        setPasswordStrength("fair");
         return "Fair";
-      case 3:
+      }
+      case 3: {
+        setPasswordStrength("Good");
         return "Good";
-      case 4:
+      }
+      case 4: {
+        setPasswordStrength("Strong");
         return "Strong";
-      default:
+      }
+      default: {
+        setPasswordStrength("Weak");
         return "Weak";
+      }
     }
   };
   const testedResult = zxcvbn(password);
