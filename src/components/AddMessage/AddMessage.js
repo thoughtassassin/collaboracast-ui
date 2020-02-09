@@ -51,7 +51,8 @@ const AddMessage = ({ channelId, channels, token, setLoading, setSuccess }) => {
         UserId: id,
         ChannelId: messageChannel,
         priority: priority ? true : null,
-        interaction: interaction
+        interaction: interaction,
+        url: window.location.origin
       })
     })
       .then(response => response.json())

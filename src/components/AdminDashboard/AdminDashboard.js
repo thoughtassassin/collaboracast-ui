@@ -44,10 +44,7 @@ const AdminDashboard = ({ setAuthenticated }) => {
   );
 
   const dashboardLoading =
-    channels.length === 0 ||
-    notifications.length === 0 ||
-    users.length === 0 ||
-    loading;
+    !channels || !notifications || users.length === 0 || loading;
 
   return (
     <DashboardContainer
