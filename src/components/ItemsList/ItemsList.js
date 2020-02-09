@@ -33,15 +33,15 @@ const ItemsList = ({
             <List.Item key={`${listItem.id}-${header.toLowerCase()}`}>
               <List.Content>
                 <Link to={`/${resource}/${listItem.id}`}>
-                  {listItem[displayValue]}
+                  <span className="item-name">{listItem[displayValue]}</span>
+                  {calloutItem && (
+                    <div className="callout">
+                      {React.cloneElement(calloutItem, {
+                        value: listItem[calloutValue]
+                      })}
+                    </div>
+                  )}
                 </Link>
-                {calloutItem && (
-                  <div className="callout">
-                    {React.cloneElement(calloutItem, {
-                      value: listItem[calloutValue]
-                    })}
-                  </div>
-                )}
               </List.Content>
             </List.Item>
           ))}
