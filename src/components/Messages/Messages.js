@@ -55,7 +55,7 @@ export const Messages = ({
                 channel={message.channelName}
                 interaction={message.interaction}
               />
-            ) : (
+            ) : message.User ? (
               <MessageCard
                 key={index}
                 id={message.id}
@@ -67,7 +67,7 @@ export const Messages = ({
                 channel={message.Channel.name}
                 interaction={message.interaction}
               />
-            )
+            ) : null
           )}
         </>
       )}

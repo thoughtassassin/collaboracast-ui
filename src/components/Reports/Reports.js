@@ -31,7 +31,7 @@ const Reports = ({ token, setLoading, loading }) => {
   const channels = useChannels(token);
   const users = useUsers(token);
 
-  channels.length > 0 && users.length > 0
+  channels && channels.length > 0 && users.length > 0
     ? setLoading(false)
     : setLoading(true);
 

@@ -2,7 +2,7 @@ import { useEffect, useCallback, useState } from "react";
 import urls from "../constants/urls";
 
 function useNotifications(type, user, update) {
-  const [notifications, setNotifications] = useState([]);
+  const [notifications, setNotifications] = useState(null);
 
   const setNotificationsCallback = useCallback(
     ({ data }) => {

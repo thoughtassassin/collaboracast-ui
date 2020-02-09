@@ -2,7 +2,7 @@ import { useEffect, useCallback, useState } from "react";
 import urls from "../constants/urls";
 
 function useChannels() {
-  const [channels, setChannels] = useState([]);
+  const [channels, setChannels] = useState(null);
 
   const setChannelsCallback = useCallback(
     ({ data }) => {

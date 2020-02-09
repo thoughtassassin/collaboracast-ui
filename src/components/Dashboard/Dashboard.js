@@ -41,8 +41,7 @@ const Dashboard = ({ setAuthenticated }) => {
     </Menu.Item>
   );
 
-  const dashboardLoading =
-    channels.length === 0 || notifications.length === 0 || loading;
+  const dashboardLoading = !channels || !notifications || loading;
 
   return (
     <DashboardContainer
