@@ -42,7 +42,7 @@ export const RequestChannels = ({
         <div>
           {success && (
             <Message positive onDismiss={() => setSuccess(false)}>
-              {JSON.stringify(success)}
+              {success}
             </Message>
           )}
           {error && (
