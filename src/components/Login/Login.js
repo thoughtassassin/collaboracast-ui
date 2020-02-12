@@ -82,6 +82,7 @@ function Login({ setAuthenticated }) {
                     label={{ basic: true, content: "Email" }}
                     onChange={handleChange}
                     onBlur={handleBlur}
+                    autoCapitalize="none"
                   />
                   {touched.email && errors.email && (
                     <Label pointing prompt color="red">
