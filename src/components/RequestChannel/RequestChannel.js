@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Form, Header, Message } from "semantic-ui-react";
+import jwtDecode from "jwt-decode";
 import { Link } from "@reach/router";
 
-import requestChannel from "../../utils/requestChannel";
 import PageHeader from "../PageHeader/PageHeader";
+import requestChannel from "../../utils/requestChannel";
 import "./RequestChannel.css";
 import useFilteredChannels from "../../customHooks/useFilteredChannels";
 import useChannels from "../../customHooks/useChannels";
@@ -15,6 +16,7 @@ export const RequestChannels = ({
   setSuccess,
   token
 }) => {
+  const { username } = jwtDecode(token);
   const channels = useChannels();
   const [filteredChannels, searchTerm, handleChange] = useFilteredChannels(
     channels
@@ -40,7 +42,7 @@ export const RequestChannels = ({
         <div>
           {success && (
             <Message positive onDismiss={() => setSuccess(false)}>
-              {success}
+              {JSON.stringify(success)}
             </Message>
           )}
           {error && (
@@ -63,7 +65,11 @@ export const RequestChannels = ({
                 content="Request Operator"
                 onClick={async () => {
                   try {
-                    const response = await requestChannel(searchTerm, token);
+                    const response = await requestChannel(
+                      searchTerm,
+                      username,
+                      token
+                    );
                     setSuccess(response.message);
                   } catch (e) {
                     setError(e.message);
