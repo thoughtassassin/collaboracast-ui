@@ -13,9 +13,9 @@ const SetNotification = ({
   setLoading,
   token
 }) => {
-  const notification = notifications.find(
-    item => item.id === parseInt(channelId)
-  );
+  const notification =
+    notifications &&
+    notifications.find(item => item.id === parseInt(channelId));
   const [error, setError] = useState(false);
   const [type, setType] = useState(
     notification && notification.type ? notification.type : ""

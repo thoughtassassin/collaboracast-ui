@@ -7,7 +7,7 @@ const ChannelName = ({ channels, resource }) => (
       let channelObj = "",
         channelId = "";
       const channelIdArray = location.pathname.match(resource);
-      if (channelIdArray) {
+      if (channelIdArray && channels) {
         channelId = channelIdArray.pop();
         channelObj = channels.filter(
           channel => channel.id.toString() === channelId
