@@ -1,20 +1,18 @@
 import { useEffect, useCallback, useState } from "react";
 import urls from "../constants/urls";
 
-function useUserChannels(setLoading, email, incrementUpdate) {
-  const [channels, setChannels] = useState([]);
+function useUser(email) {
+  const [user, setUser] = useState([]);
 
-  const setUserChannelsCallback = useCallback(
+  const setUserCallback = useCallback(
     ({ data }) => {
-      data && setChannels(data.channels);
-      setLoading(false);
+      setUser(data);
     },
-    [setChannels, setLoading]
+    [setUser]
   );
 
   const getUser = useCallback(
     token => {
-      setLoading(true);
       fetch(`${urls.base}/api/v1/users/${email}`, {
         headers: {
           "Content-Type": "application/json",
@@ -22,21 +20,20 @@ function useUserChannels(setLoading, email, incrementUpdate) {
         }
       })
         .then(response => response.json())
-        .then(setUserChannelsCallback)
+        .then(setUserCallback)
         .catch(e => {
-          setLoading(false);
           console.error(e);
         });
     },
-    [setUserChannelsCallback, setLoading, email]
+    [setUserCallback, email]
   );
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     getUser(token);
-  }, [getUser, incrementUpdate]);
+  }, [getUser]);
 
-  return channels;
+  return user;
 }
 
-export default useUserChannels;
+export default useUser;

@@ -10,13 +10,12 @@ const ItemsList = ({
   header,
   resource,
   displayValue,
+  resourceId,
   success,
   setSuccess,
   calloutItem,
   calloutValue
 }) => {
-  if (calloutItem === "badge") {
-  }
   return (
     <div className="items-list">
       <PageHeader>
@@ -32,7 +31,13 @@ const ItemsList = ({
           listItems.map(listItem => (
             <List.Item key={`${listItem.id}-${header.toLowerCase()}`}>
               <List.Content>
-                <Link to={`/${resource}/${listItem.id}`}>
+                <Link
+                  to={
+                    resourceId
+                      ? `/${resource}/${listItem[resourceId]}`
+                      : `/${resource}/${listItem.id}`
+                  }
+                >
                   <span className="item-name">{listItem[displayValue]}</span>
                   {calloutItem && (
                     <div className="callout">

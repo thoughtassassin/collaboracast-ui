@@ -19,13 +19,17 @@ import useNotifications from "../../customHooks/useNotifications";
 import useUsers from "../../customHooks/useUsers";
 import urls from "../../constants/urls";
 import useLoader from "../../customHooks/useLoader";
+import UserChannels from "../UserChannels/UserChannels";
 
 import { Router, navigate } from "@reach/router";
 import jwtDecode from "jwt-decode";
 
 const AdminDashboard = ({ setAuthenticated }) => {
   const token = localStorage.getItem("token");
-  const { id: userId } = jwtDecode(token);
+  const {
+    id: userId,
+    Role: { role }
+  } = jwtDecode(token);
   const [loading, setLoading] = useLoader();
   const [success, setSuccess] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -120,6 +124,17 @@ const AdminDashboard = ({ setAuthenticated }) => {
           <Icon name="question circle" />
           Request Operator
         </Menu.Item>
+        {role === "admin" && (
+          <Menu.Item
+            onClick={() => {
+              setIsMenuOpen(false);
+              navigate("/channel-access");
+            }}
+          >
+            <Icon name="key" />
+            Channel Acceess
+          </Menu.Item>
+        )}
       </Sidebar>
       <Router primary={false}>
         <Messages
@@ -244,6 +259,31 @@ const AdminDashboard = ({ setAuthenticated }) => {
           loading={loading}
           setLoading={setLoading}
         />
+        {role === "admin" && (
+          <ItemsList
+            path="/channel-access"
+            listItems={users.filter(user => user.RoleId === 3)}
+            success={success}
+            setSuccess={setSuccess}
+            header="Users (Channel Access)"
+            displayValue="username"
+            resource="channel-access"
+            resourceId="email"
+            calloutValue="type"
+          />
+        )}
+        {role === "admin" && (
+          <UserChannels
+            path="/channel-access/:id"
+            listItems={channels}
+            success={success}
+            setSuccess={setSuccess}
+            setLoading={setLoading}
+            header="Channels for User"
+            displayValue="name"
+            calloutValue="type"
+          />
+        )}
       </Router>
     </DashboardContainer>
   );

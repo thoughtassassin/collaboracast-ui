@@ -4,16 +4,18 @@
   overflow: hidden;
 }
 
-.contact-card .ui.header > .icon {
+.contact-card .ui.header>.icon {
   display: inline-block;
 }
 
-.contact-card a,
-.contact-card a:hover {
+.contact-card a, .contact-card a:hover {
   color: #555;
 }
 
-.contact-card a:hover,
-.contact-card a:active {
+.contact-card a:hover, .contact-card a:active {
   text-decoration: underline;
+}
+
+.contact-card h4.ui.attached.top.header {
+  padding: 1rem;
 }
