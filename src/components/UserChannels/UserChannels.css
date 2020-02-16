@@ -1,0 +1,26 @@
+.user-channels-list a, .user-channels-list a:hover, .user-channels-list a:active {
+    color: black;
+}
+
+.user-channels-list a:hover, .user-channels-list a:active {
+    text-decoration: underline;
+}
+
+.user-channels-list .item {
+    padding: 1rem 0 !important;
+}
+
+.user-channels-list .item .content div {
+    display: grid;
+    grid-template-rows: 1fr auto;
+    grid-template-areas: "description extra";
+    justify-content: space-between;
+}
+
+.user-channels-list .item .content a .item-name {
+    grid-area: description;
+}
+
+.user-channels-list .item .content div {
+    grid-area: extra;
+}
