@@ -42,7 +42,8 @@ const ItemsList = ({
                   {calloutItem && (
                     <div className="callout">
                       {React.cloneElement(calloutItem, {
-                        value: listItem[calloutValue]
+                        value: listItem[calloutValue],
+                        id: listItem.id
                       })}
                     </div>
                   )}

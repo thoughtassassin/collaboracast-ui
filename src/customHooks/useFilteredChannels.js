@@ -17,7 +17,9 @@ function useFilteredChannels(channels) {
     setSearchTerm(value);
   };
 
-  return [filteredChannels, searchTerm, handleChange];
+  const clearSearch = () => setSearchTerm("");
+
+  return [filteredChannels, searchTerm, handleChange, clearSearch];
 }
 
 export default useFilteredChannels;

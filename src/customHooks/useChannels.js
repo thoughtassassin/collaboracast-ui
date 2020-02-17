@@ -1,7 +1,7 @@
 import { useEffect, useCallback, useState } from "react";
 import urls from "../constants/urls";
 
-function useChannels() {
+function useChannels(updateIncrement) {
   const [channels, setChannels] = useState(null);
 
   const setChannelsCallback = useCallback(
@@ -31,7 +31,7 @@ function useChannels() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     getChannels(token);
-  }, [getChannels]);
+  }, [getChannels, updateIncrement]);
 
   return channels;
 }
