@@ -31,7 +31,7 @@ const AddChannel = ({ token, setLoading, setSuccess }) => {
         Authorization: `JWT ${token}`
       },
       body: JSON.stringify({
-        name: channel,
+        name: channel.toUpperCase(),
         FeedId: 2
       })
     })
