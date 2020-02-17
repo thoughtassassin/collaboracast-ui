@@ -183,6 +183,7 @@ const AdminDashboard = ({ setAuthenticated }) => {
             token={token}
             setLoading={setLoading}
             setSuccess={setSuccess}
+            setUpdateIncrement={setUpdateIncrement}
             success={success}
           />
         )}

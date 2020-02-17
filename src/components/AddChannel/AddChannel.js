@@ -7,11 +7,12 @@ import { navigate } from "@reach/router";
 import urls from "../../constants/urls";
 import PageHeader from "../PageHeader/PageHeader";
 
-const AddChannel = ({ token, setLoading, setSuccess }) => {
+const AddChannel = ({ token, setLoading, setUpdateIncrement, setSuccess }) => {
   const [error, setError] = useState(false);
   const addChannelSuccess = json => {
     if (json.status === "success") {
       setSuccess(json.message);
+      setUpdateIncrement(updateIncrement => updateIncrement + 1);
       setError(false);
       setLoading(false);
       navigate(`/channels/`);
