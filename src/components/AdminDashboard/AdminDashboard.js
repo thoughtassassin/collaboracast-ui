@@ -35,7 +35,8 @@ const AdminDashboard = ({ setAuthenticated }) => {
   const [loading, setLoading] = useLoader();
   const [success, setSuccess] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const channels = useChannels();
+  const [updateIncrement, setUpdateIncrement] = useState(0);
+  const channels = useChannels(updateIncrement);
   const notifications = useNotifications(
     "admin",
     userId,
@@ -50,7 +51,9 @@ const AdminDashboard = ({ setAuthenticated }) => {
   );
 
   const dashboardLoading =
-    !channels || !notifications || users.length === 0 || loading;
+    !channels || !notifications || users.length === 0 || loading !== false
+      ? true
+      : false;
 
   return (
     <DashboardContainer
@@ -168,7 +171,9 @@ const AdminDashboard = ({ setAuthenticated }) => {
         {role === "admin" && (
           <AdminChannelList
             path="/operators"
+            channels={channels}
             setLoading={setLoading}
+            setUpdateIncrement={setUpdateIncrement}
             token={token}
           />
         )}

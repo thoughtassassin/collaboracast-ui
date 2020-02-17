@@ -3,15 +3,19 @@ import AdminArchiveButton from "../AdminArchiveButton/AdminArchiveButton";
 import { Button, Form, Message } from "semantic-ui-react";
 import ItemsList from "../ItemsList/ItemsList";
 import { navigate } from "@reach/router";
-import useChannels from "../../customHooks/useChannels";
 import useFilteredChannels from "../../customHooks/useFilteredChannels";
 
 import "./AdminChannelList.css";
 
-const AdminChannelList = ({ setLoading, setSuccess, success, token }) => {
-  const [updateIncrement, setUpdateIncrement] = useState(0);
+const AdminChannelList = ({
+  channels,
+  setLoading,
+  setSuccess,
+  setUpdateIncrement,
+  success,
+  token
+}) => {
   const [error, setError] = useState(null);
-  const channels = useChannels(updateIncrement);
   const [
     filteredChannels,
     searchTerm,
