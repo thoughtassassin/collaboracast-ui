@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import AddChannel from "../AddChannel/AddChannel";
 import AddContact from "../AddContact/AddContact";
 import AddComment from "../AddComment/AddComment";
+import AddUser from "../AddUser/AddUser";
 import AdminChannelList from "../AdminChannelList/AdminChannelList";
+import AdminUsersList from "../AdminUsersList/AdminUsersList";
 import AddMessage from "../AddMessage/AddMessage";
 import ChannelList from "../ChannelList/ChannelList";
 import ChannelUsers from "../ChannelUsers/ChannelUsers";
@@ -42,7 +44,7 @@ const AdminDashboard = ({ setAuthenticated }) => {
     userId,
     success === "Notification Added!" || success === "Notification deleted"
   );
-  const users = useUsers();
+  const users = useUsers(updateIncrement);
 
   const menuIcon = (
     <Menu.Item position="right" onClick={() => setIsMenuOpen(true)}>
@@ -150,13 +152,34 @@ const AdminDashboard = ({ setAuthenticated }) => {
           successUrl={`/add-message`}
           default
         />
-        <ItemsList
-          path="/users"
-          listItems={users}
-          header="Users"
-          displayValue="username"
-          resource="users"
-        />
+        {role !== "admin" && (
+          <ItemsList
+            path="/users"
+            listItems={users}
+            header="Users"
+            displayValue="username"
+            resource="users"
+          />
+        )}
+        {role === "admin" && (
+          <AdminUsersList
+            path="/users"
+            users={users}
+            setLoading={setLoading}
+            setUpdateIncrement={setUpdateIncrement}
+            token={token}
+          />
+        )}
+        {role === "admin" && (
+          <AddUser
+            path="/add-user"
+            token={token}
+            setLoading={setLoading}
+            setSuccess={setSuccess}
+            setUpdateIncrement={setUpdateIncrement}
+            success={success}
+          />
+        )}
         <Messages
           path="/users/:id"
           setLoading={setLoading}

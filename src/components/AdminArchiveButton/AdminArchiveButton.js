@@ -31,7 +31,7 @@ const AdminAchiveButton = ({
         .then(data => {
           console.log(data);
           setUpdateIncrement(updateIncrement => updateIncrement + 1);
-          clearSearch();
+          clearSearch && clearSearch();
           setLoading(false);
         })
         .catch(e => {
