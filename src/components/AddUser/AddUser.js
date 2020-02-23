@@ -198,7 +198,6 @@ const AddUser = ({ token, setLoading, setUpdateIncrement, setSuccess }) => {
                 Save User
               </Button>
             </Form.Field>
-            <div>{JSON.stringify(values, null, 4)}</div>
           </Form>
         )}
       </Formik>
