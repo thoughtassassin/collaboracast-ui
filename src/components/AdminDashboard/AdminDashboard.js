@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import AddChannel from "../AddChannel/AddChannel";
 import AddContact from "../AddContact/AddContact";
 import AddComment from "../AddComment/AddComment";
+import AdminChannelList from "../AdminChannelList/AdminChannelList";
 import AddMessage from "../AddMessage/AddMessage";
 import ChannelList from "../ChannelList/ChannelList";
 import ChannelUsers from "../ChannelUsers/ChannelUsers";
@@ -33,7 +35,8 @@ const AdminDashboard = ({ setAuthenticated }) => {
   const [loading, setLoading] = useLoader();
   const [success, setSuccess] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const channels = useChannels();
+  const [updateIncrement, setUpdateIncrement] = useState(0);
+  const channels = useChannels(updateIncrement);
   const notifications = useNotifications(
     "admin",
     userId,
@@ -48,7 +51,9 @@ const AdminDashboard = ({ setAuthenticated }) => {
   );
 
   const dashboardLoading =
-    !channels || !notifications || users.length === 0 || loading;
+    !channels || !notifications || users.length === 0 || loading !== false
+      ? true
+      : false;
 
   return (
     <DashboardContainer
@@ -160,7 +165,28 @@ const AdminDashboard = ({ setAuthenticated }) => {
           fetchUrl={`${urls.base}/api/v1/messages-by-user/`}
           successUrl={`/add-message`}
         />
-        <ChannelList path="/operators" channels={channels} />
+        {role !== "admin" && (
+          <ChannelList path="/operators" channels={channels} />
+        )}
+        {role === "admin" && (
+          <AdminChannelList
+            path="/operators"
+            channels={channels}
+            setLoading={setLoading}
+            setUpdateIncrement={setUpdateIncrement}
+            token={token}
+          />
+        )}
+        {role === "admin" && (
+          <AddChannel
+            path="/add-channel"
+            token={token}
+            setLoading={setLoading}
+            setSuccess={setSuccess}
+            setUpdateIncrement={setUpdateIncrement}
+            success={success}
+          />
+        )}
         <Messages
           path="/operators/:id"
           setLoading={setLoading}

@@ -1,16 +1,14 @@
-.items-list a,
-.items-list a:hover,
-.items-list a:active {
+.items-list a, .items-list a:hover, .items-list a:active {
   color: black;
 }
 
-.items-list a:hover,
-.items-list a:active {
+.items-list a:hover, .items-list a:active {
   text-decoration: underline;
 }
 
 .items-list .item {
   padding: 1rem 0 !important;
+  clear: both;
 }
 
 .items-list .item .content a {
