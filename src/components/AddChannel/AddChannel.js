@@ -40,7 +40,7 @@ const AddChannel = ({ token, setLoading, setUpdateIncrement, setSuccess }) => {
       .then(addChannelSuccess)
       .catch(e => {
         setLoading(false);
-        setError("Comment could not be saved.");
+        setError("Channel could not be saved.");
         setSuccess(false);
         console.error(e);
       });

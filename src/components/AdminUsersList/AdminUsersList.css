@@ -1,0 +1,22 @@
+.users-list .add-button {
+    margin-bottom: 1.5rem;
+    width: 100%;
+}
+
+.users-list .add-button * {
+    width: 100%;
+}
+
+@media (min-width: 546px) {
+    .users-list .add-button {
+        float: right;
+        margin-bottom: 0;
+        width: auto;
+    }
+    .users-list .add-button * {
+        width: auto;
+    }
+    .users-list form * {
+        width: auto;
+    }
+}

@@ -1,39 +1,39 @@
 import { useEffect, useCallback, useState } from "react";
 import urls from "../constants/urls";
 
-function useUsers(updateIncrement) {
-  const [users, setUsers] = useState([]);
+function useProviders() {
+  const [providers, setProviders] = useState(null);
 
-  const setUsersCallback = useCallback(
+  const setProvidersCallback = useCallback(
     ({ data }) => {
-      setUsers(data);
+      setProviders(data);
     },
-    [setUsers]
+    [setProviders]
   );
 
-  const getUsers = useCallback(
+  const getProviders = useCallback(
     token => {
-      fetch(`${urls.base}/api/v1/users`, {
+      fetch(`${urls.base}/api/v1/providers`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `JWT ${token}`
         }
       })
         .then(response => response.json())
-        .then(setUsersCallback)
+        .then(setProvidersCallback)
         .catch(e => {
           console.error(e);
         });
     },
-    [setUsersCallback]
+    [setProvidersCallback]
   );
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    getUsers(token);
-  }, [getUsers, updateIncrement]);
+    getProviders(token);
+  }, [getProviders]);
 
-  return users;
+  return providers;
 }
 
-export default useUsers;
+export default useProviders;

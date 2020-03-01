@@ -41,7 +41,8 @@ const AddComment = ({ messageId, token, setLoading, setSuccess }) => {
       body: JSON.stringify({
         content: comment,
         UserId: id,
-        MessageId: messageId
+        MessageId: messageId,
+        url: window.location.origin
       })
     })
       .then(response => response.json())
