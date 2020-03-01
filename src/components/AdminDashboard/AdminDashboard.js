@@ -14,7 +14,7 @@ import { Menu, Icon, Sidebar } from "semantic-ui-react";
 import Messages from "../Messages/Messages";
 import ItemsList from "../ItemsList/ItemsList";
 import Message from "../Message/Message";
-import NotificationLabel from "../NotificationLabel/NotificationLabel";
+import NotificationList from "../NotificationList/NotificationList";
 import Reports from "../Reports/Reports";
 import RequestChannel from "../RequestChannel/RequestChannel";
 import SetNotification from "../SetNotification/SetNotification";
@@ -42,7 +42,9 @@ const AdminDashboard = ({ setAuthenticated }) => {
   const notifications = useNotifications(
     "admin",
     userId,
-    success === "Notification Added!" || success === "Notification deleted"
+    success === "Notification Added!" ||
+      success === "Notification deleted" ||
+      success === "Notifications Set!"
   );
   const users = useUsers(updateIncrement);
 
@@ -270,16 +272,14 @@ const AdminDashboard = ({ setAuthenticated }) => {
           setSuccess={setSuccess}
           channels={channels}
         />
-        <ItemsList
+        <NotificationList
           path="/notifications"
-          listItems={notifications}
+          notifications={notifications}
+          setLoading={setLoading}
           success={success}
           setSuccess={setSuccess}
-          header="Notifications"
-          displayValue="name"
-          resource="notifications"
-          calloutItem={<NotificationLabel />}
-          calloutValue="type"
+          token={token}
+          userType={role}
         />
         <SetNotification
           path="/notifications/:channelId"

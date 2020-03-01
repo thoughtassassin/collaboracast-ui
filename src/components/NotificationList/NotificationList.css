@@ -1,0 +1,23 @@
+.notifications-list .set-all-notifications {
+    margin-bottom: 1rem;
+    width: auto;
+}
+
+.notifications-list .set-all-notifications * {
+    width: auto;
+}
+
+.notifications-list .all-notifications {
+    margin-right: 1rem;
+}
+
+.notifications-list .default.text {
+    color: #666 !important;
+}
+
+@media (min-width: 546px) {
+    .notifications-list .set-all-notifications {
+        float: right;
+        margin-bottom: 0;
+    }
+}

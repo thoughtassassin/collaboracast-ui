@@ -8,7 +8,7 @@ import DashboardContainer from "../DashboardContainer/DashboadContainer";
 import ItemsList from "../ItemsList/ItemsList";
 import Messages from "../Messages/Messages";
 import Message from "../Message/Message";
-import NotificationLabel from "../NotificationLabel/NotificationLabel";
+import NotificationList from "../NotificationList/NotificationList";
 import RequestChannel from "../RequestChannel/RequestChannel";
 import SetNotification from "../SetNotification/SetNotification";
 import useNotifications from "../../customHooks/useNotifications";
@@ -32,7 +32,9 @@ const Dashboard = ({ setAuthenticated }) => {
   const notifications = useNotifications(
     "user",
     userId,
-    success === "Notification Added!" || success === "Notification deleted"
+    success === "Notification Added!" ||
+      success === "Notification deleted" ||
+      success === "Notifications Set!"
   );
 
   const menuIcon = (
@@ -156,16 +158,14 @@ const Dashboard = ({ setAuthenticated }) => {
           setSuccess={setSuccess}
           channels={channels}
         />
-        <ItemsList
+        <NotificationList
           path="/notifications"
-          listItems={notifications}
+          notifications={notifications}
+          setLoading={setLoading}
           success={success}
           setSuccess={setSuccess}
-          header="Notifications"
-          displayValue="name"
-          resource="notifications"
-          calloutItem={<NotificationLabel />}
-          calloutValue="type"
+          token={token}
+          userType="representative"
         />
         <SetNotification
           path="/notifications/:channelId"
