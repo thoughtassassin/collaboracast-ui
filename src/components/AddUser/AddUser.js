@@ -108,6 +108,7 @@ const AddUser = ({ token, setLoading, setUpdateIncrement, setSuccess }) => {
           handleChange,
           handleBlur,
           handleSubmit,
+          isSubmitting,
           setFieldValue
         }) => (
           <Form>
@@ -194,7 +195,12 @@ const AddUser = ({ token, setLoading, setUpdateIncrement, setSuccess }) => {
               )}
             </Form.Field>
             <Form.Field>
-              <Button primary type="submit" onClick={handleSubmit}>
+              <Button
+                primary
+                type="submit"
+                onClick={handleSubmit}
+                disabled={isSubmitting}
+              >
                 Save User
               </Button>
             </Form.Field>

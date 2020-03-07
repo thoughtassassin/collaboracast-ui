@@ -60,7 +60,14 @@ const AddChannel = ({ token, setLoading, setUpdateIncrement, setSuccess }) => {
           channel: yup.string().required("Channel name is required")
         })}
       >
-        {({ errors, touched, handleChange, handleBlur, handleSubmit }) => (
+        {({
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          isSubmitting
+        }) => (
           <Form>
             <Form.Field>
               <Input
@@ -77,7 +84,12 @@ const AddChannel = ({ token, setLoading, setUpdateIncrement, setSuccess }) => {
               )}
             </Form.Field>
             <Form.Field>
-              <Button primary type="submit" onClick={handleSubmit}>
+              <Button
+                primary
+                type="submit"
+                onClick={handleSubmit}
+                disabled={isSubmitting}
+              >
                 Save Channel
               </Button>
             </Form.Field>

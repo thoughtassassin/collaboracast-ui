@@ -116,7 +116,14 @@ const AddContact = ({ channelId, channels, token, setLoading, setSuccess }) => {
           [["email", "phone"]]
         )}
       >
-        {({ errors, touched, handleChange, handleBlur, handleSubmit }) => (
+        {({
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          isSubmitting
+        }) => (
           <Form inverted className="add-contact">
             <Form.Field>
               <Input
@@ -268,7 +275,12 @@ const AddContact = ({ channelId, channels, token, setLoading, setSuccess }) => {
               )}
             </Form.Field>
             <Form.Field>
-              <Button primary type="submit" onClick={handleSubmit}>
+              <Button
+                primary
+                type="submit"
+                onClick={handleSubmit}
+                disabled={isSubmitting}
+              >
                 Save Contact
               </Button>
             </Form.Field>
