@@ -102,7 +102,14 @@ const AddMessage = ({ channelId, channels, token, setLoading, setSuccess }) => {
             .required("Message is required")
         })}
       >
-        {({ errors, touched, handleChange, handleBlur, handleSubmit }) => (
+        {({
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          isSubmitting
+        }) => (
           <Form>
             <Form.Field>
               <TextArea
@@ -146,7 +153,12 @@ const AddMessage = ({ channelId, channels, token, setLoading, setSuccess }) => {
             <Form.Field>
               {(channelId || messageChannel) && interaction ? (
                 <>
-                  <Button primary type="submit" onClick={handleSubmit}>
+                  <Button
+                    primary
+                    type="submit"
+                    onClick={handleSubmit}
+                    disabled={isSubmitting}
+                  >
                     Save Message
                   </Button>
                 </>

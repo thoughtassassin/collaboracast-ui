@@ -92,7 +92,7 @@ const SetNotification = ({
         }}
         onSubmit={formSubmit}
       >
-        {({ errors, touched, handleBlur, handleSubmit }) => (
+        {({ handleSubmit, isSubmitting }) => (
           <Form>
             <Form.Field>
               Selected value: <b>{type || "none"}</b>
@@ -125,7 +125,12 @@ const SetNotification = ({
               />
             </Form.Field>
             <Form.Field>
-              <Button primary type="submit" onClick={handleSubmit}>
+              <Button
+                primary
+                type="submit"
+                onClick={handleSubmit}
+                disabled={isSubmitting}
+              >
                 Set Notification
               </Button>
             </Form.Field>

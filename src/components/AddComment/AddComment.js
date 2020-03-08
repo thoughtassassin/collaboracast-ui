@@ -72,7 +72,14 @@ const AddComment = ({ messageId, token, setLoading, setSuccess }) => {
             .required("Comment is required")
         })}
       >
-        {({ errors, touched, handleChange, handleBlur, handleSubmit }) => (
+        {({
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          isSubmitting
+        }) => (
           <Form inverted>
             <Form.Field>
               <TextArea
@@ -90,7 +97,12 @@ const AddComment = ({ messageId, token, setLoading, setSuccess }) => {
               )}
             </Form.Field>
             <Form.Field>
-              <Button primary type="submit" onClick={handleSubmit}>
+              <Button
+                primary
+                type="submit"
+                onClick={handleSubmit}
+                disabled={isSubmitting}
+              >
                 Save Comment
               </Button>
             </Form.Field>
