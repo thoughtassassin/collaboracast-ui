@@ -24,7 +24,7 @@ export const Messages = ({
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    setLoadedMessages([...loadedMessages, ...messages]);
+    setLoadedMessages((loadedMessages) => [...loadedMessages, ...messages]);
   }, [messages]);
 
   const loadMessages = () => {
