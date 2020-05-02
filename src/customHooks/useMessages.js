@@ -11,16 +11,18 @@ function useMessages(url) {
   );
 
   const getMessages = useCallback(
-    token => {
-      fetch(url, {
+    (page) => {
+      const token = localStorage.getItem("token");
+
+      fetch(`${url}?page=${page}&limit=10`, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `JWT ${token}`
-        }
+          Authorization: `JWT ${token}`,
+        },
       })
-        .then(response => response.json())
+        .then((response) => response.json())
         .then(setMessagesCallback)
-        .catch(e => {
+        .catch((e) => {
           console.error(e);
         });
     },
@@ -28,11 +30,10 @@ function useMessages(url) {
   );
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    getMessages(token);
+    getMessages(1);
   }, [getMessages]);
 
-  return messages;
+  return [messages, getMessages];
 }
 
 export default useMessages;
