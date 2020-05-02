@@ -1,5 +1,6 @@
 import React from "react";
 import { navigate } from "@reach/router";
+import moment from "moment";
 
 import { Link } from "@reach/router";
 import jwtDecode from "jwt-decode";
@@ -11,15 +12,21 @@ const DashboardContainer = ({
   children,
   loading,
   setAuthenticated,
-  menuIcon
+  menuIcon,
 }) => {
   const token = localStorage.getItem("token");
-  const { username } = jwtDecode(token);
+  const { username, exp } = jwtDecode(token);
   const logout = () => {
     localStorage.removeItem("token");
     setAuthenticated(false);
     navigate("/");
   };
+
+  // log the user out if the token is expired
+  if (token && moment.unix(exp).isBefore(Date.now())) {
+    logout();
+  }
+
   return (
     <Container className="dashboard" text>
       <Dimmer active={loading} inverted page>
