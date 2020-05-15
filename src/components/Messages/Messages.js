@@ -10,6 +10,7 @@ import "./Messages.css";
 
 export const Messages = ({
   id,
+  path,
   setLoading,
   success,
   setSuccess,
@@ -22,6 +23,10 @@ export const Messages = ({
   const [messages, getMessages] = useMessages(url, setLoading);
   const [loadedMessages, setLoadedMessages] = useState([]);
   const [page, setPage] = useState(1);
+
+  useEffect(() => {
+    setLoadedMessages([]);
+  }, [path]);
 
   useEffect(() => {
     setLoadedMessages((loadedMessages) => [...loadedMessages, ...messages]);
