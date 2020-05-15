@@ -8,7 +8,7 @@ import {
   Label,
   Message,
   Radio,
-  TextArea
+  TextArea,
 } from "semantic-ui-react";
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -26,7 +26,7 @@ const AddMessage = ({ channelId, channels, token, setLoading, setSuccess }) => {
   const [interaction, setInteraction] = useState(false);
 
   const { id } = jwtDecode(token);
-  const addMessageSuccess = json => {
+  const addMessageSuccess = (json, setSubmitting) => {
     if (json.status === "success") {
       setSuccess(json.message);
       setError(false);
@@ -36,15 +36,16 @@ const AddMessage = ({ channelId, channels, token, setLoading, setSuccess }) => {
       setError(json.message);
       setSuccess(false);
       setLoading(false);
+      setSubmitting(false);
     }
   };
-  const formSubmit = ({ message }) => {
+  const formSubmit = ({ message }, { setSubmitting }) => {
     setLoading(true);
     fetch(`${urls.base}/api/v1/messages`, {
       method: "post",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `JWT ${token}`
+        Authorization: `JWT ${token}`,
       },
       body: JSON.stringify({
         content: message,
@@ -52,12 +53,12 @@ const AddMessage = ({ channelId, channels, token, setLoading, setSuccess }) => {
         ChannelId: messageChannel,
         priority: priority ? true : null,
         interaction: interaction,
-        url: window.location.origin
-      })
+        url: window.location.origin,
+      }),
     })
-      .then(response => response.json())
-      .then(addMessageSuccess)
-      .catch(e => {
+      .then((response) => response.json())
+      .then((json) => addMessageSuccess(json, setSubmitting))
+      .catch((e) => {
         setLoading(false);
         setError("Message could not be saved.");
         setSuccess(false);
@@ -71,10 +72,10 @@ const AddMessage = ({ channelId, channels, token, setLoading, setSuccess }) => {
       <PageHeader>
         <Dropdown
           placeholder="Select Channel"
-          options={channels.map(channel => ({
+          options={channels.map((channel) => ({
             key: channel.id,
             value: channel.id,
-            text: channel.name
+            text: channel.name,
           }))}
           scrolling
           value={messageChannel ? Number(messageChannel) : undefined}
@@ -85,21 +86,21 @@ const AddMessage = ({ channelId, channels, token, setLoading, setSuccess }) => {
           label="priority"
           name="priority"
           checked={priority}
-          onChange={() => setPriority(priority => !priority)}
+          onChange={() => setPriority((priority) => !priority)}
         />
       </PageHeader>
       {error && <Message error>{error}</Message>}
       <Formik
         initialValues={{
           message: "",
-          priority: null
+          priority: null,
         }}
         onSubmit={formSubmit}
         validationSchema={yup.object().shape({
           message: yup
             .string()
             .max(600, "Message cannot exceed 600 characters")
-            .required("Message is required")
+            .required("Message is required"),
         })}
       >
         {({
@@ -108,7 +109,7 @@ const AddMessage = ({ channelId, channels, token, setLoading, setSuccess }) => {
           handleChange,
           handleBlur,
           handleSubmit,
-          isSubmitting
+          isSubmitting,
         }) => (
           <Form>
             <Form.Field>
