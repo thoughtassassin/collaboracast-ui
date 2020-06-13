@@ -61,40 +61,42 @@ export const Messages = ({
               {success}
             </Message>
           )}
-          <InfiniteScroll
-            dataLength={loadedMessages.length}
-            next={loadMessages}
-            hasMore={true}
-            loader={<h4>Loading...</h4>}
-          >
-            {loadedMessages.map((message, index) =>
-              user ? (
-                <MessageCard
-                  key={index}
-                  id={message.id}
-                  username={message.username}
-                  warehouse={message.warehouseName}
-                  content={message.content}
-                  createdAt={message.createdAt}
-                  commentCount={message.CommentCount}
-                  channel={message.channelName}
-                  interaction={message.interaction}
-                />
-              ) : message.User ? (
-                <MessageCard
-                  key={index}
-                  id={message.id}
-                  username={message.User.username}
-                  warehouse={message.User.Warehouse.name}
-                  content={message.content}
-                  createdAt={message.createdAt}
-                  commentCount={message.Comments.length}
-                  channel={message.Channel.name}
-                  interaction={message.interaction}
-                />
-              ) : null
-            )}
-          </InfiniteScroll>
+          {loadedMessages.length > 0 && (
+            <InfiniteScroll
+              dataLength={loadedMessages.length}
+              next={loadMessages}
+              hasMore={true}
+              loader={<h4>Loading...</h4>}
+            >
+              {loadedMessages.map((message, index) =>
+                user ? (
+                  <MessageCard
+                    key={index}
+                    id={message.id}
+                    username={message.username}
+                    warehouse={message.warehouseName}
+                    content={message.content}
+                    createdAt={message.createdAt}
+                    commentCount={message.CommentCount}
+                    channel={message.channelName}
+                    interaction={message.interaction}
+                  />
+                ) : message.User ? (
+                  <MessageCard
+                    key={index}
+                    id={message.id}
+                    username={message.User.username}
+                    warehouse={message.User.Warehouse.name}
+                    content={message.content}
+                    createdAt={message.createdAt}
+                    commentCount={message.Comments.length}
+                    channel={message.Channel.name}
+                    interaction={message.interaction}
+                  />
+                ) : null
+              )}
+            </InfiniteScroll>
+          )}
         </>
       )}
     </div>
