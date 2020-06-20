@@ -32,7 +32,7 @@ const AdminDashboard = ({ setAuthenticated }) => {
   const token = localStorage.getItem("token");
   const {
     id: userId,
-    Role: { role }
+    Role: { role },
   } = jwtDecode(token);
   const [loading, setLoading] = useLoader();
   const [success, setSuccess] = useState(false);
@@ -55,9 +55,14 @@ const AdminDashboard = ({ setAuthenticated }) => {
   );
 
   const dashboardLoading =
-    !channels || !notifications || users.length === 0 || loading !== false
+    (!channels || !notifications || users.length === 0) && loading !== false
       ? true
       : false;
+
+  const isDashboardReady =
+    Array.isArray(channels) &&
+    Array.isArray(notifications) &&
+    Array.isArray(users);
 
   return (
     <DashboardContainer
@@ -145,195 +150,199 @@ const AdminDashboard = ({ setAuthenticated }) => {
           </Menu.Item>
         )}
       </Sidebar>
-      <Router primary={false}>
-        <Messages
-          path="/"
-          success={success}
-          setSuccess={setSuccess}
-          fetchUrl={`${urls.base}/api/v1/messages`}
-          successUrl={`/add-message`}
-          default
-        />
-        {role !== "admin" && (
-          <ItemsList
-            path="/users"
-            listItems={users}
-            header="Users"
-            displayValue="username"
-            resource="users"
-          />
-        )}
-        {role === "admin" && (
-          <AdminUsersList
-            path="/users"
-            users={users}
-            setLoading={setLoading}
-            setUpdateIncrement={setUpdateIncrement}
-            token={token}
-          />
-        )}
-        {role === "admin" && (
-          <AddUser
-            path="/add-user"
-            token={token}
-            setLoading={setLoading}
-            setSuccess={setSuccess}
-            setUpdateIncrement={setUpdateIncrement}
+      {isDashboardReady ? (
+        <Router primary={false}>
+          <Messages
+            path="/"
             success={success}
+            setSuccess={setSuccess}
+            fetchUrl={`${urls.base}/api/v1/messages`}
+            successUrl={`/add-message`}
+            default
           />
-        )}
-        <Messages
-          path="/users/:id"
-          setLoading={setLoading}
-          success={success}
-          setSuccess={setSuccess}
-          fetchUrl={`${urls.base}/api/v1/messages-by-user/`}
-          successUrl={`/add-message`}
-        />
-        {role !== "admin" && (
-          <ChannelList path="/operators" channels={channels} />
-        )}
-        {role === "admin" && (
-          <AdminChannelList
-            path="/operators"
+          {role !== "admin" && (
+            <ItemsList
+              path="/users"
+              listItems={users}
+              header="Users"
+              displayValue="username"
+              resource="users"
+            />
+          )}
+          {role === "admin" && (
+            <AdminUsersList
+              path="/users"
+              users={users}
+              setLoading={setLoading}
+              setUpdateIncrement={setUpdateIncrement}
+              token={token}
+            />
+          )}
+          {role === "admin" && (
+            <AddUser
+              path="/add-user"
+              token={token}
+              setLoading={setLoading}
+              setSuccess={setSuccess}
+              setUpdateIncrement={setUpdateIncrement}
+              success={success}
+            />
+          )}
+          <Messages
+            path="/users/:id"
+            setLoading={setLoading}
+            success={success}
+            setSuccess={setSuccess}
+            fetchUrl={`${urls.base}/api/v1/messages-by-user/`}
+            successUrl={`/add-message`}
+          />
+          {role !== "admin" && (
+            <ChannelList path="/operators" channels={channels} />
+          )}
+          {role === "admin" && (
+            <AdminChannelList
+              path="/operators"
+              channels={channels}
+              setLoading={setLoading}
+              setUpdateIncrement={setUpdateIncrement}
+              token={token}
+            />
+          )}
+          {role === "admin" && (
+            <AddChannel
+              path="/add-channel"
+              token={token}
+              setLoading={setLoading}
+              setSuccess={setSuccess}
+              setUpdateIncrement={setUpdateIncrement}
+              success={success}
+            />
+          )}
+          <Messages
+            path="/operators/:id"
+            setLoading={setLoading}
+            success={success}
+            setSuccess={setSuccess}
+            fetchUrl={`${urls.base}/api/v1/channel-messages/`}
+            selectMessageTopic
+            successUrl={`/add-message`}
+          />
+          <Message
+            path="/messages/:messageId"
+            setLoading={setLoading}
+            messageId="1"
+            success={success}
+            setSuccess={setSuccess}
+          />
+          <AddMessage
+            path="/add-message"
             channels={channels}
-            setLoading={setLoading}
-            setUpdateIncrement={setUpdateIncrement}
-            token={token}
-          />
-        )}
-        {role === "admin" && (
-          <AddChannel
-            path="/add-channel"
             token={token}
             setLoading={setLoading}
             setSuccess={setSuccess}
-            setUpdateIncrement={setUpdateIncrement}
             success={success}
           />
-        )}
-        <Messages
-          path="/operators/:id"
-          setLoading={setLoading}
-          success={success}
-          setSuccess={setSuccess}
-          fetchUrl={`${urls.base}/api/v1/channel-messages/`}
-          selectMessageTopic
-          successUrl={`/add-message`}
-        />
-        <Message
-          path="/messages/:messageId"
-          setLoading={setLoading}
-          messageId="1"
-          success={success}
-          setSuccess={setSuccess}
-        />
-        <AddMessage
-          path="/add-message"
-          channels={channels}
-          token={token}
-          setLoading={setLoading}
-          setSuccess={setSuccess}
-          success={success}
-        />
-        <AddMessage
-          path="/add-message/:channelId"
-          channels={channels}
-          token={token}
-          setLoading={setLoading}
-          setSuccess={setSuccess}
-          success={success}
-        />
-        <AddComment
-          path="/add-comment/:messageId"
-          token={token}
-          setLoading={setLoading}
-          setSuccess={setSuccess}
-          success={success}
-        />
-        <ItemsList
-          path="/contacts"
-          listItems={channels}
-          header="Contacts"
-          displayValue="name"
-          resource="contacts"
-        />
-        <Contacts
-          path="/contacts/:channelId"
-          setLoading={setLoading}
-          success={success}
-          setSuccess={setSuccess}
-          channels={channels}
-        />
-        <AddContact
-          path="/add-contact/:channelId"
-          token={token}
-          setLoading={setLoading}
-          setSuccess={setSuccess}
-          channels={channels}
-        />
-        <NotificationList
-          path="/notifications"
-          notifications={notifications}
-          setLoading={setLoading}
-          success={success}
-          setSuccess={setSuccess}
-          token={token}
-          userType={role}
-        />
-        <SetNotification
-          path="/notifications/:channelId"
-          token={token}
-          notifications={notifications}
-          setSuccess={setSuccess}
-          setLoading={setLoading}
-        />
-        <Reports
-          path="/reports"
-          token={token}
-          loading={loading}
-          setLoading={setLoading}
-        />
-        <RequestChannel
-          path="/request-operator"
-          token={token}
-          loading={loading}
-          setLoading={setLoading}
-          setSuccess={setSuccess}
-          success={success}
-        />
-        <ChannelUsers
-          path="/channel-users/:channelId"
-          token={token}
-          loading={loading}
-          setLoading={setLoading}
-        />
-        {role === "admin" && (
+          <AddMessage
+            path="/add-message/:channelId"
+            channels={channels}
+            token={token}
+            setLoading={setLoading}
+            setSuccess={setSuccess}
+            success={success}
+          />
+          <AddComment
+            path="/add-comment/:messageId"
+            token={token}
+            setLoading={setLoading}
+            setSuccess={setSuccess}
+            success={success}
+          />
           <ItemsList
-            path="/channel-access"
-            listItems={users.filter(user => user.RoleId === 3)}
+            path="/contacts"
+            listItems={channels}
+            header="Contacts"
+            displayValue="name"
+            resource="contacts"
+          />
+          <Contacts
+            path="/contacts/:channelId"
+            setLoading={setLoading}
             success={success}
             setSuccess={setSuccess}
-            header="Users (Channel Access)"
-            displayValue="username"
-            resource="channel-access"
-            resourceId="email"
-            calloutValue="type"
+            channels={channels}
           />
-        )}
-        {role === "admin" && (
-          <UserChannels
-            path="/channel-access/:id"
-            listItems={channels}
+          <AddContact
+            path="/add-contact/:channelId"
+            token={token}
+            setLoading={setLoading}
+            setSuccess={setSuccess}
+            channels={channels}
+          />
+          <NotificationList
+            path="/notifications"
+            notifications={notifications}
+            setLoading={setLoading}
             success={success}
+            setSuccess={setSuccess}
+            token={token}
+            userType={role}
+          />
+          <SetNotification
+            path="/notifications/:channelId"
+            token={token}
+            notifications={notifications}
             setSuccess={setSuccess}
             setLoading={setLoading}
-            header="Channels for User"
-            displayValue="name"
-            calloutValue="type"
           />
-        )}
-      </Router>
+          <Reports
+            path="/reports"
+            token={token}
+            loading={loading}
+            setLoading={setLoading}
+          />
+          <RequestChannel
+            path="/request-operator"
+            token={token}
+            loading={loading}
+            setLoading={setLoading}
+            setSuccess={setSuccess}
+            success={success}
+          />
+          <ChannelUsers
+            path="/channel-users/:channelId"
+            token={token}
+            loading={loading}
+            setLoading={setLoading}
+          />
+          {role === "admin" && (
+            <ItemsList
+              path="/channel-access"
+              listItems={users.filter((user) => user.RoleId === 3)}
+              success={success}
+              setSuccess={setSuccess}
+              header="Users (Channel Access)"
+              displayValue="username"
+              resource="channel-access"
+              resourceId="email"
+              calloutValue="type"
+            />
+          )}
+          {role === "admin" && (
+            <UserChannels
+              path="/channel-access/:id"
+              listItems={channels}
+              success={success}
+              setSuccess={setSuccess}
+              setLoading={setLoading}
+              header="Channels for User"
+              displayValue="name"
+              calloutValue="type"
+            />
+          )}
+        </Router>
+      ) : (
+        "Dashboard not initialized."
+      )}
     </DashboardContainer>
   );
 };

@@ -44,7 +44,10 @@ const Dashboard = ({ setAuthenticated }) => {
   );
 
   const dashboardLoading =
-    !channels || !notifications || loading !== false ? true : false;
+    (!channels || !notifications) && loading !== false ? true : false;
+
+  const isDashboardReady =
+    Array.isArray(channels) && Array.isArray(notifications);
 
   return (
     <DashboardContainer
@@ -104,91 +107,95 @@ const Dashboard = ({ setAuthenticated }) => {
           Request Operator
         </Menu.Item>
       </Sidebar>
-      <Router primary={false}>
-        <Messages
-          path="/"
-          setLoading={setLoading}
-          success={success}
-          setSuccess={setSuccess}
-          fetchUrl={`${urls.base}/api/v1/user-messages/${email}`}
-          successUrl={`/add-message`}
-          user
-          default
-        />
-        <Message
-          path="/messages/:messageId"
-          setLoading={setLoading}
-          messageId="1"
-          success={success}
-          setSuccess={setSuccess}
-        />
-        <AddMessage
-          path="/add-message"
-          channels={channels}
-          token={token}
-          setLoading={setLoading}
-          setSuccess={setSuccess}
-          success={success}
-        />
-        <AddComment
-          path="/add-comment/:messageId"
-          token={token}
-          setLoading={setLoading}
-          setSuccess={setSuccess}
-          success={success}
-        />
-        <ItemsList
-          path="/contacts"
-          listItems={channels}
-          header="Contacts"
-          displayValue="name"
-          resource="contacts"
-        />
-        <Contacts
-          path="/contacts/:channelId"
-          setLoading={setLoading}
-          success={success}
-          setSuccess={setSuccess}
-          channels={channels}
-        />
-        <AddContact
-          path="/add-contact/:channelId"
-          token={token}
-          setLoading={setLoading}
-          setSuccess={setSuccess}
-          channels={channels}
-        />
-        <NotificationList
-          path="/notifications"
-          notifications={notifications}
-          setLoading={setLoading}
-          success={success}
-          setSuccess={setSuccess}
-          token={token}
-          userType="representative"
-        />
-        <SetNotification
-          path="/notifications/:channelId"
-          token={token}
-          notifications={notifications}
-          setSuccess={setSuccess}
-          setLoading={setLoading}
-        />
-        <RequestChannel
-          path="/request-operator"
-          token={token}
-          loading={loading}
-          setLoading={setLoading}
-          setSuccess={setSuccess}
-          success={success}
-        />
-        <ChannelUsers
-          path="/channel-users/:channelId"
-          token={token}
-          loading={loading}
-          setLoading={setLoading}
-        />
-      </Router>
+      {isDashboardReady ? (
+        <Router primary={false}>
+          <Messages
+            path="/"
+            setLoading={setLoading}
+            success={success}
+            setSuccess={setSuccess}
+            fetchUrl={`${urls.base}/api/v1/user-messages/${email}`}
+            successUrl={`/add-message`}
+            user
+            default
+          />
+          <Message
+            path="/messages/:messageId"
+            setLoading={setLoading}
+            messageId="1"
+            success={success}
+            setSuccess={setSuccess}
+          />
+          <AddMessage
+            path="/add-message"
+            channels={channels}
+            token={token}
+            setLoading={setLoading}
+            setSuccess={setSuccess}
+            success={success}
+          />
+          <AddComment
+            path="/add-comment/:messageId"
+            token={token}
+            setLoading={setLoading}
+            setSuccess={setSuccess}
+            success={success}
+          />
+          <ItemsList
+            path="/contacts"
+            listItems={channels}
+            header="Contacts"
+            displayValue="name"
+            resource="contacts"
+          />
+          <Contacts
+            path="/contacts/:channelId"
+            setLoading={setLoading}
+            success={success}
+            setSuccess={setSuccess}
+            channels={channels}
+          />
+          <AddContact
+            path="/add-contact/:channelId"
+            token={token}
+            setLoading={setLoading}
+            setSuccess={setSuccess}
+            channels={channels}
+          />
+          <NotificationList
+            path="/notifications"
+            notifications={notifications}
+            setLoading={setLoading}
+            success={success}
+            setSuccess={setSuccess}
+            token={token}
+            userType="representative"
+          />
+          <SetNotification
+            path="/notifications/:channelId"
+            token={token}
+            notifications={notifications}
+            setSuccess={setSuccess}
+            setLoading={setLoading}
+          />
+          <RequestChannel
+            path="/request-operator"
+            token={token}
+            loading={loading}
+            setLoading={setLoading}
+            setSuccess={setSuccess}
+            success={success}
+          />
+          <ChannelUsers
+            path="/channel-users/:channelId"
+            token={token}
+            loading={loading}
+            setLoading={setLoading}
+          />
+        </Router>
+      ) : (
+        "Dashboard not initialized."
+      )}
     </DashboardContainer>
   );
 };
