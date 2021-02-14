@@ -1,10 +1,10 @@
 import urls from "../constants/urls";
 import moment from "moment";
 
-const fetchReport = async (token, userId, channelId, beginDate, endDate) => {
+const fetchPDFReport = async (token, userId, channelId, beginDate, endDate) => {
   // check if all necessary arguments are sent
   if (!token || !beginDate || !endDate || (!channelId && !userId)) {
-    throw new Error(`fetchReport requires a valid token, 
+    throw new Error(`fetchPDFReport requires a valid token, 
         a user id or a channel id and both a begin and end date`);
   }
   // check if dates are in the future
@@ -12,18 +12,18 @@ const fetchReport = async (token, userId, channelId, beginDate, endDate) => {
     moment(beginDate).isAfter(moment()) ||
     moment(endDate).isAfter(moment())
   ) {
-    throw new Error(`fetchReport requires that both dates be in the past`);
+    throw new Error(`fetchPDFReport requires that both dates be in the past`);
   }
   // check if beginDate is before endDate
   if (moment(beginDate).isAfter(endDate)) {
     throw new Error(
-      `fetchReport requires that the start date is before the end date`
+      `fetchPDFReport requires that the start date is before the end date`
     );
   }
 
   let route = userId ? `/users/${userId}` : `/channels/${channelId}`;
 
-  const response = await fetch(`${urls.base}/api/v1/reports${route}`, {
+  const response = await fetch(`${urls.base}/api/v1/pdfreports${route}`, {
     method: "post",
     headers: {
       "Content-Type": "application/json",
@@ -36,13 +36,10 @@ const fetchReport = async (token, userId, channelId, beginDate, endDate) => {
   });
 
   const blob = await response.blob();
-  if (
-    blob.type ===
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-  ) {
+  if (blob.type === "application/pdf") {
     let lnk = document.createElement("a"),
       objectURL;
-    lnk.download = "report.xlsx";
+    lnk.download = "report.pdf";
     lnk.href = objectURL = URL.createObjectURL(blob);
     //lnk.text = "Download Report";
     const downloadArea = document.getElementById("downloadStep");
@@ -59,4 +56,4 @@ const fetchReport = async (token, userId, channelId, beginDate, endDate) => {
   }
 };
 
-export default fetchReport;
+export default fetchPDFReport;

@@ -10,10 +10,11 @@ import {
   Message as SemanticMessage,
   Icon,
   Label,
-  Radio
+  Radio,
 } from "semantic-ui-react";
 
 import fetchReport from "../../utils/fetchReport";
+import fetchPDFReport from "../../utils/fetchPDFReport";
 import PageHeader from "../PageHeader/PageHeader";
 import useChannels from "../../customHooks/useChannels";
 import useUsers from "../../customHooks/useUsers";
@@ -38,6 +39,30 @@ const Reports = ({ token, setLoading, loading }) => {
   const getReport = async () => {
     try {
       await fetchReport(
+        token,
+        user && JSON.parse(user).id,
+        channel && JSON.parse(channel).id,
+        startDate,
+        endDate
+      );
+      setError(null);
+    } catch (e) {
+      if (
+        e.message ===
+        "A report could not be fetched because the parameters returned no results."
+      ) {
+        setError(
+          "A report could not be generated because the parameters returned no results. Please try another user, channel, start date or end date."
+        );
+      } else {
+        console.error(e);
+      }
+    }
+  };
+
+  const getPDFReport = async () => {
+    try {
+      await fetchPDFReport(
         token,
         user && JSON.parse(user).id,
         channel && JSON.parse(channel).id,
@@ -156,23 +181,23 @@ const Reports = ({ token, setLoading, loading }) => {
                   options={
                     type === "channel"
                       ? channels.length > 0
-                        ? channels.map(channel => ({
+                        ? channels.map((channel) => ({
                             key: channel.id,
                             value: JSON.stringify({
                               id: channel.id,
-                              name: channel.name
+                              name: channel.name,
                             }),
-                            text: channel.name
+                            text: channel.name,
                           }))
                         : []
                       : users.length > 0
-                      ? users.map(user => ({
+                      ? users.map((user) => ({
                           key: user.id,
                           value: JSON.stringify({
                             id: user.id,
-                            name: user.username
+                            name: user.username,
                           }),
-                          text: user.username
+                          text: user.username,
                         }))
                       : []
                   }
@@ -211,9 +236,9 @@ const Reports = ({ token, setLoading, loading }) => {
                       format="LL"
                       placeholder={formatDate(new Date(), "LL")}
                       dayPickerProps={{
-                        disabledDays: { after: moment().toDate() }
+                        disabledDays: { after: moment().toDate() },
                       }}
-                      onDayChange={date =>
+                      onDayChange={(date) =>
                         date
                           ? setStartDate(formatDate(date, "YYYY-MM-DD"))
                           : setStartDate(null)
@@ -232,10 +257,10 @@ const Reports = ({ token, setLoading, loading }) => {
                       dayPickerProps={{
                         disabledDays: [
                           { before: moment(startDate).toDate() },
-                          { after: moment().toDate() }
-                        ]
+                          { after: moment().toDate() },
+                        ],
                       }}
-                      onDayChange={date =>
+                      onDayChange={(date) =>
                         date
                           ? setEndDate(formatDate(date, "YYYY-MM-DD"))
                           : setEndDate(null)
@@ -255,7 +280,10 @@ const Reports = ({ token, setLoading, loading }) => {
             <li id="downloadStep">
               <Header as="h3">Download report:</Header>
               <Button color="blue" size="large" onClick={getReport}>
-                Download Report
+                Download Excel Report
+              </Button>
+              <Button color="blue" size="large" onClick={getPDFReport}>
+                Download PDF Report
               </Button>
             </li>
           </CSSTransition>
